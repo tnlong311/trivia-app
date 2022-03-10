@@ -1,6 +1,6 @@
-# trivia_app
+# Trivia App
 
-Flutter project for Mobile Trivia App
+A mobile app to play game in Trivia Night - an event organized by Fulbright STEM Club
 
 ## Getting Started
 
