@@ -1,9 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:trivia_app/views/pages/guidelines_page.dart';
+import 'package:trivia_app/views/pages/rules_page.dart';
 
 import '../../consts/app_styles.dart';
 
 class LobbyPage extends StatelessWidget{
+  static const routeName = "/lobby";
   const LobbyPage ({Key? key}) : super(key: key);
 
   @override
@@ -58,7 +60,9 @@ class RulesNav extends StatelessWidget{
         padding: const EdgeInsets.only(left: 20, right: 20),
         child: Center(
             child: TextButton(
-                onPressed: (){},
+                onPressed: (){
+                  Navigator.pushNamed(context, RulesPage.routeName);
+                },
                 child: const Text("Game rules",
                     style: triviaHeading1,
                     textAlign: TextAlign.center,
@@ -79,10 +83,15 @@ class GuidelineNav extends StatelessWidget{
           color: Colors.cyanAccent
       ),
       padding: const EdgeInsets.only(left: 20, right: 20),
-      child: const Center(
-          child: Text("App guidelines",
-            style: triviaHeading1,
-            textAlign: TextAlign.center,
+      child: Center(
+          child: TextButton(
+              onPressed: (){
+                Navigator.pushNamed(context, GuidelinesPage.routeName);
+              },
+              child: const Text("App guidelines",
+                style: triviaHeading1,
+                textAlign: TextAlign.center,
+              )
           )
       )
   );
