@@ -10,7 +10,7 @@ class GuidelinesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('game rules here'),
+        title: const Text('App guidelines here'),
         leading: IconButton(
           icon: const Icon(Icons.navigate_before),
           onPressed: (){

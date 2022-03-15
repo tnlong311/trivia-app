@@ -17,7 +17,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Trivia App',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        backgroundColor: Colors.black12,
         primarySwatch: Colors.deepPurple,
       ),
       initialRoute: LandingPage.routeName,
