@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'Trivia App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        backgroundColor: Colors.black12,
+        backgroundColor: Colors.white,
         primarySwatch: Colors.deepPurple,
       ),
       initialRoute: LandingPage.routeName,
