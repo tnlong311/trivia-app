@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trivia_app/views/pages/question_template/answer_info_page.dart';
+import 'package:trivia_app/views/widgets/InfoBox.dart';
 
 class AnswerRevealPage extends StatelessWidget {
   static const routeName = "/answer-reveal";
@@ -10,12 +11,24 @@ class AnswerRevealPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: Center(
-            child: Text(
-              "Your correct answer is...",
-              style: Theme.of(context).textTheme.headline3,
-            ),
-          )),
+          child: Column(
+            children: const [
+              Expanded(
+                  flex: 1,
+                  child: InfoBox(title: "Current Point", width: 150, height: 120,),
+              ),
+              Expanded(
+                  flex: 1,
+                  child: Text("Placeholder"),
+              ),
+              Expanded(
+                  flex: 1,
+                  child: Text("Placeholder"),
+              ),
+            ],
+          )
+      
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.pushNamed(context, AnswerInfoPage.routeName);

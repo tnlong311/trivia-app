@@ -1,7 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trivia_app/consts/app_styles.dart';
 import 'package:trivia_app/views/pages/team_formation_page.dart';
-import 'package:trivia_app/views/widgets/CustomTextField1.dart';
+import 'package:trivia_app/views/widgets/TextFieldWithButton.dart';
 
 class LandingPage extends StatelessWidget {
   static const routeName = "/";
@@ -38,10 +39,10 @@ class LandingPage extends StatelessWidget {
               flex: 1,
               child: Align(
                 alignment: Alignment.topCenter,
-                child: CustomTextField1(
+                child: TextFieldWithButton(
                     routeName: TeamFormationPage.routeName,
                     isKeyboard: isKeyboard),
-              ))
+              )),
         ],
       ),
     );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../consts/app_styles.dart';
-import '../widgets/CustomTextField1.dart';
+import '../widgets/TextFieldWithButton.dart';
 import 'lobby_page.dart';
 
 class TeamFormationPage extends StatelessWidget {
@@ -34,7 +34,7 @@ class TeamFormationPage extends StatelessWidget {
               flex: 1,
               child: Align(
                 alignment: Alignment.topCenter,
-                child: CustomTextField1(
+                child: TextFieldWithButton(
                     routeName: LobbyPage.routeName,
                     isKeyboard: isKeyboard),
               )

@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CustomTextField1 extends StatefulWidget {
-  const CustomTextField1(
+class TextFieldWithButton extends StatefulWidget {
+  const TextFieldWithButton(
       {Key? key, required this.routeName, required this.isKeyboard})
       : super(key: key);
 
@@ -12,10 +11,10 @@ class CustomTextField1 extends StatefulWidget {
   // final Function customValidate;
 
   @override
-  State<CustomTextField1> createState() => _CustomTextField1State();
+  State<TextFieldWithButton> createState() => _TextFieldWithButtonState();
 }
 
-class _CustomTextField1State extends State<CustomTextField1> {
+class _TextFieldWithButtonState extends State<TextFieldWithButton> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _controller = TextEditingController();
 
@@ -39,6 +38,7 @@ class _CustomTextField1State extends State<CustomTextField1> {
               },
               controller: _controller,
               decoration: const InputDecoration(
+                border: OutlineInputBorder(),
                 hintText: "Enter game code",
                 // labelText: "Hello",
                 // errorText: "Please fill in",
