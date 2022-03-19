@@ -23,7 +23,8 @@ class _CustomTextField1State extends State<CustomTextField1> {
   Widget build(BuildContext context) {
     return Container(
       width: 200,
-      height: 200,
+      // padding: const EdgeInsets.symmetric(horizontal: 10),
+      // height: 200,
       child: Row(children: [
         Expanded(
           flex: 3,
