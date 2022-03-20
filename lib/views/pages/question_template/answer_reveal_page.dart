@@ -24,7 +24,7 @@ class AnswerRevealPage extends StatelessWidget {
           ),
           Expanded(
             flex: 1,
-            child: CorrectAnswerWidget(header: "The correct answer is", content: "A. Hello"),
+            child: CorrectAnswerWidget(header: "The correct answer izz", content: "A. Hello"),
           ),
           Expanded(
             flex: 1,
