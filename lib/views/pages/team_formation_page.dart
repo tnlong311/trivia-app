@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../consts/app_styles.dart';
-import '../widgets/InputValidate.dart';
+import '../widgets/TextFieldWithButton.dart';
 import 'lobby_page.dart';
 
 class TeamFormationPage extends StatelessWidget {
@@ -10,6 +10,8 @@ class TeamFormationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
+
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       body: Column(
@@ -28,11 +30,13 @@ class TeamFormationPage extends StatelessWidget {
                 ),
               )
           ),
-          const Expanded(
+          Expanded(
               flex: 1,
               child: Align(
                 alignment: Alignment.topCenter,
-                child: InputValidate(routeName: LobbyPage.routeName),
+                child: TextFieldWithButton(
+                    routeName: LobbyPage.routeName,
+                    isKeyboard: isKeyboard),
               )
           )
         ],
