@@ -19,3 +19,15 @@ const triviaHeading2 = TextStyle(
   height: 2,
   decoration: TextDecoration.none
 );
+
+const triviaGreen = LinearGradient(
+colors: [Color(0xFF46A0AE), Color(0xFF00FFCB)],
+begin: Alignment.centerLeft,
+end: Alignment.centerRight,
+);
+
+const triviaRed = LinearGradient(
+  colors: [Color(0xDFa70000), Color(0xDFfe2424)],
+  begin: Alignment.centerLeft,
+  end: Alignment.centerRight,
+);
