@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 
 class InfoBox extends StatelessWidget {
   const InfoBox(
-      {Key? key, this.title, required this.width, required this.height})
+      {Key? key, required this.title, required this.width, required this.height, required this.content})
       : super(key: key);
 
-  final String? title;
+  final String title;
   final double width;
   final double height;
+  final String content;
 
   @override
   Widget build(BuildContext context) {
@@ -35,17 +36,18 @@ class InfoBox extends StatelessWidget {
       ),
       child: Column(
         children: [
+          (title != "") ?
           Padding(
             padding: const EdgeInsets.only(top: 8),
             child: Text(
-              'Time left',
-              style: themeData.textTheme.headline6,
+              title,
+              style: themeData.textTheme.subtitle1,
             ),
-          ),
+          ) : SizedBox.shrink(),
           Expanded(
             child: Center(
               child: Text(
-                '100',
+                content,
                 style: themeData.textTheme.headline3,
               ),
             ),

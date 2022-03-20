@@ -15,6 +15,8 @@ class QuestionPollPage extends StatefulWidget {
 
 class _QuestionPollPageState extends State<QuestionPollPage> {
   final _formKey = GlobalKey<FormState>();
+  String answer = '';
+  String bet = '';
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +32,18 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               // crossAxisAlignment: CrossAxisAlignment.center,
               children: const [
-                InfoBox(title: "Current Point", width: 150, height: 120,),
-                InfoBox(title: "Time Left", width: 150, height: 120,),
+                InfoBox(
+                  title: "Current Point",
+                  width: 150,
+                  height: 120,
+                  content: "1234",
+                ),
+                InfoBox(
+                  title: "Time Left",
+                  width: 150,
+                  height: 120,
+                  content: '20s',
+                ),
               ],
             ),
           ),
@@ -41,10 +53,20 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
               key: _formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: const [
-                  SizedBox(height: 30),
-                  TextFieldSingle(width: 250),
-                  TextFieldSingle(width: 250)
+                children: [
+                  const SizedBox(height: 30),
+                  TextFieldSingle(
+                      width: 250,
+                      title: "Answer",
+                      description: "Enter your answer...",
+                      validator: answerValidator,
+                  input: answer),
+                  TextFieldSingle(
+                      width: 250,
+                      title: "Bet",
+                      description: "Enter your bet...",
+                      validator: betValidator,
+                  input: bet),
                 ],
               ),
             ),
@@ -56,7 +78,10 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
                 height: 60,
                 child: ElevatedButton(
                   onPressed: () {
-                    _formKey.currentState!.validate();
+                    if(_formKey.currentState!.validate()){
+                      print('your answer is submitted');
+                      _formKey.currentState!.save();
+                    };
                   },
                   child: Text(
                     "Submit",
@@ -75,4 +100,18 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
       ),
     );
   }
+}
+
+answerValidator(value) {
+  if (value == null || value.isEmpty) {
+    return 'Please enter some text';
+  }
+  return null;
+}
+
+betValidator(value) {
+  if (value == null || value.isEmpty) {
+    return 'Please enter a number';
+  }
+  return null;
 }

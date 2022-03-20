@@ -15,7 +15,7 @@ class AnswerRevealPage extends StatelessWidget {
             children: const [
               Expanded(
                   flex: 1,
-                  child: InfoBox(title: "Current Point", width: 150, height: 120,),
+                  child: Center(child: InfoBox(title: "", width: 150, height: 120, content: "+200")),
               ),
               Expanded(
                   flex: 1,
