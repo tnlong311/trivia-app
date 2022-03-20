@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
-import 'package:trivia_app/controllers/QuestionController.dart';
+import 'package:trivia_app/controllers/question_controller.dart';
 import 'package:trivia_app/views/pages/question_template/answer_reveal_page.dart';
 import 'package:trivia_app/views/widgets/TextFieldSingle.dart';
 
@@ -87,7 +87,7 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
                           height: 60,
                           child: ElevatedButton(
                             onPressed: () {
-                              _questionController.resetCounter();
+                              _questionController.resetQuestionState();
                               _questionController.checkAnswer();
                               if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();

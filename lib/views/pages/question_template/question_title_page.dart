@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:trivia_app/views/pages/question_template/question_poll_page.dart';
 
-import '../../../controllers/QuestionController.dart';
+import '../../../controllers/question_controller.dart';
 
 class QuestionTitlePage extends StatelessWidget {
   static const routeName = "/question-title";
@@ -18,13 +18,13 @@ class QuestionTitlePage extends StatelessWidget {
       body: SafeArea(
           child: Center(
         child: Text(
-          "Question #${_questionController.index}",
+          "Question #${_questionController.index+1}",
           style: Theme.of(context).textTheme.headline3,
         ),
       )),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, QuestionPollPage.routeName);
+          _questionController.gotoPollPage();
         },
       ),
     );
