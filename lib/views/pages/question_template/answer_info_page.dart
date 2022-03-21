@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:trivia_app/views/pages/question_template/question_title_page.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import '../../../controllers/question_controller.dart';
 
 class AnswerInfoPage extends StatelessWidget {
   static const routeName = "/answer-info";
@@ -8,6 +11,8 @@ class AnswerInfoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    QuestionController _questionController = Get.put(QuestionController());
+
     return Scaffold(
       body: SafeArea(
           child: Center(
@@ -18,7 +23,7 @@ class AnswerInfoPage extends StatelessWidget {
           )),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, QuestionTitlePage.routeName);
+          _questionController.gotoQuestionTitle();
         },
       ),
     );
