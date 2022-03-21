@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../../consts/app_styles.dart';
 
@@ -12,11 +12,24 @@ class CorrectAnswerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Text(header, style: triviaHeading1),
-      Text(
-        content,
-      ),
-    ]);
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: Text(
+                header,
+                style: triviaHeading2,
+              ),
+            ),
+            Expanded(
+              child: Text(
+                content,
+                style: Theme.of(context).textTheme.headline4,
+              ),
+            ),
+          ]),
+    );
   }
 }
