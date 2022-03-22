@@ -13,6 +13,8 @@ import 'package:trivia_app/views/pages/unknown_page.dart';
 
 void main() {
   runApp(const MyApp());
+
+  // testt 2
 }
 
 class MyApp extends StatelessWidget {
