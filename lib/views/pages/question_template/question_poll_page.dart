@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:trivia_app/consts/app_styles.dart';
 import 'package:trivia_app/controllers/question_controller.dart';
 import 'package:trivia_app/views/pages/question_template/answer_reveal_page.dart';
 import 'package:trivia_app/views/widgets/TextFieldSingle.dart';
@@ -51,7 +52,8 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
                             title: "Time Left",
                             width: 150,
                             height: 120,
-                            content: '${(controller.countdown.value*30).round()}s',
+                            content:
+                                '${(controller.countdown.value * 30).round()}s',
                           ),
                         ],
                       ),
@@ -94,9 +96,8 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
                               }
                               ;
                             },
-                            child: Text(
+                            child: const Text(
                               "Submit",
-                              style: themeData.textTheme.headline5,
                             ),
                           ),
                         ),

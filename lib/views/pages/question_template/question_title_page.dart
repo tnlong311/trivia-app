@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:trivia_app/consts/app_styles.dart';
 import 'package:trivia_app/views/pages/question_template/question_poll_page.dart';
 
 import '../../../controllers/question_controller.dart';
@@ -19,7 +20,7 @@ class QuestionTitlePage extends StatelessWidget {
           child: Center(
         child: Text(
           "Question #${_questionController.index+1}",
-          style: Theme.of(context).textTheme.headline3,
+          style: triviaHeading1,
         ),
       )),
       floatingActionButton: FloatingActionButton(
