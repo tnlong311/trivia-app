@@ -17,6 +17,7 @@ class LobbyPage extends StatelessWidget{
         controller: _pageController,
         itemCount: slideList.length,
         itemBuilder: (context, i) => slideList[i]);
+
   }
 }
 
