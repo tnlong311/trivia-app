@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:trivia_app/consts/app_styles.dart';
 import 'package:trivia_app/views/pages/guidelines_page.dart';
 import 'package:trivia_app/views/pages/landing_page.dart';
 import 'package:trivia_app/views/pages/lobby_page.dart';
@@ -13,6 +14,7 @@ import 'package:trivia_app/views/pages/unknown_page.dart';
 
 void main() {
   runApp(const MyApp());
+  // test2
 }
 
 class MyApp extends StatelessWidget {

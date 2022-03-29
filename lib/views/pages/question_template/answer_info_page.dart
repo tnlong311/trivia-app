@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trivia_app/consts/app_styles.dart';
 import 'package:trivia_app/views/pages/question_template/question_title_page.dart';
 
 class AnswerInfoPage extends StatelessWidget {
@@ -9,11 +10,11 @@ class AnswerInfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      body: const SafeArea(
           child: Center(
             child: Text(
               "Some funfacts about this quesiton",
-              style: Theme.of(context).textTheme.headline3,
+              style: triviaHeading1,
             ),
           )),
       floatingActionButton: FloatingActionButton(
