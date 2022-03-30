@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:trivia_app/consts/app_styles.dart';
 import 'package:trivia_app/views/pages/team_formation_page.dart';
 import 'package:trivia_app/views/widgets/TextFieldWithButton.dart';
@@ -21,17 +22,8 @@ class LandingPage extends StatelessWidget {
         children: [
           Expanded(
               flex: 2,
-              child: Center(
-                child: RichText(
-                  text: const TextSpan(style: triviaHeading1, children: [
-                    TextSpan(text: "Welcome to\n"),
-                    TextSpan(
-                      text: "Trivia Night\n",
-                    ),
-                    TextSpan(text: "with STEM club!", style: triviaHeading2),
-                  ]),
-                ),
-              )),
+              child: Transform.scale(
+                  scale: 1.2, child: Image.asset('assets/images/welcome.png'))),
           Expanded(
               flex: 1,
               child: Align(
