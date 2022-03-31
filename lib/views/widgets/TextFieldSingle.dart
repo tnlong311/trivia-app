@@ -7,14 +7,14 @@ class TextFieldSingle extends StatefulWidget {
       required this.title,
       required this.description,
       required this.validator,
-      required this.input})
+      required this.updator})
       : super(key: key);
 
   final double width;
   final String title;
   final String description;
   final Function validator;
-  String input;
+  final Function updator;
 
   @override
   State<TextFieldSingle> createState() => _TextFieldSingleState();
@@ -37,7 +37,7 @@ class _TextFieldSingleState extends State<TextFieldSingle> {
           hintText: widget.description,
           labelText: widget.title,
         ),
-        onSaved: (value) => print(value),
+        onSaved: (value) => widget.updator(value),
       ),
     );
   }
