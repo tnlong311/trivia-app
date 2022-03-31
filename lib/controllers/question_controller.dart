@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:trivia_app/models/mock_questions.dart';
+import 'package:trivia_app/views/pages/question_template/answer_info_page.dart';
 import 'package:trivia_app/views/pages/question_template/answer_reveal_page.dart';
 import 'package:trivia_app/views/pages/question_template/question_poll_page.dart';
+import 'package:trivia_app/views/pages/question_template/question_title_page.dart';
 
 import '../models/question.dart';
 
@@ -17,32 +19,27 @@ class QuestionController extends GetxController
   String _userAnswer = '';
   int _bet = 0;
   int _result = 0;
+  late int questionLength;
 
-  // late int questionLength;
-
-  final List<Question> _questionList = sampleQuestions
+  final List<Question> questionList = sampleQuestions
       .map((question) => Question(
             id: question['id'],
             type: question['type'],
             correct: question['correct'],
+            fullCorrect: question['full correct'],
             additionInfo: question['addition info'],
             clock: question['clock'],
           ))
       .toList();
 
-  // expose to global use
-  Animation get countdown => _countdown;
-  int get currentPoint => _currentPoint;
-  int get index => _index;
-  int get result => _result;
 
   // called immediately after the widget is allocated memory
   @override
   void onInit() {
-    // questionLength = sampleQuestions.length;
+    questionLength = sampleQuestions.length;
 
     _countdownController = AnimationController(
-        duration: Duration(seconds: _questionList[index].clock), vsync: this);
+        duration: Duration(seconds: questionList[index].clock), vsync: this);
 
     _countdown = Tween<double>(begin: 1, end: 0).animate(_countdownController)
       ..addListener(() {
@@ -55,29 +52,81 @@ class QuestionController extends GetxController
 
   @override
   void onClose() {
+    print("QuestionController closed");
     _countdownController.dispose();
     super.onClose();
   }
 
-  void resetQuestionState() {
-    // _countdownController = AnimationController(
-    //     duration: Duration(seconds: _questionList[index].clock), vsync: this);
-    // _countdown = Tween<double>(begin: 1, end: 0).animate(_countdownController)
-    //   ..addListener(() {
-    //     // update = setState
-    //     update();
-    //   });
-    update();
 
+  // getters
+  Animation get countdown => _countdown;
+
+  int get currentPoint => _currentPoint;
+
+  int get index => _index;
+
+  String get resultString =>
+      (_result >= 0) ? ("+" + _result.toString()) : _result.toString();
+
+  int get bet => _bet;
+
+  String get userAnswer => _userAnswer;
+
+  String get fullCorrectAnswer => questionList[index].fullCorrect;
+
+
+  // settlers
+  void setUserAnswer(value) {
+    _userAnswer = value.toString().toUpperCase();
+  }
+
+  void setBet(value) {
+    _bet = int.parse(value);
+  }
+
+
+  // helpful methods
+  void checkAnswer() {
+    _countdownController.stop();
+
+    if (_userAnswer == questionList[index].correct) {
+      _result = _bet;
+      print("correct answer");
+    } else {
+      _result = -_bet;
+      print("wrong answer");
+    }
+
+    _currentPoint += _result;
+    update();
+  }
+
+  void resetQuestionState() {
+    print("index ${index}, timer: ${questionList[index].clock}");
+
+    // _countdownController.dispose();
+
+    _countdownController.duration =
+        Duration(seconds: questionList[index].clock);
+    _countdown = Tween<double>(begin: 1, end: 0).animate(_countdownController);
+    // update();
+
+    // _countdownController.resync(this);
     _countdownController.reset();
     _countdownController.forward();
   }
 
-  void checkAnswer() {
-    _currentPoint += 100;
-  }
 
-  void gotoQuestionTitle() {}
+  // routing
+  void gotoQuestionTitle() {
+    if (_index >= questionLength - 1) {
+      _index = 0;
+    } else {
+      _index++;
+    }
+
+    Get.to(const QuestionTitlePage());
+  }
 
   void gotoPollPage() {
     resetQuestionState();
@@ -87,10 +136,11 @@ class QuestionController extends GetxController
 
   void gotoAnswerReveal() {
     _countdownController.stop();
-    _index++;
 
-    Get.to(AnswerRevealPage());
+    Get.to(const AnswerRevealPage());
   }
 
-  void gotoAnswerInfo() {}
+  void gotoAnswerInfo() {
+    Get.to(const AnswerInfoPage());
+  }
 }

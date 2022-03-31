@@ -21,46 +21,59 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 200,
+      width: 250,
       // padding: const EdgeInsets.symmetric(horizontal: 10),
       // height: 200,
-      child: Row(children: [
-        Expanded(
-          flex: 3,
-          child: Form(
-            key: _formKey,
-            child: TextFormField(
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
-                }
-                return null;
-              },
-              controller: _controller,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: "Enter game code",
-                // labelText: "Hello",
-                // errorText: "Please fill in",
+      child: Stack(children: <Widget>[
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          resizeToAvoidBottomInset: false,
+          body: Image.asset('assets/images/DemoBox.png',
+              alignment: Alignment.topCenter),
+        ),
+        Row(children: [
+          Expanded(
+            flex: 3,
+            child: Form(
+              key: _formKey,
+              child: TextFormField(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
+                controller: _controller,
+                decoration: const InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Colors.transparent, width: 4.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Colors.transparent, width: 5.0),
+                  ),
+                  hintText: "Enter game code",
+                ),
               ),
             ),
           ),
-        ),
-        widget.isKeyboard
-            ? Expanded(
-                child: IconButton(
-                  icon: const Icon(Icons.navigate_next),
-                  iconSize: 40,
-                  onPressed: () {
-                    // print(widget.isKeyboard);
-                    // print(_controller.text);
-                    if (_formKey.currentState!.validate()) {
-                      Navigator.pushNamed(context, this.widget.routeName);
-                    }
-                  },
-                ),
-              )
-            : const SizedBox.shrink(),
+          widget.isKeyboard
+              ? Expanded(
+                  child: IconButton(
+                    icon: const Icon(Icons.navigate_next),
+                    iconSize: 40,
+                    onPressed: () {
+                      // print(widget.isKeyboard);
+                      // print(_controller.text);
+                      if (_formKey.currentState!.validate()) {
+                        Navigator.pushNamed(context, this.widget.routeName);
+                      }
+                    },
+                  ),
+                )
+              : const SizedBox.shrink(),
+        ]),
       ]),
     );
   }

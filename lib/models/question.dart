@@ -1,6 +1,6 @@
 class Question {
   final int id, clock;
-  final String type, correct;
+  final String type, correct, fullCorrect;
   final String? additionInfo;
 
   Question(
@@ -8,7 +8,6 @@ class Question {
       required this.clock,
       required this.type,
       required this.correct,
-      required this.additionInfo});
-
-
+      required this.fullCorrect,
+      this.additionInfo});
 }
