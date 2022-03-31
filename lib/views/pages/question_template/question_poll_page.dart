@@ -81,7 +81,7 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
                             title: "Time Left",
                             width: 150,
                             height: 120,
-                            content: '${(controller.countdown.value*30).round()}s',
+                            content: '${(controller.countdown.value*controller.duration).round()}s',
                           ),
                         ],
                       ),
