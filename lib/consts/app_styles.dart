@@ -32,7 +32,7 @@ const triviaSmall1 = TextStyle(
 const triviaHeading2 = TextStyle(
     color: Colors.pinkAccent,
     fontWeight: FontWeight.w800,
-    fontFamily: 'Garamond',
+    fontFamily: 'PixelFont',
     letterSpacing: 0.6,
     fontSize: 30,
     height: 2,
