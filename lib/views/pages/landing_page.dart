@@ -29,17 +29,16 @@ class _LandingPageState extends State<LandingPage> {
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
 
     return SafeArea(
-        child: Stack(children: <Widget>[
-      Image.asset(
-        'assets/images/sky.jpg',
-        fit: BoxFit.cover,
-        height: double.infinity,
-        width: double.infinity,
-      ),
-      Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Column(
-          children: [
+      child: Stack(children: <Widget>[
+        Image.asset(
+          'assets/images/sky.jpg',
+          fit: BoxFit.cover,
+          height: double.infinity,
+          width: double.infinity,
+        ),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Column(children: [
             Expanded(
                 flex: 2,
                 child: Transform.scale(
@@ -52,10 +51,10 @@ class _LandingPageState extends State<LandingPage> {
                   child: TextFieldWithButton(
                       routeName: TeamFormationPage.routeName,
                       isKeyboard: isKeyboard),
-                )),
-          ],
-        ),
-      ),
-    ]));
+                ))
+          ]),
+        )
+      ]),
+    );
   }
 }
