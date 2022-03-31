@@ -20,13 +20,13 @@ class CorrectAnswerWidget extends StatelessWidget {
             Expanded(
               child: Text(
                 header,
-                style: triviaHeading2,
+                style: triviaHeading1,
               ),
             ),
             Expanded(
               child: Text(
                 content,
-                style: triviaHeading1,
+                style: triviaHeading2,
               ),
             ),
           ]),
