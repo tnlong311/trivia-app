@@ -31,8 +31,8 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.deepPurple,
         colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.cyanAccent),
       ),
-      // initialRoute: LandingPage.routeName,
-      initialRoute: QuestionTitlePage.routeName,
+      initialRoute: LandingPage.routeName,
+      // initialRoute: QuestionTitlePage.routeName,
       routes: {
         LandingPage.routeName: (context) => LandingPage(),
         TeamFormationPage.routeName: (context) => TeamFormationPage(),
