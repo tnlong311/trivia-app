@@ -27,11 +27,11 @@ class AnswerRevealPage extends StatelessWidget {
           ),
           Expanded(
             flex: 1,
-            child: CorrectAnswerWidget(header: "The correct answer is:", content: _questionController.fullCorrectAnswer),
+            child: CorrectAnswerWidget(header: "The correct answer izz", content: _questionController.fullCorrectAnswer),
           ),
           Expanded(
             flex: 1,
-            child: CorrectAnswerWidget(header: "Your current point:", content: _questionController.currentPoint.toString()),
+            child: CorrectAnswerWidget(header: "Your current point", content: _questionController.currentPoint.toString()),
           ),
         ],
       )),
