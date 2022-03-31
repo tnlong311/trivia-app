@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trivia_app/consts/app_styles.dart';
 
 class TextFieldWithButton extends StatefulWidget {
   const TextFieldWithButton(
@@ -37,6 +38,7 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
             child: Form(
               key: _formKey,
               child: TextFormField(
+                style: triviaSmall1,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter some text';
@@ -53,7 +55,7 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
                     borderSide:
                         BorderSide(color: Colors.transparent, width: 5.0),
                   ),
-                  hintText: "Enter game code",
+                  hintText: 'Enter game code',
                 ),
               ),
             ),

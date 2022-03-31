@@ -20,6 +20,15 @@ const triviaHeading1 = TextStyle(
     height: 2,
     decoration: TextDecoration.none);
 
+const triviaSmall1 = TextStyle(
+    color: Colors.pinkAccent,
+    fontWeight: FontWeight.w200,
+    fontFamily: 'PixelFont',
+    letterSpacing: 0.6,
+    fontSize: 13,
+    height: 2,
+    decoration: TextDecoration.none);
+
 const triviaHeading2 = TextStyle(
     color: Colors.pinkAccent,
     fontWeight: FontWeight.w800,
