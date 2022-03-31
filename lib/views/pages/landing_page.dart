@@ -6,43 +6,36 @@ import 'package:trivia_app/views/widgets/TextFieldWithButton.dart';
 
 class LandingPage extends StatefulWidget {
   static const routeName = "/";
+
   const LandingPage({Key? key}) : super(key: key);
 
   @override
-  State<LandingPage> createState() => _State();
+  State<LandingPage> createState() => _LandingPageState();
 }
 
-class _State extends State<LandingPage> with SingleTickerProviderStateMixin {
-
-  late AnimationController _animationController;
-
+class _LandingPageState extends State<LandingPage> {
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: Duration(seconds: 10),
-    );
-    _animationController.repeat();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final isKeyboard = MediaQuery
-        .of(context)
-        .viewInsets
-        .bottom != 0;
+    final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
 
-    return SafeArea(child: Stack(children: <Widget>[
-      AnimatedBuilder(
-          animation: _animationController,
-          child: Image.asset('assets/images/sky.jpg'),
-          builder: (context, child) =>
-              Transform.scale(
-                scale: _animationController.value,
-                child: child,
-              )),
-
+    return SafeArea(
+        child: Stack(children: <Widget>[
+      Image.asset(
+        'assets/images/sky.jpg',
+        fit: BoxFit.cover,
+        height: double.infinity,
+        width: double.infinity,
+      ),
       Scaffold(
         backgroundColor: Colors.transparent,
         body: Column(
@@ -63,8 +56,6 @@ class _State extends State<LandingPage> with SingleTickerProviderStateMixin {
           ],
         ),
       ),
-      const Align(alignment: Alignment.center,
-          child: Text('Hello', style: triviaHeading1)),
     ]));
   }
 }
