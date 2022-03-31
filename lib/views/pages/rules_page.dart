@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trivia_app/consts/app_styles.dart';
 import 'package:trivia_app/views/pages/landing_page.dart';
 
 class RulesPage extends StatelessWidget {
@@ -9,7 +10,7 @@ class RulesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('game rules here'),
+        title: const Text('game rules here', style: triviaHeading2),
         leading: IconButton(
           icon: const Icon(Icons.navigate_before),
           onPressed: (){

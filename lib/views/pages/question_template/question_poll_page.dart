@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:trivia_app/consts/app_styles.dart';
 import 'package:trivia_app/controllers/question_controller.dart';
+import 'package:trivia_app/views/pages/question_template/answer_reveal_page.dart';
 import 'package:trivia_app/views/widgets/TextFieldSingle.dart';
 
 import '../../widgets/InfoBox.dart';
@@ -19,44 +21,13 @@ class QuestionPollPage extends StatefulWidget {
 
 class _QuestionPollPageState extends State<QuestionPollPage> {
   final _formKey = GlobalKey<FormState>();
+  String answer = '';
+  String bet = '';
 
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
     QuestionController _questionController = Get.put(QuestionController());
-
-    answerValidator(value) {
-      if (value == null || value.isEmpty) {
-        return 'Please enter some text';
-      }
-      return null;
-    }
-
-    betValidator(value) {
-      if (value == null || value.isEmpty) {
-        return 'Please enter a number';
-      }
-      return null;
-    }
-
-    answerUpdator(value) {
-      _questionController.setUserAnswer(value);
-      // print(_questionController.userAnswer);
-    }
-
-    betUpdator(value) {
-      _questionController.setBet(value);
-      // print(_questionController.bet);
-    }
-
-    answerOnSubmit() {
-      if (_formKey.currentState!.validate()) {
-        // update state to Controller
-        _formKey.currentState!.save();
-        _questionController.checkAnswer();
-        // _questionController.resetQuestionState();
-      }
-    }
 
     return Scaffold(
       body: SafeArea(
@@ -81,7 +52,8 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
                             title: "Time Left",
                             width: 150,
                             height: 120,
-                            content: '${(controller.countdown.value*30).round()}s',
+                            content:
+                                '${(controller.countdown.value * 30).round()}s',
                           ),
                         ],
                       ),
@@ -99,13 +71,13 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
                                 title: "Answer",
                                 description: "Enter your answer...",
                                 validator: answerValidator,
-                                updator: answerUpdator),
+                                input: answer),
                             TextFieldSingle(
                                 width: 250,
                                 title: "Bet",
                                 description: "Enter your bet...",
                                 validator: betValidator,
-                                updator: betUpdator),
+                                input: bet),
                           ],
                         ),
                       ),
@@ -116,10 +88,16 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
                         child: SizedBox(
                           height: 60,
                           child: ElevatedButton(
-                            onPressed: answerOnSubmit,
-                            child: Text(
+                            onPressed: () {
+                              _questionController.resetQuestionState();
+                              _questionController.checkAnswer();
+                              if (_formKey.currentState!.validate()) {
+                                _formKey.currentState!.save();
+                              }
+                              ;
+                            },
+                            child: const Text(
                               "Submit",
-                              style: themeData.textTheme.headline5,
                             ),
                           ),
                         ),
@@ -130,11 +108,23 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
               })),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _questionController.gotoAnswerReveal();
+          Navigator.pushNamed(context, AnswerRevealPage.routeName);
         },
       ),
     );
   }
 }
 
+answerValidator(value) {
+  if (value == null || value.isEmpty) {
+    return 'Please enter some text';
+  }
+  return null;
+}
 
+betValidator(value) {
+  if (value == null || value.isEmpty) {
+    return 'Please enter a number';
+  }
+  return null;
+}

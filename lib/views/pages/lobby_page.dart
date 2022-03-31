@@ -6,27 +6,22 @@ import '../../consts/app_styles.dart';
 
 class LobbyPage extends StatelessWidget{
   static const routeName = "/lobby";
-  const LobbyPage ({Key? key}) : super(key: key);
+  LobbyPage ({Key? key}) : super(key: key);
+
+  final PageController _pageController = PageController(initialPage: 0);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: const [
-        Expanded(
-            flex: 2,
-            child: WaitingInfo()
-        ),
-        Expanded(
-          flex: 1,
-            child: RulesNav()
-        ),
-        Expanded(
-            child: GuidelineNav()
-        ),
-      ],
-    );
+    return PageView.builder(
+        scrollDirection: Axis.horizontal,
+        controller: _pageController,
+        itemCount: slideList.length,
+        itemBuilder: (context, i) => slideList[i]);
+
   }
 }
+
+const slideList = [WaitingInfo(), RulesNav(), GuidelineNav()];
 
 class WaitingInfo extends StatelessWidget{
   const WaitingInfo ({Key? key}) : super(key: key);

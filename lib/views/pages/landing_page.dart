@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:trivia_app/consts/app_styles.dart';
 import 'package:trivia_app/views/pages/team_formation_page.dart';
 import 'package:trivia_app/views/widgets/TextFieldWithButton.dart';
+import 'package:trivia_app/views/widgets/test.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LandingPage extends StatelessWidget {
   static const routeName = "/";
@@ -21,17 +23,12 @@ class LandingPage extends StatelessWidget {
               flex: 2,
               child: Center(
                 child: RichText(
-                  textAlign: TextAlign.center,
                   text: const TextSpan(style: triviaHeading1, children: [
                     TextSpan(text: "Welcome to\n"),
                     TextSpan(
                       text: "Trivia Night\n",
-                      style: TextStyle(
-                        // color: Colors.yellowAccent,
-                        fontSize: 60,
-                      ),
                     ),
-                    TextSpan(text: "with STEM club!"),
+                    TextSpan(text: "with STEM club!", style: triviaHeading2),
                   ]),
                 ),
               )),
