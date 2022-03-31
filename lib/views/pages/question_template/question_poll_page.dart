@@ -130,7 +130,7 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
               })),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _questionController.gotoAnswerReveal();
+          _questionController.gotoAnswerInfo();
         },
       ),
     );

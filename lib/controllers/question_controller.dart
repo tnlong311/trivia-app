@@ -135,12 +135,12 @@ class QuestionController extends GetxController
   }
 
   void gotoAnswerReveal() {
-    _countdownController.stop();
-
     Get.to(const AnswerRevealPage());
   }
 
   void gotoAnswerInfo() {
+    _countdownController.stop();
+
     Get.to(const AnswerInfoPage());
   }
 }

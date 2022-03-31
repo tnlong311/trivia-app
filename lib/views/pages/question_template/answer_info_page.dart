@@ -24,7 +24,7 @@ class AnswerInfoPage extends StatelessWidget {
           )),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _questionController.gotoQuestionTitle();
+          _questionController.gotoAnswerReveal();
         },
       ),
     );
