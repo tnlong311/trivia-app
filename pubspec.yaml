@@ -59,6 +59,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - ./assets/pixelComponents/
+    - ./assets/images/welcome.png
       #   - images/a_dot_ham.jpeg
 
       # An image asset can refer to one or more resolution-specific "variants", see
@@ -78,6 +79,11 @@ flutter:
         - asset: fonts/EBGaramond-VariableFont_wght.ttf
         - asset: fonts/EBGaramond-Italic-VariableFont_wght.ttf
           style: italic
+    - family: PixelFont
+      fonts:
+        - asset: fonts/RetroGaming.ttf
+
+
       #   - family: Trajan Pro
       #     fonts:s
       #       - asset: fonts/TrajanPro.ttf
