@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:trivia_app/models/mock_questions.dart';
@@ -10,9 +12,20 @@ import '../models/question.dart';
 
 class QuestionController extends GetxController
     with GetTickerProviderStateMixin {
-  // for countdown
   late AnimationController _countdownController;
   late Animation _countdown;
+
+  final List<Question> questionList = sampleQuestions
+      .map((question) =>
+      Question(
+        id: question['id'],
+        type: question['type'],
+        correct: question['correct'],
+        fullCorrect: question['full correct'],
+        additionInfo: question['addition info'],
+        clock: question['clock'],
+      ))
+      .toList();
 
   int _currentPoint = 0;
   int _index = 0;
@@ -20,17 +33,7 @@ class QuestionController extends GetxController
   int _bet = 0;
   int _result = 0;
   late int questionLength;
-
-  final List<Question> questionList = sampleQuestions
-      .map((question) => Question(
-            id: question['id'],
-            type: question['type'],
-            correct: question['correct'],
-            fullCorrect: question['full correct'],
-            additionInfo: question['addition info'],
-            clock: question['clock'],
-          ))
-      .toList();
+  late int _duration;
 
 
   // called immediately after the widget is allocated memory
@@ -74,6 +77,8 @@ class QuestionController extends GetxController
 
   String get fullCorrectAnswer => questionList[index].fullCorrect;
 
+  int get duration => _duration;
+
 
   // settlers
   void setUserAnswer(value) {
@@ -86,6 +91,7 @@ class QuestionController extends GetxController
 
 
   // helpful methods
+
   void checkAnswer() {
     _countdownController.stop();
 
@@ -104,12 +110,14 @@ class QuestionController extends GetxController
   void resetQuestionState() {
     print("index ${index}, timer: ${questionList[index].clock}");
 
+    _duration = questionList[index].clock;
+
     // _countdownController.dispose();
 
     _countdownController.duration =
         Duration(seconds: questionList[index].clock);
     _countdown = Tween<double>(begin: 1, end: 0).animate(_countdownController);
-    // update();
+    update();
 
     // _countdownController.resync(this);
     _countdownController.reset();
@@ -117,8 +125,9 @@ class QuestionController extends GetxController
   }
 
 
-  // routing
+  // page 1
   void gotoQuestionTitle() {
+    // placeholder for end of question list
     if (_index >= questionLength - 1) {
       _index = 0;
     } else {
@@ -126,21 +135,40 @@ class QuestionController extends GetxController
     }
 
     Get.to(const QuestionTitlePage());
+
+    Future.delayed(const Duration(seconds: 3), () {
+      gotoPollPage();
+    });
   }
 
+  // page 2
   void gotoPollPage() {
     resetQuestionState();
 
     Get.to(QuestionPollPage());
   }
 
-  void gotoAnswerReveal() {
+  // page 3
+  void gotoAnswerInfo() {
     _countdownController.stop();
 
-    Get.to(const AnswerRevealPage());
+    // no fun facts to show, go to page 1
+    if (questionList[index].additionInfo != null) {
+      Get.to(const AnswerInfoPage());
+      Future.delayed(const Duration(seconds: 3), () {
+        gotoAnswerReveal();
+      });
+    } else {
+      gotoAnswerReveal();
+    }
   }
 
-  void gotoAnswerInfo() {
-    Get.to(const AnswerInfoPage());
+  // page 4
+  void gotoAnswerReveal() {
+    Get.to(const AnswerRevealPage());
+
+    Future.delayed(const Duration(seconds: 3), () {
+      gotoQuestionTitle();
+    });
   }
 }

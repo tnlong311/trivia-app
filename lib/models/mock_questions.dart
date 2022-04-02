@@ -5,7 +5,7 @@ const List sampleQuestions = [
     'correct': 'A',
     'full correct': 'A. An animal',
     'addition info': null,
-    'clock': 30
+    'clock': 15
   },
   {
     'id': 2,
@@ -13,7 +13,7 @@ const List sampleQuestions = [
     'correct': 'B',
     'full correct': 'B. Long rat ngau',
     'addition info': 'This question is very interesting!!',
-    'clock': 20
+    'clock': 24
   },
   {
     'id': 3,
