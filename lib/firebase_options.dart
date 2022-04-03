@@ -55,5 +55,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '227496191191',
     projectId: 'trivia-app-37d1b',
     storageBucket: 'trivia-app-37d1b.appspot.com',
+    // databaseURL: 'https://trivia-app-37d1b-default-rtdb.firebaseio.com',
   );
 }
