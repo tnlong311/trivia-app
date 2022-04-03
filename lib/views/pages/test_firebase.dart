@@ -58,6 +58,8 @@ class _TestFirebasePageState extends State<TestFirebasePage> {
       print('kicked');
       DatabaseReference childs = ref.child('test');
 
+      print(await childs.child('hello').get());
+
       final keyname = await childs.push().key;
 
       final testData = <String, dynamic>{
