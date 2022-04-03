@@ -76,9 +76,9 @@ class _TestFirebasePageState extends State<TestFirebasePage> {
 
       // print(await childs.child('hello').get());
 
-      childs.child(keyname!).set(testData);
-      // .then((_) => print('done'))
-      // .catchError((error) => print(error));
+      await childs.child(keyname!).set(testData)
+      .then((_) => print('done'))
+      .catchError((error) => print(error));
 
       if (_formKey.currentState!.validate()) {
         // update state to Controller
