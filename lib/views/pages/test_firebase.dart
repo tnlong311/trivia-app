@@ -3,8 +3,9 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trivia_app/consts/app_styles.dart';
-import 'package:trivia_app/controllers/question_controller.dart';
+import 'package:trivia_app/controllers/game_controller.dart';
 import 'package:trivia_app/views/widgets/TextFieldSingle.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../widgets/InfoBox.dart';
 
@@ -20,15 +21,23 @@ class TestFirebasePage extends StatefulWidget {
 class _TestFirebasePageState extends State<TestFirebasePage> {
   final _formKey = GlobalKey<FormState>();
 
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //
+  //   print("state intiated");
+  // }
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
-    QuestionController _questionController = Get.put(QuestionController());
-    // DatabaseReference ref = FirebaseDatabase.instance.ref();
-    DatabaseReference ref = FirebaseDatabase.instanceFor(
-            app: Firebase.app(),
-            databaseURL: 'https://trivia-app-37d1b-default-rtdb.firebaseio.com')
-        .ref();
+    GameController _questionController = Get.put(GameController());
+    DatabaseReference ref = FirebaseDatabase.instance.ref();
+    // DatabaseReference ref = FirebaseDatabase.instanceFor(
+    //         app: Firebase.app(),
+    //         databaseURL: 'https://trivia-app-37d1b-default-rtdb.firebaseio.com')
+    //     .ref();
+    // CollectionReference users = FirebaseFirestore.instance.collection('users');
 
     answerValidator(value) {
       if (value == null || value.isEmpty) {
@@ -56,11 +65,9 @@ class _TestFirebasePageState extends State<TestFirebasePage> {
 
     answerOnSubmit() async {
       print('kicked');
-      DatabaseReference childs = ref.child('test');
+      DatabaseReference questionsRef = ref.child('questions');
 
-      print(await childs.child('hello').get());
-
-      final keyname = await childs.push().key;
+      final keyname = await questionsRef.push().key;
 
       final testData = <String, dynamic>{
         'id': keyname,
@@ -71,16 +78,20 @@ class _TestFirebasePageState extends State<TestFirebasePage> {
         'clock': DateTime.now().millisecondsSinceEpoch
       };
 
-      // await childs.get().asStream().forEach((element) {
-      //   print(element.value);
-      //   print('\n');
-      // });
-
-      // print(await childs.child('hello').get());
-
-      await childs.child(keyname!).set(testData)
-      .then((_) => print('done'))
-      .catchError((error) => print(error));
+      // for(Datasnapshot c: childs.get().value.getChildren()){
+      //
+      // }
+      // await childs.child(keyname!).set(testData)
+      // .then((_) => print('done'))
+      // .catchError((error) => print(error));
+      await questionsRef.get().then((DataSnapshot snapshot) {
+        // final data = Map<String, dynamic>.from(snapshot. as Map);
+        for (var m in (snapshot.value as List)) {
+          print(m);
+          // print(m.key);
+        }
+        // print(snapshot.value as Map);
+      });
 
       if (_formKey.currentState!.validate()) {
         // update state to Controller
@@ -92,8 +103,8 @@ class _TestFirebasePageState extends State<TestFirebasePage> {
 
     return Scaffold(
       body: SafeArea(
-          child: GetBuilder<QuestionController>(
-              init: QuestionController(),
+          child: GetBuilder<GameController>(
+              init: GameController(),
               builder: (controller) {
                 return Column(
                   children: [

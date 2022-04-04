@@ -4,7 +4,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:trivia_app/consts/app_styles.dart';
 import 'package:trivia_app/views/pages/question_template/question_poll_page.dart';
 
-import '../../../controllers/question_controller.dart';
+import '../../../controllers/game_controller.dart';
 
 class QuestionTitlePage extends StatelessWidget {
   static const routeName = "/question-title";
@@ -13,7 +13,7 @@ class QuestionTitlePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    QuestionController _questionController = Get.put(QuestionController());
+    GameController _questionController = Get.put(GameController());
 
     return Scaffold(
       body: SafeArea(

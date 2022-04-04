@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
-import 'package:trivia_app/controllers/question_controller.dart';
+import 'package:trivia_app/controllers/game_controller.dart';
 import 'package:trivia_app/views/widgets/TextFieldSingle.dart';
 
 import '../../widgets/InfoBox.dart';
@@ -23,7 +23,7 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
-    QuestionController _questionController = Get.put(QuestionController());
+    GameController _gameController = Get.put(GameController());
 
     answerValidator(value) {
       if (value == null || value.isEmpty) {
@@ -40,28 +40,28 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
     }
 
     answerUpdator(value) {
-      _questionController.setUserAnswer(value);
-      // print(_questionController.userAnswer);
+      _gameController.setUserAnswer(value);
+      // print(_gameController.userAnswer);
     }
 
     betUpdator(value) {
-      _questionController.setBet(value);
-      // print(_questionController.bet);
+      _gameController.setBet(value);
+      // print(_gameController.bet);
     }
 
     answerOnSubmit() {
       if (_formKey.currentState!.validate()) {
         // update state to Controller
         _formKey.currentState!.save();
-        _questionController.checkAnswer();
-        // _questionController.resetQuestionState();
+        _gameController.checkAnswer();
+        // _gameController.resetQuestionState();
       }
     }
 
     return Scaffold(
       body: SafeArea(
-          child: GetBuilder<QuestionController>(
-              init: QuestionController(),
+          child: GetBuilder<GameController>(
+              init: GameController(),
               builder: (controller) {
                 return Column(
                   children: [
@@ -130,7 +130,7 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
               })),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _questionController.gotoAnswerInfo();
+          _gameController.gotoAnswerInfo();
         },
       ),
     );

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:trivia_app/views/widgets/InfoBox.dart';
 
-import '../../../controllers/question_controller.dart';
+import '../../../controllers/game_controller.dart';
 import '../../widgets/CorrectAnswerWidget.dart';
 
 class AnswerRevealPage extends StatelessWidget {
@@ -13,7 +13,7 @@ class AnswerRevealPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    QuestionController _questionController = Get.put(QuestionController());
+    GameController _gameController = Get.put(GameController());
 
     return Scaffold(
       body: SafeArea(
@@ -23,21 +23,21 @@ class AnswerRevealPage extends StatelessWidget {
             flex: 1,
             child: Center(
                 child: InfoBox(
-                    title: "", width: 200, height: 120, content: _questionController.resultString)),
+                    title: "", width: 200, height: 120, content: _gameController.resultString)),
           ),
           Expanded(
             flex: 1,
-            child: CorrectAnswerWidget(header: "The correct answer is:", content: _questionController.fullCorrectAnswer),
+            child: CorrectAnswerWidget(header: "The correct answer is:", content: _gameController.fullCorrectAnswer),
           ),
           Expanded(
             flex: 1,
-            child: CorrectAnswerWidget(header: "Your current point:", content: _questionController.currentPoint.toString()),
+            child: CorrectAnswerWidget(header: "Your current point:", content: _gameController.currentPoint.toString()),
           ),
         ],
       )),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _questionController.gotoQuestionTitle();
+          _gameController.gotoQuestionTitle();
         },
       ),
     );

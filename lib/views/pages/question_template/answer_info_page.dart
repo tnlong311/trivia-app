@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:trivia_app/consts/app_styles.dart';
 
-import '../../../controllers/question_controller.dart';
+import '../../../controllers/game_controller.dart';
 
 class AnswerInfoPage extends StatelessWidget {
   static const routeName = "/answer-info";
@@ -12,7 +12,7 @@ class AnswerInfoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    QuestionController _questionController = Get.put(QuestionController());
+    GameController _gameController = Get.put(GameController());
 
     return Scaffold(
       body: const SafeArea(
@@ -24,7 +24,7 @@ class AnswerInfoPage extends StatelessWidget {
           )),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _questionController.gotoAnswerReveal();
+          _gameController.gotoAnswerReveal();
         },
       ),
     );

@@ -10,7 +10,7 @@ import 'package:trivia_app/views/pages/question_template/question_title_page.dar
 
 import '../models/question.dart';
 
-class QuestionController extends GetxController
+class GameController extends GetxController
     with GetTickerProviderStateMixin {
   late AnimationController _countdownController;
   late Animation _countdown;
