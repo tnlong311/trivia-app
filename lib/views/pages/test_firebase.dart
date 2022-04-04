@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trivia_app/consts/app_styles.dart';
 import 'package:trivia_app/controllers/game_controller.dart';
+import 'package:trivia_app/models/question.dart';
 import 'package:trivia_app/views/widgets/TextFieldSingle.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -86,9 +87,12 @@ class _TestFirebasePageState extends State<TestFirebasePage> {
       // .catchError((error) => print(error));
       await questionsRef.get().then((DataSnapshot snapshot) {
         // final data = Map<String, dynamic>.from(snapshot. as Map);
-        for (var m in (snapshot.value as List)) {
-          print(m);
-          // print(m.key);
+        for (var q in (snapshot.value as List)) {
+          if (q != null) {
+            Question question = Question.fromRTDB(q);
+            // print('${question.id} ${question.additionInfo}  ${question.correct}');
+            // print(question.clock);
+          }
         }
         // print(snapshot.value as Map);
       });

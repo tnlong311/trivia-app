@@ -10,4 +10,16 @@ class Question {
       required this.correct,
       required this.fullCorrect,
       this.additionInfo});
+
+  factory Question.fromRTDB(Map<String, dynamic> data){
+    return Question(
+      id: data['qid'],
+      type: data['answer type'],
+      clock: data['timer'],
+      correct: data['correct'],
+      fullCorrect: data['full correct'],
+      additionInfo: data['fun fact'],
+    );
+  }
+
 }
