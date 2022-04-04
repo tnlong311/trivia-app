@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:trivia_app/controllers/score_controller.dart';
 import 'package:trivia_app/models/mock_questions.dart';
 import 'package:trivia_app/views/pages/question_template/answer_info_page.dart';
 import 'package:trivia_app/views/pages/question_template/answer_reveal_page.dart';
@@ -19,27 +20,19 @@ class GameController extends GetxController
       .map((question) =>
       Question(
         id: question['id'],
-        type: question['type'],
-        correct: question['correct'],
-        fullCorrect: question['full correct'],
         additionInfo: question['addition info'],
         clock: question['clock'],
       ))
       .toList();
 
-  int _currentPoint = 0;
   int _index = 0;
-  String _userAnswer = '';
-  int _bet = 0;
-  int _result = 0;
   late int questionLength;
-  late int _duration;
 
 
   // called immediately after the widget is allocated memory
   @override
   void onInit() {
-    questionLength = sampleQuestions.length;
+    questionLength = questionList.length;
 
     _countdownController = AnimationController(
         duration: Duration(seconds: questionList[index].clock), vsync: this);
@@ -64,53 +57,16 @@ class GameController extends GetxController
   // getters
   Animation get countdown => _countdown;
 
-  int get currentPoint => _currentPoint;
-
   int get index => _index;
 
-  String get resultString =>
-      (_result >= 0) ? ("+" + _result.toString()) : _result.toString();
+  String? get additionInfo => questionList[index].additionInfo;
 
-  int get bet => _bet;
-
-  String get userAnswer => _userAnswer;
-
-  String get fullCorrectAnswer => questionList[index].fullCorrect;
-
-  int get duration => _duration;
-
-
-  // settlers
-  void setUserAnswer(value) {
-    _userAnswer = value.toString().toUpperCase();
-  }
-
-  void setBet(value) {
-    _bet = int.parse(value);
-  }
-
+  int get duration => questionList[index].clock;
 
   // helpful methods
 
-  void checkAnswer() {
-    _countdownController.stop();
-
-    if (_userAnswer == questionList[index].correct) {
-      _result = _bet;
-      print("correct answer");
-    } else {
-      _result = -_bet;
-      print("wrong answer");
-    }
-
-    _currentPoint += _result;
-    update();
-  }
-
   void resetQuestionState() {
-    print("index ${index}, timer: ${questionList[index].clock}");
-
-    _duration = questionList[index].clock;
+    print("index $index, timer: ${questionList[index].clock}");
 
     // _countdownController.dispose();
 
@@ -131,10 +87,12 @@ class GameController extends GetxController
     if (_index >= questionLength - 1) {
       _index = 0;
     } else {
+      ScoreController _scoreController = Get.put(ScoreController());
+      _scoreController.increaseIndex();
       _index++;
     }
 
-    Get.to(const QuestionTitlePage());
+    Get.toNamed(QuestionTitlePage.routeName);
 
     Future.delayed(const Duration(seconds: 3), () {
       gotoPollPage();
@@ -145,7 +103,7 @@ class GameController extends GetxController
   void gotoPollPage() {
     resetQuestionState();
 
-    Get.to(QuestionPollPage());
+    Get.toNamed(QuestionPollPage.routeName);
   }
 
   // page 3
@@ -154,7 +112,7 @@ class GameController extends GetxController
 
     // no fun facts to show, go to page 1
     if (questionList[index].additionInfo != null) {
-      Get.to(const AnswerInfoPage());
+      Get.toNamed(AnswerInfoPage.routeName);
       Future.delayed(const Duration(seconds: 3), () {
         gotoAnswerReveal();
       });
@@ -165,9 +123,9 @@ class GameController extends GetxController
 
   // page 4
   void gotoAnswerReveal() {
-    Get.to(const AnswerRevealPage());
+    Get.toNamed(AnswerRevealPage.routeName);
 
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 6), () {
       gotoQuestionTitle();
     });
   }

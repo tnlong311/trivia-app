@@ -15,17 +15,24 @@ class AnswerInfoPage extends StatelessWidget {
     GameController _gameController = Get.put(GameController());
 
     return Scaffold(
-      body: const SafeArea(
-          child: Center(
-            child: Text(
-              "Some funfacts about this quesiton",
-              style: triviaHeading1,
+      body: SafeArea(
+        child: Column(
+          children: [
+            const Expanded(
+              flex: 1,
+              child: Center(
+                child: Text(
+                  "Some funfacts about this quesiton",
+                  style: triviaHeading1,
+                ),
+              ),
             ),
-          )),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _gameController.gotoAnswerReveal();
-        },
+            Expanded(
+                flex: 2,
+                child: Text(_gameController.additionInfo ?? "",
+                style: triviaHeading2))
+          ],
+        ),
       ),
     );
   }

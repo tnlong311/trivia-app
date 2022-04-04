@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get/get.dart';
+import 'package:trivia_app/controllers/score_controller.dart';
 import 'package:trivia_app/views/pages/guidelines_page.dart';
 import 'package:trivia_app/views/pages/landing_page.dart';
 import 'package:trivia_app/views/pages/lobby_page.dart';
@@ -13,6 +14,8 @@ import 'package:trivia_app/views/pages/team_formation_page.dart';
 import 'package:trivia_app/views/pages/test_firebase.dart';
 import 'package:trivia_app/views/pages/unknown_page.dart';
 
+import 'controllers/game_controller.dart';
+import 'controllers/score_controller.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -31,6 +34,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GameController _gameController = Get.put(GameController());
+    ScoreController _scoreController = Get.put(ScoreController());
+
     return GetMaterialApp(
         title: 'Trivia App',
         debugShowCheckedModeBanner: false,
@@ -42,19 +48,19 @@ class MyApp extends StatelessWidget {
               ColorScheme.fromSwatch().copyWith(secondary: Colors.cyanAccent),
         ),
         // initialRoute: LandingPage.routeName,
-        // initialRoute: QuestionTitlePage.routeName,
-        initialRoute: TestFirebasePage.routeName,
+        initialRoute: QuestionTitlePage.routeName,
+        // initialRoute: TestFirebasePage.routeName,
         routes: {
-          LandingPage.routeName: (context) => LandingPage(),
-          TeamFormationPage.routeName: (context) => TeamFormationPage(),
+          LandingPage.routeName: (context) => const LandingPage(),
+          TeamFormationPage.routeName: (context) => const TeamFormationPage(),
           LobbyPage.routeName: (context) => LobbyPage(),
-          RulesPage.routeName: (context) => RulesPage(),
-          GuidelinesPage.routeName: (context) => GuidelinesPage(),
-          QuestionTitlePage.routeName: (context) => QuestionTitlePage(),
-          QuestionPollPage.routeName: (context) => QuestionPollPage(),
-          AnswerRevealPage.routeName: (context) => AnswerRevealPage(),
-          AnswerInfoPage.routeName: (context) => AnswerInfoPage(),
-          TestFirebasePage.routeName: (context) => TestFirebasePage(),
+          RulesPage.routeName: (context) => const RulesPage(),
+          GuidelinesPage.routeName: (context) => const GuidelinesPage(),
+          QuestionTitlePage.routeName: (context) => const QuestionTitlePage(),
+          QuestionPollPage.routeName: (context) => const QuestionPollPage(),
+          AnswerRevealPage.routeName: (context) => const AnswerRevealPage(),
+          AnswerInfoPage.routeName: (context) => const AnswerInfoPage(),
+          TestFirebasePage.routeName: (context) => const TestFirebasePage(),
         },
         // in case passing data to the next page
         // onGenerateRoute: (RouteSettings settings) {

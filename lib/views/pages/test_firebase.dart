@@ -54,16 +54,6 @@ class _TestFirebasePageState extends State<TestFirebasePage> {
       return null;
     }
 
-    answerUpdator(value) {
-      _questionController.setUserAnswer(value);
-      // print(_questionController.userAnswer);
-    }
-
-    betUpdator(value) {
-      _questionController.setBet(value);
-      // print(_questionController.bet);
-    }
-
     answerOnSubmit() async {
       print('kicked');
       DatabaseReference questionsRef = ref.child('questions');
@@ -100,7 +90,6 @@ class _TestFirebasePageState extends State<TestFirebasePage> {
       if (_formKey.currentState!.validate()) {
         // update state to Controller
         _formKey.currentState!.save();
-        _questionController.checkAnswer();
         // _questionController.resetQuestionState();
       }
     }
@@ -118,43 +107,6 @@ class _TestFirebasePageState extends State<TestFirebasePage> {
                       style: triviaHeading2,
                       textAlign: TextAlign.center,
                     )),
-                    Expanded(
-                      flex: 2,
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            InfoBox(
-                              title: "Current Point",
-                              width: 150,
-                              height: 120,
-                              content: '${controller.currentPoint}',
-                            ),
-                          ]),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            const SizedBox(height: 30),
-                            TextFieldSingle(
-                                width: 250,
-                                title: "Answer",
-                                description: "Enter your answer...",
-                                validator: answerValidator,
-                                updator: answerUpdator),
-                            TextFieldSingle(
-                                width: 250,
-                                title: "Bet",
-                                description: "Enter your bet...",
-                                validator: betValidator,
-                                updator: betUpdator),
-                          ],
-                        ),
-                      ),
-                    ),
                     Expanded(
                       flex: 1,
                       child: Center(

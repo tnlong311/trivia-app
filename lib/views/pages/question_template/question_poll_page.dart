@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:trivia_app/controllers/game_controller.dart';
+import 'package:trivia_app/controllers/score_controller.dart';
 import 'package:trivia_app/views/widgets/TextFieldSingle.dart';
 
 import '../../widgets/InfoBox.dart';
@@ -24,6 +25,7 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
     GameController _gameController = Get.put(GameController());
+    ScoreController _scoreController = Get.put(ScoreController());
 
     answerValidator(value) {
       if (value == null || value.isEmpty) {
@@ -40,20 +42,20 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
     }
 
     answerUpdator(value) {
-      _gameController.setUserAnswer(value);
+      _scoreController.setUserAnswer(value);
       // print(_gameController.userAnswer);
     }
 
     betUpdator(value) {
-      _gameController.setBet(value);
+      _scoreController.setBet(value);
       // print(_gameController.bet);
     }
 
     answerOnSubmit() {
       if (_formKey.currentState!.validate()) {
-        // update state to Controller
+        // calls updator()
         _formKey.currentState!.save();
-        _gameController.checkAnswer();
+        _scoreController.checkAnswer();
         // _gameController.resetQuestionState();
       }
     }
@@ -62,10 +64,10 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
       body: SafeArea(
           child: GetBuilder<GameController>(
               init: GameController(),
-              builder: (controller) {
+              builder: (gameController) {
                 return Column(
                   children: [
-                    ProgressBar(progress: controller.countdown.value),
+                    ProgressBar(progress: gameController.countdown.value),
                     Expanded(
                       flex: 2,
                       child: Row(
@@ -75,13 +77,13 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
                             title: "Current Point",
                             width: 150,
                             height: 120,
-                            content: '${controller.currentPoint}',
+                            content: '${_scoreController.currentPoint}',
                           ),
                           InfoBox(
                             title: "Time Left",
                             width: 150,
                             height: 120,
-                            content: '${(controller.countdown.value*controller.duration).round()}s',
+                            content: '${(gameController.countdown.value*gameController.duration).round()}s',
                           ),
                         ],
                       ),
