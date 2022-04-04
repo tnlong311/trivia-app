@@ -34,9 +34,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GameController _gameController = Get.put(GameController());
-    ScoreController _scoreController = Get.put(ScoreController());
-
     return GetMaterialApp(
         title: 'Trivia App',
         debugShowCheckedModeBanner: false,
