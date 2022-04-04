@@ -1,9 +1,9 @@
 import 'dart:async';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:trivia_app/controllers/score_controller.dart';
-import 'package:trivia_app/models/mock_questions.dart';
 import 'package:trivia_app/views/pages/question_template/answer_info_page.dart';
 import 'package:trivia_app/views/pages/question_template/answer_reveal_page.dart';
 import 'package:trivia_app/views/pages/question_template/question_poll_page.dart';
@@ -11,31 +11,44 @@ import 'package:trivia_app/views/pages/question_template/question_title_page.dar
 
 import '../models/question.dart';
 
-class GameController extends GetxController
-    with GetTickerProviderStateMixin {
+class GameController extends GetxController with GetTickerProviderStateMixin {
   late AnimationController _countdownController;
   late Animation _countdown;
 
-  final List<Question> questionList = sampleQuestions
-      .map((question) =>
-      Question(
-        id: question['id'],
-        additionInfo: question['addition info'],
-        clock: question['clock'],
-      ))
-      .toList();
+  final List<Question> _questionList = [];
+
+  // final List<Question> questionList = sampleQuestions
+  //     .map((question) =>
+  //     Question(
+  //       id: question['id'],
+  //       additionInfo: question['addition info'],
+  //       clock: question['clock'],
+  //     ))
+  //     .toList();
 
   int _index = 0;
-  late int questionLength;
-
+  late final int questionLength;
 
   // called immediately after the widget is allocated memory
   @override
-  void onInit() {
-    questionLength = questionList.length;
+  void onInit() async {
+    DatabaseReference questionRef =
+        FirebaseDatabase.instance.ref().child('/game bank/2022/questions');
+
+    await questionRef.get().then((DataSnapshot snapshot) {
+      for (var q in (snapshot.value as List)) {
+        if (q != null) {
+          Question question = Question.fromRTDB(q);
+          _questionList.add(question);
+          // print('${question.id} ${question.additionInfo}  ${question.clock}');
+        }
+      }
+    }).catchError((error) => print(error));
+
+    questionLength = _questionList.length;
 
     _countdownController = AnimationController(
-        duration: Duration(seconds: questionList[index].clock), vsync: this);
+        duration: Duration(seconds: _questionList[index].clock), vsync: this);
 
     _countdown = Tween<double>(begin: 1, end: 0).animate(_countdownController)
       ..addListener(() {
@@ -53,25 +66,24 @@ class GameController extends GetxController
     super.onClose();
   }
 
-
   // getters
   Animation get countdown => _countdown;
 
   int get index => _index;
 
-  String? get additionInfo => questionList[index].additionInfo;
+  String? get additionInfo => _questionList[index].additionInfo;
 
-  int get duration => questionList[index].clock;
+  int get duration => _questionList[index].clock;
 
   // helpful methods
 
   void resetQuestionState() {
-    print("index $index, timer: ${questionList[index].clock}");
+    print("index $index, timer: ${_questionList[index].clock}");
 
     // _countdownController.dispose();
 
     _countdownController.duration =
-        Duration(seconds: questionList[index].clock);
+        Duration(seconds: _questionList[index].clock);
     _countdown = Tween<double>(begin: 1, end: 0).animate(_countdownController);
     update();
 
@@ -79,7 +91,6 @@ class GameController extends GetxController
     _countdownController.reset();
     _countdownController.forward();
   }
-
 
   // page 1
   void gotoQuestionTitle() {
@@ -111,7 +122,7 @@ class GameController extends GetxController
     _countdownController.stop();
 
     // no fun facts to show, go to page 1
-    if (questionList[index].additionInfo != null) {
+    if (_questionList[index].additionInfo != "") {
       Get.toNamed(AnswerInfoPage.routeName);
       Future.delayed(const Duration(seconds: 3), () {
         gotoAnswerReveal();

@@ -29,8 +29,7 @@ class AnswerInfoPage extends StatelessWidget {
             ),
             Expanded(
                 flex: 2,
-                child: Text(_gameController.additionInfo ?? "",
-                style: triviaHeading2))
+                child: Text(_gameController.additionInfo ?? ""))
           ],
         ),
       ),

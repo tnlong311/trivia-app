@@ -1,35 +1,47 @@
 import 'dart:async';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 
 import '../models/answer.dart';
 import '../models/mock_questions.dart';
 
-class ScoreController extends GetxController
-    with GetTickerProviderStateMixin {
-
-  int _currentPoint = 0;
+class ScoreController extends GetxController with GetTickerProviderStateMixin {
+  int _currentPoint = 2000;
   int _index = 0;
   String _userAnswer = "";
   int _bet = 0;
   int _result = 0;
-  late int questionLength;
+  late final int questionLength;
 
-  final List<Answer> answerList = sampleQuestions
-      .map((question) =>
-      Answer(
-        id: question['id'],
-        type: question['type'],
-        correct: question['correct'],
-        fullCorrect: question['full correct'],
-      ))
-      .toList();
+  final List<Answer> _answerList = [];
 
+  // final List<Answer> answerList = sampleQuestions
+  //     .map((question) =>
+  //     Answer(
+  //       id: question['id'],
+  //       type: question['type'],
+  //       correct: question['correct'],
+  //       fullCorrect: question['full correct'],
+  //     ))
+  //     .toList();
 
   // called immediately after the widget is allocated memory
   @override
-  void onInit() {
-    questionLength = answerList.length;
+  void onInit() async {
+    DatabaseReference questionRef =
+        FirebaseDatabase.instance.ref().child('/game bank/2022/questions');
+
+    await questionRef.get().then((DataSnapshot snapshot) {
+      for (var q in (snapshot.value as List)) {
+        if (q != null) {
+          Answer answer = Answer.fromRTDB(q);
+          _answerList.add(answer);
+        }
+      }
+    }).catchError((error) => print(error));
+
+    questionLength = _answerList.length;
 
     super.onInit();
   }
@@ -39,7 +51,6 @@ class ScoreController extends GetxController
     print("ScoreController closed");
     super.onClose();
   }
-
 
   // getters
   int get currentPoint => _currentPoint;
@@ -53,7 +64,7 @@ class ScoreController extends GetxController
 
   String get userAnswer => _userAnswer;
 
-  String get fullCorrectAnswer => answerList[index].fullCorrect;
+  String get fullCorrectAnswer => _answerList[index].fullCorrect;
 
   // settlers
   void setUserAnswer(value) {
@@ -64,14 +75,13 @@ class ScoreController extends GetxController
     _bet = int.parse(value);
   }
 
-
   // helpful methods
 
   void checkAnswer() {
     // _countdownController.stop();
-    print(answerList[index].correct);
+    print(_answerList[index].correct);
 
-    if (_userAnswer == answerList[index].correct) {
+    if (_userAnswer == _answerList[index].correct) {
       _result = _bet;
       print("correct answer");
     } else {
@@ -83,11 +93,9 @@ class ScoreController extends GetxController
     update();
   }
 
-  void resetAnswerState() {
-
-  }
+  void resetAnswerState() {}
 
   void increaseIndex() {
-    _index ++;
+    _index++;
   }
 }

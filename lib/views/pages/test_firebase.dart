@@ -56,33 +56,32 @@ class _TestFirebasePageState extends State<TestFirebasePage> {
 
     answerOnSubmit() async {
       print('kicked');
-      DatabaseReference questionsRef = ref.child('questions');
+      DatabaseReference questionsRef = ref.child('/game bank/2022/questions');
 
-      final keyname = await questionsRef.push().key;
-
-      final testData = <String, dynamic>{
-        'id': keyname,
-        'type': 'string',
-        'correct': 'B',
-        'full correct': 'B. Long rat ngau',
-        'addition info': 'This question is very interesting!!',
-        'clock': DateTime.now().millisecondsSinceEpoch
-      };
-
-      // for(Datasnapshot c: childs.get().value.getChildren()){
+      // final keyname = await questionsRef.push().key;
       //
-      // }
+      // final testData = <String, dynamic>{
+      //   'id': keyname,
+      //   'type': 'string',
+      //   'correct': 'B',
+      //   'full correct': 'B. Long rat ngau',
+      //   'addition info': 'This question is very interesting!!',
+      //   'clock': DateTime.now().millisecondsSinceEpoch
+      // };
+
       // await childs.child(keyname!).set(testData)
       // .then((_) => print('done'))
       // .catchError((error) => print(error));
       await questionsRef.get().then((DataSnapshot snapshot) {
+        print(snapshot.value);
         // final data = Map<String, dynamic>.from(snapshot. as Map);
         for (var q in (snapshot.value as List)) {
-          if (q != null) {
-            Question question = Question.fromRTDB(q);
-            // print('${question.id} ${question.additionInfo}  ${question.correct}');
-            // print(question.clock);
-          }
+          print(q);
+          // if (q != null) {
+          //   Question question = Question.fromRTDB(q);
+          //   // print('${question.id} ${question.additionInfo}  ${question.correct}');
+          //   // print(question.clock);
+          // }
         }
         // print(snapshot.value as Map);
       });
