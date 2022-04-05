@@ -21,20 +21,44 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
 
   @override
   Widget build(BuildContext context) {
+    final buttonImage = Image.asset(
+      'assets/images/nextButton.png',
+      scale: 2,
+    );
     return Container(
       width: 250,
-      // padding: const EdgeInsets.symmetric(horizontal: 10),
-      // height: 200,
       child: Stack(children: <Widget>[
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          resizeToAvoidBottomInset: false,
-          body: Image.asset('assets/images/DemoBox.png',
-              alignment: Alignment.topCenter),
+        Row(
+          mainAxisAlignment: centertop,
+          children: [
+            Expanded(
+              flex: 3,
+              child: Image.asset(
+                'assets/images/InputBox2.png',
+                fit: BoxFit.fill,
+                height: 80,
+              ),
+            ),
+            widget.isKeyboard
+                ? Expanded(
+                    flex: 1,
+                    child: GestureDetector(
+                      onTap: () {
+                        const snackBar = SnackBar(content: Text('Tap'));
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      },
+                      child: Align(
+                          alignment: Alignment.centerRight, child: buttonImage),
+                    ),
+                  )
+                : const SizedBox.shrink(),
+          ],
         ),
-        Row(children: [
-          Expanded(
-            flex: 3,
+        Align(
+          alignment: const Alignment(0.1, -1),
+          child: Container(
+            width: 230,
+            height: 70,
             child: Form(
               key: _formKey,
               child: TextFormField(
@@ -60,22 +84,7 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
               ),
             ),
           ),
-          widget.isKeyboard
-              ? Expanded(
-                  child: IconButton(
-                    icon: const Icon(Icons.navigate_next),
-                    iconSize: 40,
-                    onPressed: () {
-                      // print(widget.isKeyboard);
-                      // print(_controller.text);
-                      if (_formKey.currentState!.validate()) {
-                        Navigator.pushNamed(context, this.widget.routeName);
-                      }
-                    },
-                  ),
-                )
-              : const SizedBox.shrink(),
-        ]),
+        ),
       ]),
     );
   }

@@ -1,8 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trivia_app/consts/app_styles.dart';
 import 'package:trivia_app/views/pages/team_formation_page.dart';
 import 'package:trivia_app/views/widgets/TextFieldWithButton.dart';
+
+import '../widgets/Layer.dart';
 
 class LandingPage extends StatefulWidget {
   static const routeName = "/";
@@ -31,19 +35,23 @@ class _LandingPageState extends State<LandingPage> {
     return SafeArea(
       child: Stack(children: <Widget>[
         Image.asset(
-          'assets/images/sky.jpg',
+          'assets/images/BackGround.png',
           fit: BoxFit.cover,
           height: double.infinity,
           width: double.infinity,
         ),
+        Layer(),
         Scaffold(
+          resizeToAvoidBottomInset: false,
           backgroundColor: Colors.transparent,
           body: Column(children: [
             Expanded(
-                flex: 2,
-                child: Transform.scale(
-                    scale: 1.2,
-                    child: Image.asset('assets/images/welcome.png'))),
+                flex: 1,
+                child: Align(
+                  alignment: Alignment(0, -0.6),
+                  child: Transform.scale(
+                      scale: 1.2, child: Image.asset('assets/images/logo.png')),
+                )),
             Expanded(
                 flex: 1,
                 child: Align(
@@ -53,8 +61,54 @@ class _LandingPageState extends State<LandingPage> {
                       isKeyboard: isKeyboard),
                 ))
           ]),
-        )
+        ),
+        Planet(),
       ]),
     );
+  }
+}
+
+class Planet extends StatefulWidget {
+  const Planet({Key? key}) : super(key: key);
+
+  @override
+  State<Planet> createState() => _PlanetState();
+}
+
+class _PlanetState extends State<Planet> with TickerProviderStateMixin {
+  late AnimationController anime;
+
+  @override
+  void initState() {
+    super.initState();
+    anime =
+        AnimationController(vsync: this, duration: const Duration(seconds: 2));
+    anime.forward();
+  }
+
+  @override
+  void didUpdateWidget(Planet oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    anime.duration = const Duration(seconds: 2);
+  }
+
+  @override
+  void dispose() {
+    anime.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+        animation: anime,
+        builder: (context, _) {
+          final p1 = Image.asset(
+            'assets/images/planet.png',
+            fit: BoxFit.cover,
+          );
+
+          return Positioned(top: 600, left: -115, child: Transform.rotate(angle: -2.0/3.0*pi*(anime.value), child: p1));
+        });
   }
 }
