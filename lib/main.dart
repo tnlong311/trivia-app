@@ -25,7 +25,7 @@ void main() async {
   ).whenComplete(() => print('initialized firebase'));
 
   // await AuthService.testSignIn();
-  // await AuthService.signOut();
+  await AuthService.signOut();
 
   runApp(const MyApp());
 
@@ -67,10 +67,8 @@ class MyApp extends StatelessWidget {
         },
         // in case passing data to the next page
         // onGenerateRoute: (RouteSettings settings) {
-        //   https://github.com/iampawan/Flutter-Routes/blob/master/lib/main.dart
         // },
         // onGenerateInitialRoutes: (settings) {
-        //   print();
         //   return [MaterialPageRoute(builder: (context) => const LandingPage())];
         // },
         onUnknownRoute: (RouteSettings settings) {

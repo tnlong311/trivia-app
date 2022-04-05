@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:trivia_app/consts/app_styles.dart';
 import 'package:trivia_app/controllers/game_controller.dart';
 import 'package:trivia_app/models/question.dart';
+import 'package:trivia_app/services/authService.dart';
 import 'package:trivia_app/views/widgets/TextFieldSingle.dart';
 
 // import 'package:cloud_firestore/cloud_firestore.dart';
@@ -55,12 +56,17 @@ class _TestFirebasePageState extends State<TestFirebasePage> {
       // await childs.child(keyname!).set(testData)
       // .then((_) => print('done'))
       // .catchError((error) => print(error));
-      var currentUser = FirebaseAuth.instance.currentUser;
-      if (currentUser != null) {
-        print(currentUser.uid);
-      } else{
-        print('not signed in');
-      }
+      // var currentUser = FirebaseAuth.instance.currentUser;
+      // if (currentUser != null) {
+      //   print(currentUser.uid);
+      // } else{
+      //   print('not signed in');
+      // }
+
+      var a = await AuthService.signIn('3112220');
+      print('Current user: $a');
+
+      await AuthService.signOut();
 
       print('done');
     }
