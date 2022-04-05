@@ -34,10 +34,16 @@ flutter:
 
   assets:
     - ./assets/pixelComponents/
-    - ./assets/images/welcome.png
-    - ./assets/images/sky.jpg
-    - ./assets/images/DemoBox.png
-    #   - images/a_dot_ham.jpeg
+    - ./assets/images/logo.png
+    - ./assets/images/InputBox1.png
+    - ./assets/images/InputBox2.png
+    - ./assets/images/BackGround.png
+    - ./assets/images/layer1.png
+    - ./assets/images/layer2.png
+    - ./assets/images/planet.png
+    - ./assets/images/nextButton.png
+      #   - images/a_dot_ham.jpeg
+
 
   fonts:
     - family: Garamond

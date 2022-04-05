@@ -27,6 +27,8 @@ void main() async {
   ).whenComplete(() => print('initialized firebase'));
 
   runApp(const MyApp());
+
+  // testt 2
 }
 
 class MyApp extends StatelessWidget {
