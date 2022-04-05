@@ -5,8 +5,12 @@ import 'package:get/get.dart';
 import 'package:trivia_app/consts/app_styles.dart';
 import 'package:trivia_app/controllers/game_controller.dart';
 import 'package:trivia_app/models/question.dart';
+import 'package:trivia_app/services/auth_service.dart';
+import 'package:trivia_app/services/user_service.dart';
 import 'package:trivia_app/views/widgets/TextFieldSingle.dart';
+
 // import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../widgets/InfoBox.dart';
 
@@ -34,30 +38,11 @@ class _TestFirebasePageState extends State<TestFirebasePage> {
     final themeData = Theme.of(context);
     GameController _questionController = Get.put(GameController());
     DatabaseReference ref = FirebaseDatabase.instance.ref();
-    // DatabaseReference ref = FirebaseDatabase.instanceFor(
-    //         app: Firebase.app(),
-    //         databaseURL: 'https://trivia-app-37d1b-default-rtdb.firebaseio.com')
-    //     .ref();
-    // CollectionReference users = FirebaseFirestore.instance.collection('users');
-
-    answerValidator(value) {
-      if (value == null || value.isEmpty) {
-        return 'Please enter some text';
-      }
-      return null;
-    }
-
-    betValidator(value) {
-      if (value == null || value.isEmpty) {
-        return 'Please enter a number';
-      }
-      return null;
-    }
+    FirebaseAuth auth = FirebaseAuth.instance;
 
     answerOnSubmit() async {
       print('kicked');
       DatabaseReference questionsRef = ref.child('/game bank/2022/questions');
-
       // final keyname = await questionsRef.push().key;
       //
       // final testData = <String, dynamic>{
@@ -72,25 +57,14 @@ class _TestFirebasePageState extends State<TestFirebasePage> {
       // await childs.child(keyname!).set(testData)
       // .then((_) => print('done'))
       // .catchError((error) => print(error));
-      await questionsRef.get().then((DataSnapshot snapshot) {
-        print(snapshot.value);
-        // final data = Map<String, dynamic>.from(snapshot. as Map);
-        for (var q in (snapshot.value as List)) {
-          print(q);
-          // if (q != null) {
-          //   Question question = Question.fromRTDB(q);
-          //   // print('${question.id} ${question.additionInfo}  ${question.correct}');
-          //   // print(question.clock);
-          // }
-        }
-        // print(snapshot.value as Map);
-      });
-
-      if (_formKey.currentState!.validate()) {
-        // update state to Controller
-        _formKey.currentState!.save();
-        // _questionController.resetQuestionState();
-      }
+      // var currentUser = FirebaseAuth.instance.currentUser;
+      // if (currentUser != null) {
+      //   print(currentUser.uid);
+      // } else{
+      //   print('not signed in');
+      // }
+      await RtdbUserService.setName('', 'Hellos');
+      // print(await RtdbUserService.isNamed('31120'));
     }
 
     return Scaffold(
