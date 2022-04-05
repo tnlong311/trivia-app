@@ -47,8 +47,8 @@ class MyApp extends StatelessWidget {
           colorScheme:
               ColorScheme.fromSwatch().copyWith(secondary: Colors.cyanAccent),
         ),
-        // initialRoute: LandingPage.routeName,
-        initialRoute: QuestionTitlePage.routeName,
+        initialRoute: LandingPage.routeName,
+        // initialRoute: QuestionTitlePage.routeName,
         // initialRoute: TestFirebasePage.routeName,
         routes: {
           LandingPage.routeName: (context) => const LandingPage(),
@@ -67,6 +67,10 @@ class MyApp extends StatelessWidget {
         // onGenerateRoute: (RouteSettings settings) {
         //   https://github.com/iampawan/Flutter-Routes/blob/master/lib/main.dart
         // },
+        onGenerateInitialRoutes: (settings) {
+          print('hello');
+          return
+        },
         onUnknownRoute: (RouteSettings settings) {
           return MaterialPageRoute(builder: (context) => const UnknownPage());
         });
