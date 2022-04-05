@@ -21,68 +21,58 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
 
   @override
   Widget build(BuildContext context) {
-    final buttonImage = Image.asset(
-      'assets/images/nextButton.png',
-      scale: 2,
-    );
     return Container(
       width: 250,
       child: Stack(children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              flex: 3,
-              child: Image.asset(
-                'assets/images/InputBox2.png',
-                fit: BoxFit.fill,
-                height: 80,
-              ),
-            ),
-            widget.isKeyboard
-                ? Expanded(
-                    flex: 1,
-                    child: GestureDetector(
-                      onTap: () {
-                        const snackBar = SnackBar(content: Text('Tap'));
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      },
-                      child: Align(
-                          alignment: Alignment.centerRight, child: buttonImage),
-                    ),
-                  )
-                : const SizedBox.shrink(),
-          ],
+        Image.asset(
+          'assets/images/InputBox2.png',
+          fit: BoxFit.fill,
+          height: 80,
         ),
         Align(
           alignment: const Alignment(0.1, -1),
           child: Container(
-            width: 230,
-            height: 70,
-            child: Form(
-              key: _formKey,
-              child: TextFormField(
-                style: triviaSmall1,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-                controller: _controller,
-                decoration: const InputDecoration(
-                  focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.transparent, width: 4.0),
+            width:240,
+            child: Stack(children: <Widget>[
+              Form(
+                key: _formKey,
+                child: TextFormField(
+                  style: triviaSmall1,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
+                  controller: _controller,
+                  decoration: const InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                      BorderSide(color: Colors.transparent, width: 4.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                      BorderSide(color: Colors.transparent, width: 5.0),
+                    ),
+                    hintText: 'Enter game code',
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                  hintText: 'Enter game code',
                 ),
               ),
-            ),
+              widget.isKeyboard
+                  ? Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: const Icon(Icons.navigate_next),
+                  iconSize: 40,
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      Navigator.pushNamed(context, this.widget.routeName);
+                    }
+                  },
+                ),
+              )
+                  : const SizedBox.shrink(),
+            ]),
           ),
         ),
       ]),
