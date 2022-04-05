@@ -1,13 +1,19 @@
 class Question {
   final int id, clock;
-  final String type, correct, fullCorrect;
   final String? additionInfo;
 
   Question(
       {required this.id,
       required this.clock,
-      required this.type,
-      required this.correct,
-      required this.fullCorrect,
       this.additionInfo});
+
+
+  factory Question.fromRTDB(Map data){
+    return Question(
+      id: data['qid'],
+      clock: data['timer'],
+      additionInfo: data['fun fact'],
+    );
+  }
+
 }

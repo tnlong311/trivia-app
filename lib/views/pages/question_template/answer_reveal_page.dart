@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:trivia_app/views/widgets/InfoBox.dart';
 
-import '../../../controllers/question_controller.dart';
+import '../../../controllers/game_controller.dart';
+import '../../../controllers/score_controller.dart';
 import '../../widgets/CorrectAnswerWidget.dart';
 
 class AnswerRevealPage extends StatelessWidget {
@@ -13,32 +14,35 @@ class AnswerRevealPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    QuestionController _questionController = Get.put(QuestionController());
+    ScoreController _scoreController = Get.put(ScoreController());
 
     return Scaffold(
       body: SafeArea(
-          child: Column(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Center(
-                child: InfoBox(
-                    title: "", width: 200, height: 120, content: _questionController.resultString)),
-          ),
-          Expanded(
-            flex: 1,
-            child: CorrectAnswerWidget(header: "The correct answer is:", content: _questionController.fullCorrectAnswer),
-          ),
-          Expanded(
-            flex: 1,
-            child: CorrectAnswerWidget(header: "Your current point:", content: _questionController.currentPoint.toString()),
-          ),
-        ],
-      )),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _questionController.gotoAnswerInfo();
-        },
+        child: Column(
+          children: [
+            Expanded(
+              flex: 1,
+              child: Center(
+                  child: InfoBox(
+                      title: "",
+                      width: 200,
+                      height: 120,
+                      content: _scoreController.resultString)),
+            ),
+            Expanded(
+              flex: 1,
+              child: CorrectAnswerWidget(
+                  header: "The correct answer is:",
+                  content: _scoreController.fullCorrectAnswer),
+            ),
+            Expanded(
+              flex: 1,
+              child: CorrectAnswerWidget(
+                  header: "Your current point:",
+                  content: _scoreController.currentPoint.toString()),
+            ),
+          ],
+        ),
       ),
     );
   }
