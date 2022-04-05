@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trivia_app/controllers/score_controller.dart';
+import 'package:trivia_app/views/pages/create_user.dart';
 import 'package:trivia_app/views/pages/guidelines_page.dart';
 import 'package:trivia_app/views/pages/landing_page.dart';
 import 'package:trivia_app/views/pages/lobby_page.dart';
@@ -60,6 +61,7 @@ class MyApp extends StatelessWidget {
           AnswerRevealPage.routeName: (context) => const AnswerRevealPage(),
           AnswerInfoPage.routeName: (context) => const AnswerInfoPage(),
           TestFirebasePage.routeName: (context) => const TestFirebasePage(),
+          CreateUserPage.routeName: (context) => const CreateUserPage(),
         },
         // in case passing data to the next page
         // onGenerateRoute: (RouteSettings settings) {

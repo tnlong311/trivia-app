@@ -10,58 +10,32 @@ import 'package:trivia_app/views/widgets/TextFieldSingle.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../models/custom_user.dart';
 import '../widgets/InfoBox.dart';
 
-class TestFirebasePage extends StatefulWidget {
-  static const routeName = "/test";
+class CreateUserPage extends StatefulWidget {
+  static const routeName = "/create-user";
 
-  const TestFirebasePage({Key? key}) : super(key: key);
+  const CreateUserPage({Key? key}) : super(key: key);
 
   @override
-  State<TestFirebasePage> createState() => _TestFirebasePageState();
+  State<CreateUserPage> createState() => _CreateUserPageState();
 }
 
-class _TestFirebasePageState extends State<TestFirebasePage> {
+class _CreateUserPageState extends State<CreateUserPage> {
   final _formKey = GlobalKey<FormState>();
 
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //
-  //   print("state intiated");
-  // }
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
-    GameController _questionController = Get.put(GameController());
     DatabaseReference ref = FirebaseDatabase.instance.ref();
     FirebaseAuth auth = FirebaseAuth.instance;
 
     answerOnSubmit() async {
       print('kicked');
-      DatabaseReference questionsRef = ref.child('/game bank/2022/questions');
-      // final keyname = await questionsRef.push().key;
-      //
-      // final testData = <String, dynamic>{
-      //   'id': keyname,
-      //   'type': 'string',
-      //   'correct': 'B',
-      //   'full correct': 'B. Long rat ngau',
-      //   'addition info': 'This question is very interesting!!',
-      //   'clock': DateTime.now().millisecondsSinceEpoch
-      // };
-
-      // await childs.child(keyname!).set(testData)
-      // .then((_) => print('done'))
-      // .catchError((error) => print(error));
-      var currentUser = FirebaseAuth.instance.currentUser;
-      if (currentUser != null) {
-        print(currentUser.uid);
-      } else{
-        print('not signed in');
-      }
-
+      // CustomUser.createCustomUser();
+      // CustomUser.getPinList();
+      await auth.signInWithEmailAndPassword(email: '31120@trivia.com', password: 'triviaiscool');
       print('done');
     }
 
@@ -73,8 +47,9 @@ class _TestFirebasePageState extends State<TestFirebasePage> {
                 return Column(
                   children: [
                     const Expanded(
+                      flex: 2,
                         child: Text(
-                      "Test firebase",
+                      "Create random user",
                       style: triviaHeading2,
                       textAlign: TextAlign.center,
                     )),
@@ -86,7 +61,7 @@ class _TestFirebasePageState extends State<TestFirebasePage> {
                           child: ElevatedButton(
                             onPressed: answerOnSubmit,
                             child: Text(
-                              "Submit",
+                              "Create user",
                               style: themeData.textTheme.headline5,
                             ),
                           ),
