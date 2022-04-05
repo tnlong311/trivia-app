@@ -36,10 +36,18 @@ class TeamFormationPage extends StatelessWidget {
                 )),
             Expanded(
                 flex: 1,
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  child: TextFieldWithButton(
-                      routeName: LobbyPage.routeName, isKeyboard: isKeyboard),
+                child: Column(
+                  mainAxisAlignment: isKeyboard
+                      ? MainAxisAlignment.end
+                      : MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 40),
+                      child: TextFieldWithButton(
+                          routeName: LobbyPage.routeName,
+                          isKeyboard: isKeyboard),
+                    ),
+                  ],
                 ))
           ],
         ),
