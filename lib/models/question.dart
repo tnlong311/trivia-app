@@ -8,7 +8,7 @@ class Question {
       this.additionInfo});
 
 
-  factory Question.fromRTDB(Map<String, dynamic> data){
+  factory Question.fromRTDB(Map data){
     return Question(
       id: data['qid'],
       clock: data['timer'],

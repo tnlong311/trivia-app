@@ -29,7 +29,7 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
       width: 250,
       child: Stack(children: <Widget>[
         Row(
-          mainAxisAlignment: centertop,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
               flex: 3,

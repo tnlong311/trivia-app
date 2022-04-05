@@ -8,7 +8,7 @@ class Answer {
       required this.correct,
       required this.fullCorrect});
 
-  factory Answer.fromRTDB(Map<String, dynamic> data) {
+  factory Answer.fromRTDB(Map data) {
     return Answer(
       id: data['qid'],
       type: data['answer type'],
