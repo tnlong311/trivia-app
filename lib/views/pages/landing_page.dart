@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trivia_app/consts/app_styles.dart';
-import 'package:trivia_app/services/authService.dart';
+import 'package:trivia_app/services/auth_service.dart';
 import 'package:trivia_app/views/pages/team_formation_page.dart';
-import 'package:trivia_app/views/widgets/TextFieldWithButton.dart';
+import 'package:trivia_app/views/widgets/SignInTextField.dart';
 
 import '../widgets/Layer.dart';
 
@@ -91,7 +91,7 @@ class _LandingPageState extends State<LandingPage> {
                 flex: 1,
                 child: Align(
                   alignment: Alignment.topCenter,
-                  child: TextFieldWithButton(
+                  child: SignInTextField(
                       validator: inputValidator,
                       updator: inputUpdator,
                       routeName: TeamFormationPage.routeName,

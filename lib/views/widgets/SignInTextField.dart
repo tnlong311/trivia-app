@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:trivia_app/consts/app_styles.dart';
 
-class TextFieldWithButton extends StatefulWidget {
-  const TextFieldWithButton(
+class SignInTextField extends StatefulWidget {
+  const SignInTextField(
       {Key? key,
       required this.routeName,
       required this.isKeyboard,
@@ -18,10 +18,10 @@ class TextFieldWithButton extends StatefulWidget {
   // final Function customValidate;
 
   @override
-  State<TextFieldWithButton> createState() => _TextFieldWithButtonState();
+  State<SignInTextField> createState() => _SignInTextFieldState();
 }
 
-class _TextFieldWithButtonState extends State<TextFieldWithButton> {
+class _SignInTextFieldState extends State<SignInTextField> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _controller = TextEditingController();
 
@@ -63,7 +63,7 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
                       borderSide:
                           BorderSide(color: Colors.transparent, width: 5.0),
                     ),
-                    hintText: 'Input here',
+                    hintText: 'Enter game code',
                   ),
                 ),
               ),

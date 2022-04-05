@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:trivia_app/services/authService.dart';
+import 'package:trivia_app/services/auth_service.dart';
 import 'package:trivia_app/views/pages/create_user.dart';
 import 'package:trivia_app/views/pages/guidelines_page.dart';
 import 'package:trivia_app/views/pages/landing_page.dart';
