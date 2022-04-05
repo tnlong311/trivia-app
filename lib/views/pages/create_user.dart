@@ -1,17 +1,9 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trivia_app/consts/app_styles.dart';
 import 'package:trivia_app/controllers/game_controller.dart';
-import 'package:trivia_app/models/question.dart';
-import 'package:trivia_app/views/widgets/TextFieldSingle.dart';
-
-// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-import '../../models/custom_user.dart';
-import '../widgets/InfoBox.dart';
 
 class CreateUserPage extends StatefulWidget {
   static const routeName = "/create-user";

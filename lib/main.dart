@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:trivia_app/controllers/score_controller.dart';
+import 'package:trivia_app/services/authService.dart';
 import 'package:trivia_app/views/pages/create_user.dart';
 import 'package:trivia_app/views/pages/guidelines_page.dart';
 import 'package:trivia_app/views/pages/landing_page.dart';
@@ -14,9 +14,6 @@ import 'package:trivia_app/views/pages/rules_page.dart';
 import 'package:trivia_app/views/pages/team_formation_page.dart';
 import 'package:trivia_app/views/pages/test_firebase.dart';
 import 'package:trivia_app/views/pages/unknown_page.dart';
-
-import 'controllers/game_controller.dart';
-import 'controllers/score_controller.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -26,6 +23,9 @@ void main() async {
     // name: "Trivia App",
     options: DefaultFirebaseOptions.currentPlatform,
   ).whenComplete(() => print('initialized firebase'));
+
+  // await AuthService.testSignIn();
+  // await AuthService.signOut();
 
   runApp(const MyApp());
 
@@ -47,7 +47,9 @@ class MyApp extends StatelessWidget {
           colorScheme:
               ColorScheme.fromSwatch().copyWith(secondary: Colors.cyanAccent),
         ),
-        initialRoute: LandingPage.routeName,
+        initialRoute: AuthService.isSignedIn()
+            ? LobbyPage.routeName
+            : LandingPage.routeName,
         // initialRoute: QuestionTitlePage.routeName,
         // initialRoute: TestFirebasePage.routeName,
         routes: {
@@ -67,10 +69,10 @@ class MyApp extends StatelessWidget {
         // onGenerateRoute: (RouteSettings settings) {
         //   https://github.com/iampawan/Flutter-Routes/blob/master/lib/main.dart
         // },
-        onGenerateInitialRoutes: (settings) {
-          print('hello');
-          return
-        },
+        // onGenerateInitialRoutes: (settings) {
+        //   print();
+        //   return [MaterialPageRoute(builder: (context) => const LandingPage())];
+        // },
         onUnknownRoute: (RouteSettings settings) {
           return MaterialPageRoute(builder: (context) => const UnknownPage());
         });
