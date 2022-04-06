@@ -63,8 +63,14 @@ class _TestFirebasePageState extends State<TestFirebasePage> {
       // } else{
       //   print('not signed in');
       // }
-      await RtdbUserService.setName('', 'Hellos');
+      await AuthService.testSignIn();
+      // var pin = await RtdbUserService.getCurrentUserPin();
+      // await RtdbUserService.setName(pin.toString(), 'Long vjpp');
+      var name = await RtdbUserService.getCurrentUserName();
+      print(name.toString());
+
       // print(await RtdbUserService.isNamed('31120'));
+      print('done');
     }
 
     return Scaffold(

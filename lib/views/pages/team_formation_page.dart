@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:trivia_app/services/auth_service.dart';
 import 'package:trivia_app/services/user_service.dart';
+import 'package:trivia_app/views/widgets/TextFieldWithButton.dart';
 
 import '../../consts/app_styles.dart';
-import '../widgets/GroupNameTextField.dart';
 import 'lobby_page.dart';
 
 class TeamFormationPage extends StatefulWidget {
@@ -23,8 +23,6 @@ class _TeamFormationPageState extends State<TeamFormationPage> {
       return 'Must be at least 6 chars';
     } else if (value.length > 15) {
       return 'Must be at most 15 chars';
-    } else if (!AuthService.isSignedIn()) {
-      return 'Login expired';
     }
 
     return null;
@@ -33,9 +31,13 @@ class _TeamFormationPageState extends State<TeamFormationPage> {
   inputUpdator(value) async {
     var pin = await RtdbUserService.getCurrentUserPin();
 
-    await RtdbUserService.setName(pin.toString(), value);
-
-    print('Set group name $value with pin $pin');
+    if (pin.toString() == '') {
+      return false;
+    } else {
+      await RtdbUserService.setName(pin.toString(), value);
+      print('Set group name $value with pin $pin');
+      return true;
+    }
   }
 
   @override
@@ -72,10 +74,13 @@ class _TeamFormationPageState extends State<TeamFormationPage> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(bottom: 40),
-                      child: GroupNameTextField(
+                      child: TextFieldWithButton(
                           validator: inputValidator,
                           updator: inputUpdator,
                           routeName: LobbyPage.routeName,
+                          failMsg: 'An error has occured',
+                          successMsg:
+                              'Welcome, ${RtdbUserService.getCurrentUserName()}!',
                           isKeyboard: isKeyboard),
                     ),
                   ],

@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:trivia_app/consts/app_styles.dart';
+import 'package:trivia_app/views/widgets/custom_snackbar.dart';
 
-class SignInTextField extends StatefulWidget {
-  const SignInTextField(
+class TextFieldWithButton extends StatefulWidget {
+  const TextFieldWithButton(
       {Key? key,
       required this.routeName,
       required this.isKeyboard,
       required this.validator,
-      required this.updator})
+      required this.updator,
+      required this.failMsg,
+      required this.successMsg})
       : super(key: key);
 
   final String routeName;
+  final String failMsg;
+  final String successMsg;
   final bool isKeyboard;
   final Function validator;
   final Function updator;
@@ -18,15 +23,36 @@ class SignInTextField extends StatefulWidget {
   // final Function customValidate;
 
   @override
-  State<SignInTextField> createState() => _SignInTextFieldState();
+  State<TextFieldWithButton> createState() => _TextFieldWithButtonState();
 }
 
-class _SignInTextFieldState extends State<SignInTextField> {
+class _TextFieldWithButtonState extends State<TextFieldWithButton> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+
+    onSubmitValidate() async {
+      var status =
+      await widget.updator(_controller.value.text);
+
+      if (status) {
+        CustomSnackBar.showSuccessSnackBar(
+            context, widget.successMsg);
+        await Future.delayed(
+            const Duration(milliseconds: 1500));
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        await Future.delayed(
+            const Duration(milliseconds: 500));
+
+        Navigator.pushNamed(context, widget.routeName);
+      } else {
+        CustomSnackBar.showFailSnackBar(
+            context, widget.failMsg);
+      }
+    }
+
     return Container(
       width: 250,
       child: Stack(children: <Widget>[
@@ -46,9 +72,8 @@ class _SignInTextFieldState extends State<SignInTextField> {
                   style: triviaSmall1,
                   validator: (value) => widget.validator(value),
                   onFieldSubmitted: (value) async {
-                    await widget.updator(value);
                     if (_formKey.currentState!.validate()) {
-                      Navigator.pushNamed(context, widget.routeName);
+                      await onSubmitValidate();
                     }
                   },
                   controller: _controller,
@@ -74,9 +99,11 @@ class _SignInTextFieldState extends State<SignInTextField> {
                         icon: const Icon(Icons.navigate_next),
                         iconSize: 40,
                         onPressed: () async {
-                          await widget.updator(_controller.value.text);
                           if (_formKey.currentState!.validate()) {
-                            Navigator.pushNamed(context, widget.routeName);
+                            // close keyboard
+                            FocusManager.instance.primaryFocus?.unfocus();
+
+                            await onSubmitValidate();
                           }
                         },
                       ),
