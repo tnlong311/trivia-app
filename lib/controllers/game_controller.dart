@@ -124,7 +124,7 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
     // no fun facts to show, go to page 1
     if (_questionList[index].additionInfo != "") {
       Get.toNamed(AnswerInfoPage.routeName);
-      Future.delayed(const Duration(seconds: 3), () {
+      Future.delayed(const Duration(seconds: 5), () {
         gotoAnswerReveal();
       });
     } else {
@@ -136,8 +136,8 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
   void gotoAnswerReveal() {
     Get.toNamed(AnswerRevealPage.routeName);
 
-    Future.delayed(const Duration(seconds: 6), () {
-      gotoQuestionTitle();
-    });
+    // Future.delayed(const Duration(seconds: 6), () {
+    //   gotoQuestionTitle();
+    // });
   }
 }
