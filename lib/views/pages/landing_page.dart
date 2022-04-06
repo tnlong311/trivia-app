@@ -120,13 +120,14 @@ class _PlanetState extends State<Planet> with TickerProviderStateMixin {
     super.initState();
     anime =
         AnimationController(vsync: this, duration: const Duration(seconds: 2));
-    anime.forward();
   }
+
 
   @override
   void didUpdateWidget(Planet oldWidget) {
     super.didUpdateWidget(oldWidget);
     anime.duration = const Duration(seconds: 2);
+    anime.forward();
   }
 
   @override
