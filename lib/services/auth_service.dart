@@ -9,9 +9,12 @@ class AuthService {
   }
 
   static testSignIn() async {
+    // String testPin = '745070';
+    String testPin = '31120';
+
     await FirebaseAuth.instance
         .signInWithEmailAndPassword(
-            email: '31120@trivia.com', password: 'triviaiscool')
+            email: testPin + EMAIL_TAIL, password: DEFAULT_PASSWORD)
         .then((_) => print('signed in as test account'))
         .catchError((error) => print(error));
 
