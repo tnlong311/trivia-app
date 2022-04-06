@@ -13,6 +13,16 @@ class RtdbUserService {
     return emailToPin(currentUser?.email);
   }
 
+  static getCurrentUserName() {
+    var currentUser = FirebaseAuth.instance.currentUser;
+
+    if (currentUser != null) {
+      return currentUser.displayName ?? 'STEMer';
+    }
+
+    return '';
+  }
+
   static isNamed(String pin) async {
     bool exists = false;
     await userRef.child(pin).child('/name').get().then((DataSnapshot snapshot) {
@@ -28,6 +38,8 @@ class RtdbUserService {
         .child('/name')
         .set(name)
         .catchError((error) => print(error));
+
+    await FirebaseAuth.instance.currentUser?.updateDisplayName(name);
   }
 
   static String emailToPin(var str) {

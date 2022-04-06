@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:trivia_app/consts/app_styles.dart';
+import 'package:trivia_app/services/user_service.dart';
+
+import 'custom_snackbar.dart';
 
 class GroupNameTextField extends StatefulWidget {
   const GroupNameTextField(
@@ -48,6 +51,11 @@ class _GroupNameTextFieldState extends State<GroupNameTextField> {
                   onFieldSubmitted: (value) async {
                     if (_formKey.currentState!.validate()) {
                       await widget.updator(value);
+
+                      CustomSnackBar.showSuccessSnackBar(context,
+                          'Welcome, ${RtdbUserService.getCurrentUserName()}!');
+                      await Future.delayed(const Duration(milliseconds: 1500));
+
                       Navigator.pushNamed(context, widget.routeName);
                     }
                   },
@@ -76,6 +84,13 @@ class _GroupNameTextFieldState extends State<GroupNameTextField> {
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             await widget.updator(_controller.value.text);
+                            // close keyboard
+                            FocusManager.instance.primaryFocus?.unfocus();
+
+                            CustomSnackBar.showSuccessSnackBar(context,
+                                'Welcome, ${RtdbUserService.getCurrentUserName()}!');
+                            await Future.delayed(const Duration(milliseconds: 1500));
+
                             Navigator.pushNamed(context, widget.routeName);
                           }
                         },

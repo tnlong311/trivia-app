@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trivia_app/consts/app_styles.dart';
+import 'package:trivia_app/views/widgets/custom_snackbar.dart';
 
 class SignInTextField extends StatefulWidget {
   const SignInTextField(
@@ -48,6 +49,9 @@ class _SignInTextFieldState extends State<SignInTextField> {
                   onFieldSubmitted: (value) async {
                     await widget.updator(value);
                     if (_formKey.currentState!.validate()) {
+                      CustomSnackBar.showSuccessSnackBar(context, 'Game joined!');
+                      await Future.delayed(const Duration(milliseconds: 1500));
+
                       Navigator.pushNamed(context, widget.routeName);
                     }
                   },
@@ -76,6 +80,12 @@ class _SignInTextFieldState extends State<SignInTextField> {
                         onPressed: () async {
                           await widget.updator(_controller.value.text);
                           if (_formKey.currentState!.validate()) {
+                            // close keyboard
+                            FocusManager.instance.primaryFocus?.unfocus();
+
+                            CustomSnackBar.showSuccessSnackBar(context, 'Game joined!');
+                            await Future.delayed(const Duration(milliseconds: 1500));
+
                             Navigator.pushNamed(context, widget.routeName);
                           }
                         },

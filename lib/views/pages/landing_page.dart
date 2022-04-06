@@ -76,6 +76,7 @@ class _LandingPageState extends State<LandingPage> {
           width: double.infinity,
         ),
         Layer(),
+        Planet(),
         Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: Colors.transparent,
@@ -99,7 +100,6 @@ class _LandingPageState extends State<LandingPage> {
                 ))
           ]),
         ),
-        Planet(),
       ]),
     );
   }
