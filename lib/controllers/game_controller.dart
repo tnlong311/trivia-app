@@ -4,34 +4,27 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:trivia_app/controllers/score_controller.dart';
+import 'package:trivia_app/services/game_service.dart';
+import 'package:trivia_app/views/pages/end_page.dart';
 import 'package:trivia_app/views/pages/question_template/answer_info_page.dart';
 import 'package:trivia_app/views/pages/question_template/answer_reveal_page.dart';
 import 'package:trivia_app/views/pages/question_template/question_poll_page.dart';
 import 'package:trivia_app/views/pages/question_template/question_title_page.dart';
 
 import '../models/question.dart';
+import '../utils/helpers.dart';
 
 class GameController extends GetxController with GetTickerProviderStateMixin {
   late AnimationController _countdownController;
   late Animation _countdown;
-
   final List<Question> _questionList = [];
-
-  // final List<Question> questionList = sampleQuestions
-  //     .map((question) =>
-  //     Question(
-  //       id: question['id'],
-  //       additionInfo: question['addition info'],
-  //       clock: question['clock'],
-  //     ))
-  //     .toList();
-
   int _index = 0;
   late final int questionLength;
 
   // called immediately after the widget is allocated memory
   @override
   void onInit() async {
+    // questions
     DatabaseReference questionRef =
         FirebaseDatabase.instance.ref().child('/game bank/2022/questions');
 
@@ -47,8 +40,11 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
 
     questionLength = _questionList.length;
 
+    await fetchIndex();
+
+    // countdown
     _countdownController = AnimationController(
-        duration: Duration(seconds: _questionList[index].clock), vsync: this);
+        duration: const Duration(seconds: 30), vsync: this);
 
     _countdown = Tween<double>(begin: 1, end: 0).animate(_countdownController)
       ..addListener(() {
@@ -80,51 +76,59 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
   void resetQuestionState() {
     print("index $index, timer: ${_questionList[index].clock}");
 
-    // _countdownController.dispose();
+    fetchCountDown();
 
+    _countdownController.reset();
+
+    ScoreController _scoreController = Get.put(ScoreController());
+    _scoreController.resetAnswerState();
+  }
+
+  Future<void> fetchIndex() async {
+    _index = await RtdbGameService.getCurrentIndex();
+  }
+
+  void fetchCountDown() {
     _countdownController.duration =
         Duration(seconds: _questionList[index].clock);
     _countdown = Tween<double>(begin: 1, end: 0).animate(_countdownController);
     update();
-
-    // _countdownController.resync(this);
-    _countdownController.reset();
-    _countdownController.forward();
   }
 
   // page 1
-  void gotoQuestionTitle() {
+  Future<void> gotoQuestionTitle() async {
     // placeholder for end of question list
     if (_index >= questionLength - 1) {
-      _index = 0;
+      Get.offAndToNamed(EndPage.routeName);
     } else {
-      ScoreController _scoreController = Get.put(ScoreController());
-      _scoreController.increaseIndex();
-      _index++;
+      // Get.offAndToNamed(QuestionTitlePage.routeName);
+      customGetTo(const QuestionTitlePage());
+      await Future.delayed(const Duration(seconds: 3), () {
+        gotoPollPage();
+      });
     }
-
-    Get.toNamed(QuestionTitlePage.routeName);
-
-    Future.delayed(const Duration(seconds: 3), () {
-      gotoPollPage();
-    });
   }
 
   // page 2
-  void gotoPollPage() {
+  Future<void> gotoPollPage() async {
     resetQuestionState();
 
-    Get.toNamed(QuestionPollPage.routeName);
+    customGetTo(const QuestionPollPage());
+
+    _countdownController.forward();
   }
 
   // page 3
-  void gotoAnswerInfo() {
+  Future<void> gotoAnswerInfo() async {
     _countdownController.stop();
+
+    ScoreController _scoreController = Get.put(ScoreController());
+    _scoreController.checkAnswer();
 
     // no fun facts to show, go to page 1
     if (_questionList[index].additionInfo != "") {
-      Get.toNamed(AnswerInfoPage.routeName);
-      Future.delayed(const Duration(seconds: 3), () {
+      customGetTo(const AnswerInfoPage());
+      await Future.delayed(const Duration(seconds: 5), () {
         gotoAnswerReveal();
       });
     } else {
@@ -134,10 +138,10 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
 
   // page 4
   void gotoAnswerReveal() {
-    Get.toNamed(AnswerRevealPage.routeName);
+    customGetTo(const AnswerRevealPage());
 
-    Future.delayed(const Duration(seconds: 6), () {
-      gotoQuestionTitle();
-    });
+    // Future.delayed(const Duration(seconds: 6), () {
+    //   gotoQuestionTitle();
+    // });
   }
 }

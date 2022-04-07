@@ -8,6 +8,10 @@ class AuthService {
     return currentUser != null;
   }
 
+  static getPin() {
+    return emailToPin(FirebaseAuth.instance.currentUser?.email);
+  }
+
   static testSignIn() async {
     // String testPin = '745070';
     String testPin = '31120';

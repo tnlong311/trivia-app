@@ -5,7 +5,8 @@ import 'package:trivia_app/consts/app_styles.dart';
 import 'package:trivia_app/controllers/game_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../models/custom_user.dart';
+import '../../../models/custom_user.dart';
+
 
 class CreateUserPage extends StatefulWidget {
   static const routeName = "/create-user";
@@ -28,7 +29,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
     answerOnSubmit() async {
       print('kicked');
       CustomUser.createCustomUser();
-      CustomUser.getPinList();
+      // CustomUser.getPinList();
       // await auth.signInWithEmailAndPassword(email: '31120@trivia.com', password: 'triviaiscool');
       print('done');
     }

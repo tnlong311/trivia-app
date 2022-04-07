@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trivia_app/consts/app_styles.dart';
-import 'package:trivia_app/views/widgets/custom_snackbar.dart';
+import 'package:trivia_app/views/dialogs/custom_snackbar.dart';
 
 class TextFieldWithButton extends StatefulWidget {
   const TextFieldWithButton(
@@ -88,7 +88,7 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
                       borderSide:
                           BorderSide(color: Colors.transparent, width: 5.0),
                     ),
-                    hintText: 'Enter game code',
+                    hintText: 'Enter here',
                   ),
                 ),
               ),

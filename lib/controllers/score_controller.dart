@@ -2,29 +2,22 @@ import 'dart:async';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
+import 'package:trivia_app/consts/user_const.dart';
+import 'package:trivia_app/services/auth_service.dart';
 
 import '../models/answer.dart';
-import '../models/mock_questions.dart';
+import '../services/game_service.dart';
 
 class ScoreController extends GetxController with GetTickerProviderStateMixin {
-  int _currentPoint = 2000;
+  int _currentPoint = DEFAULT_SCORE;
   int _index = 0;
   String _userAnswer = "";
   int _bet = 0;
   int _result = 0;
+  final bool _isAnswered = false;
   late final int questionLength;
 
   final List<Answer> _answerList = [];
-
-  // final List<Answer> answerList = sampleQuestions
-  //     .map((question) =>
-  //     Answer(
-  //       id: question['id'],
-  //       type: question['type'],
-  //       correct: question['correct'],
-  //       fullCorrect: question['full correct'],
-  //     ))
-  //     .toList();
 
   // called immediately after the widget is allocated memory
   @override
@@ -42,6 +35,8 @@ class ScoreController extends GetxController with GetTickerProviderStateMixin {
     }).catchError((error) => print(error));
 
     questionLength = _answerList.length;
+
+    await fetchIndex();
 
     super.onInit();
   }
@@ -64,6 +59,8 @@ class ScoreController extends GetxController with GetTickerProviderStateMixin {
 
   String get userAnswer => _userAnswer;
 
+  bool get isAnswered => _isAnswered;
+
   String get fullCorrectAnswer => _answerList[index].fullCorrect;
 
   // settlers
@@ -77,8 +74,11 @@ class ScoreController extends GetxController with GetTickerProviderStateMixin {
 
   // helpful methods
 
-  void checkAnswer() {
+  Future<void> checkAnswer() async {
     // _countdownController.stop();
+    print(_bet);
+    print(_userAnswer);
+
     print(_answerList[index].correct);
 
     if (_userAnswer == _answerList[index].correct) {
@@ -90,12 +90,16 @@ class ScoreController extends GetxController with GetTickerProviderStateMixin {
     }
 
     _currentPoint += _result;
+
     update();
+
+    await RtdbGameService.postScoreChange(AuthService.getPin(), _index+1, _result);
+    await RtdbGameService.postTotalScore(AuthService.getPin(), _currentPoint);
+  }
+
+  Future<void> fetchIndex() async {
+    _index = await RtdbGameService.getCurrentIndex();
   }
 
   void resetAnswerState() {}
-
-  void increaseIndex() {
-    _index++;
-  }
 }
