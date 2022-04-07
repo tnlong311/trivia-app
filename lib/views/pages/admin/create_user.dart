@@ -29,7 +29,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
     answerOnSubmit() async {
       print('kicked');
       CustomUser.createCustomUser();
-      CustomUser.getPinList();
+      // CustomUser.getPinList();
       // await auth.signInWithEmailAndPassword(email: '31120@trivia.com', password: 'triviaiscool');
       print('done');
     }

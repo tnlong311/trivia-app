@@ -32,16 +32,16 @@ class _LandingPageState extends State<LandingPage> {
 
   // bool _isLoggedIn = false;
 
-  validateSignIn(value) async {
-    var pin = await AuthService.signIn(value);
-
-    if (pin != '') {
-      print(pin);
-      return true;
-    } else {
-      return false;
-    }
-  }
+  // validateSignIn(value) async {
+  //   var pin = await AuthService.signIn(value).pin;
+  //
+  //   if (pin != '') {
+  //     print(pin);
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   inputValidator(value) {
     // print(_isLoggedIn);
@@ -57,7 +57,9 @@ class _LandingPageState extends State<LandingPage> {
 
     if (pin == null || pin == '') {
       return false;
-    } else {
+    }
+    // login success
+    else {
       print(pin);
       return true;
     }
@@ -95,8 +97,8 @@ class _LandingPageState extends State<LandingPage> {
                   child: TextFieldWithButton(
                       validator: inputValidator,
                       updator: inputUpdator,
-                      // routeName: TeamFormationPage.routeName,
-                      routeName: TestFirebasePage.routeName,
+                      routeName: TeamFormationPage.routeName,
+                      // routeName: TestFirebasePage.routeName,
                       failMsg: 'Wrong game code!',
                       successMsg: 'Game joined!',
                       isKeyboard: isKeyboard),

@@ -6,6 +6,7 @@ import 'package:trivia_app/controllers/game_controller.dart';
 import 'package:trivia_app/controllers/score_controller.dart';
 import 'package:trivia_app/views/widgets/TextFieldSingle.dart';
 
+import '../../dialogs/custom_snackbar.dart';
 import '../../widgets/InfoBox.dart';
 import '../../widgets/ProgressBar.dart';
 
@@ -43,20 +44,21 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
 
     answerUpdator(value) {
       _scoreController.setUserAnswer(value);
-      // print(_gameController.userAnswer);
+      // print(_scoreController.userAnswer);
     }
 
     betUpdator(value) {
       _scoreController.setBet(value);
-      // print(_gameController.bet);
+      // print(_scoreController.bet);
     }
 
     answerOnSubmit() {
+      // close keyboard
+      FocusManager.instance.primaryFocus?.unfocus();
+
       if (_formKey.currentState!.validate()) {
-        // calls updator()
         _formKey.currentState!.save();
-        _scoreController.checkAnswer();
-        // _gameController.resetQuestionState();
+        CustomSnackBar.showSuccessSnackBar(context, 'Answer submitted!');
       }
     }
 
@@ -83,7 +85,8 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
                             title: "Time Left",
                             width: 150,
                             height: 120,
-                            content: '${(gameController.countdown.value*gameController.duration).round()}s',
+                            content:
+                                '${(gameController.countdown.value * gameController.duration).round()}s',
                           ),
                         ],
                       ),
@@ -101,13 +104,15 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
                                 title: "Answer",
                                 description: "Enter your answer...",
                                 validator: answerValidator,
-                                updator: answerUpdator),
+                                updator: answerUpdator,
+                                onEnter: answerOnSubmit),
                             TextFieldSingle(
                                 width: 250,
                                 title: "Bet",
                                 description: "Enter your bet...",
                                 validator: betValidator,
-                                updator: betUpdator),
+                                updator: betUpdator,
+                                onEnter: answerOnSubmit),
                           ],
                         ),
                       ),
@@ -138,4 +143,3 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
     );
   }
 }
-

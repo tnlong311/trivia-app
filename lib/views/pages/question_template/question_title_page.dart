@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:trivia_app/consts/app_styles.dart';
-import 'package:trivia_app/views/pages/question_template/question_poll_page.dart';
 
 import '../../../controllers/game_controller.dart';
 import '../../../controllers/score_controller.dart';

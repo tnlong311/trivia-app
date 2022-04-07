@@ -79,6 +79,9 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
     fetchCountDown();
 
     _countdownController.reset();
+
+    ScoreController _scoreController = Get.put(ScoreController());
+    _scoreController.resetAnswerState();
   }
 
   Future<void> fetchIndex() async {
@@ -119,6 +122,9 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
   Future<void> gotoAnswerInfo() async {
     _countdownController.stop();
 
+    ScoreController _scoreController = Get.put(ScoreController());
+    _scoreController.checkAnswer();
+
     // no fun facts to show, go to page 1
     if (_questionList[index].additionInfo != "") {
       customGetTo(const AnswerInfoPage());
@@ -132,8 +138,6 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
 
   // page 4
   void gotoAnswerReveal() {
-    _countdownController.stop();
-
     customGetTo(const AnswerRevealPage());
 
     // Future.delayed(const Duration(seconds: 6), () {

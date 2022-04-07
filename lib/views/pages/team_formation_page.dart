@@ -16,6 +16,8 @@ class TeamFormationPage extends StatefulWidget {
 }
 
 class _TeamFormationPageState extends State<TeamFormationPage> {
+  var _name = 'STEMer';
+
   inputValidator(value) {
     if (value == null || value.isEmpty) {
       return 'Please enter some text';
@@ -34,6 +36,9 @@ class _TeamFormationPageState extends State<TeamFormationPage> {
     if (pin.toString() == '') {
       return false;
     } else {
+      setState(() {
+        _name = value;
+      });
       await RtdbUserService.setName(pin.toString(), value);
       print('Set group name $value with pin $pin');
       return true;
@@ -80,7 +85,7 @@ class _TeamFormationPageState extends State<TeamFormationPage> {
                           routeName: LobbyPage.routeName,
                           failMsg: 'An error has occured',
                           successMsg:
-                              'Welcome, ${RtdbUserService.getCurrentUserName()}!',
+                              'Welcome, $_name',
                           isKeyboard: isKeyboard),
                     ),
                   ],
