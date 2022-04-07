@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -29,8 +30,9 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   ).whenComplete(() => print('initialized firebase'));
 
-  // await AuthService.testSignIn();
-  await AuthService.signOut();
+  // available for web only
+  // await FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
+  // await AuthService.signOut();
 
   GameController _gameController = Get.put(GameController());
   ScoreController _scoreController = Get.put(ScoreController());
