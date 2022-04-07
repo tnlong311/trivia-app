@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:trivia_app/controllers/game_controller.dart';
 import 'package:trivia_app/controllers/score_controller.dart';
 import 'package:trivia_app/services/auth_service.dart';
-import 'package:trivia_app/views/pages/create_user.dart';
+import 'package:trivia_app/services/game_service.dart';
+import 'package:trivia_app/views/pages/admin/create_user.dart';
+import 'package:trivia_app/views/pages/end_page.dart';
 import 'package:trivia_app/views/pages/guidelines_page.dart';
 import 'package:trivia_app/views/pages/landing_page.dart';
 import 'package:trivia_app/views/pages/lobby_page.dart';
@@ -15,7 +17,7 @@ import 'package:trivia_app/views/pages/question_template/question_poll_page.dart
 import 'package:trivia_app/views/pages/question_template/question_title_page.dart';
 import 'package:trivia_app/views/pages/rules_page.dart';
 import 'package:trivia_app/views/pages/team_formation_page.dart';
-import 'package:trivia_app/views/pages/test_firebase.dart';
+import 'package:trivia_app/views/pages/admin/test_firebase.dart';
 import 'package:trivia_app/views/pages/unknown_page.dart';
 import 'firebase_options.dart';
 
@@ -35,10 +37,11 @@ void main() async {
 
   final ref = FirebaseDatabase.instance
       .ref().child('/gameplay/2022/game status/current');
-  ref.onValue.listen((event) {
-    var current = event.snapshot.value;
-    print(current);
+  ref.onValue.listen((event) async {
     if (AuthService.isSignedIn()){
+      await _scoreController.fetchIndex();
+      await _gameController.fetchIndex();
+
       _gameController.gotoQuestionTitle();
     }
   });
@@ -80,6 +83,7 @@ class MyApp extends StatelessWidget {
           AnswerInfoPage.routeName: (context) => const AnswerInfoPage(),
           TestFirebasePage.routeName: (context) => const TestFirebasePage(),
           CreateUserPage.routeName: (context) => const CreateUserPage(),
+          EndPage.routeName: (context) => const EndPage(),
         },
         // in case passing data to the next page
         // onGenerateRoute: (RouteSettings settings) {

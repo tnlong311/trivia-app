@@ -6,13 +6,14 @@ import 'package:trivia_app/consts/app_styles.dart';
 import 'package:trivia_app/controllers/game_controller.dart';
 import 'package:trivia_app/models/question.dart';
 import 'package:trivia_app/services/auth_service.dart';
+import 'package:trivia_app/services/game_service.dart';
 import 'package:trivia_app/services/user_service.dart';
 import 'package:trivia_app/views/widgets/TextFieldSingle.dart';
 
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../widgets/InfoBox.dart';
+import '../../widgets/InfoBox.dart';
 
 class TestFirebasePage extends StatefulWidget {
   static const routeName = "/test";
@@ -42,34 +43,9 @@ class _TestFirebasePageState extends State<TestFirebasePage> {
 
     answerOnSubmit() async {
       print('kicked');
-      DatabaseReference questionsRef = ref.child('/game bank/2022/questions');
-      // final keyname = await questionsRef.push().key;
-      //
-      // final testData = <String, dynamic>{
-      //   'id': keyname,
-      //   'type': 'string',
-      //   'correct': 'B',
-      //   'full correct': 'B. Long rat ngau',
-      //   'addition info': 'This question is very interesting!!',
-      //   'clock': DateTime.now().millisecondsSinceEpoch
-      // };
+      DatabaseReference gameRef = ref.child('/game play/2022');
+      RtdbGameService.getCurrentQuestion();
 
-      // await childs.child(keyname!).set(testData)
-      // .then((_) => print('done'))
-      // .catchError((error) => print(error));
-      // var currentUser = FirebaseAuth.instance.currentUser;
-      // if (currentUser != null) {
-      //   print(currentUser.uid);
-      // } else{
-      //   print('not signed in');
-      // }
-      await AuthService.testSignIn();
-      // var pin = await RtdbUserService.getCurrentUserPin();
-      // await RtdbUserService.setName(pin.toString(), 'Long vjpp');
-      var name = await RtdbUserService.getCurrentUserName();
-      print(name.toString());
-
-      // print(await RtdbUserService.isNamed('31120'));
       print('done');
     }
 

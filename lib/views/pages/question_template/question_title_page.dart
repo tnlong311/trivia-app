@@ -15,20 +15,15 @@ class QuestionTitlePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GameController _gameController = Get.put(GameController());
-    ScoreController _scoreController = Get.put(ScoreController());
 
     return Scaffold(
       body: SafeArea(
-          child: Center(
-        child: Text(
-          "Question #${_gameController.index+1}",
-          style: triviaHeading1,
+        child: Center(
+          child: Text(
+            "Question #${_gameController.index + 1}",
+            style: triviaHeading1,
+          ),
         ),
-      )),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _gameController.gotoPollPage();
-        },
       ),
     );
   }

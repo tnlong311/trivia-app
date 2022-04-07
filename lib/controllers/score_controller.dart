@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../models/answer.dart';
 import '../models/mock_questions.dart';
+import '../services/game_service.dart';
 
 class ScoreController extends GetxController with GetTickerProviderStateMixin {
   int _currentPoint = 2000;
@@ -15,16 +16,6 @@ class ScoreController extends GetxController with GetTickerProviderStateMixin {
   late final int questionLength;
 
   final List<Answer> _answerList = [];
-
-  // final List<Answer> answerList = sampleQuestions
-  //     .map((question) =>
-  //     Answer(
-  //       id: question['id'],
-  //       type: question['type'],
-  //       correct: question['correct'],
-  //       fullCorrect: question['full correct'],
-  //     ))
-  //     .toList();
 
   // called immediately after the widget is allocated memory
   @override
@@ -42,6 +33,8 @@ class ScoreController extends GetxController with GetTickerProviderStateMixin {
     }).catchError((error) => print(error));
 
     questionLength = _answerList.length;
+
+    await fetchIndex();
 
     super.onInit();
   }
@@ -93,9 +86,9 @@ class ScoreController extends GetxController with GetTickerProviderStateMixin {
     update();
   }
 
-  void resetAnswerState() {}
-
-  void increaseIndex() {
-    _index++;
+  Future<void> fetchIndex() async {
+    _index = await RtdbGameService.getCurrentIndex();
   }
+
+  void resetAnswerState() {}
 }

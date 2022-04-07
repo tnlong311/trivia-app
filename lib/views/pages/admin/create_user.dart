@@ -5,7 +5,8 @@ import 'package:trivia_app/consts/app_styles.dart';
 import 'package:trivia_app/controllers/game_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../models/custom_user.dart';
+import '../../../models/custom_user.dart';
+
 
 class CreateUserPage extends StatefulWidget {
   static const routeName = "/create-user";
