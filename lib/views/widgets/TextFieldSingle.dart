@@ -39,7 +39,7 @@ class _TextFieldSingleState extends State<TextFieldSingle> {
           hintText: widget.description,
           labelText: widget.title,
         ),
-        onFieldSubmitted: (_) => widget.onEnter(),
+        onFieldSubmitted: (_) async => widget.onEnter(),
         onSaved: (value) => widget.updator(value),
       ),
     );

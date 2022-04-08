@@ -71,7 +71,6 @@ class CustomUser {
     DatabaseReference gameRef = ref.child('gameplay/2022/scores');
     DatabaseReference userRef = ref.child('users');
 
-
     await userRef.get().then((snapshot) async {
       for (var data in snapshot.children) {
         var pin = data.key ?? '31120';

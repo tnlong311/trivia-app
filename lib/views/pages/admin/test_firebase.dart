@@ -13,6 +13,7 @@ import 'package:trivia_app/views/widgets/TextFieldSingle.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../../controllers/score_controller.dart';
 import '../../widgets/InfoBox.dart';
 
 class TestFirebasePage extends StatefulWidget {
@@ -37,19 +38,15 @@ class _TestFirebasePageState extends State<TestFirebasePage> {
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
-    GameController _questionController = Get.put(GameController());
+    GameController _gameController = Get.put(GameController());
+    ScoreController _scoreController = Get.put(ScoreController());
     DatabaseReference ref = FirebaseDatabase.instance.ref();
     FirebaseAuth auth = FirebaseAuth.instance;
 
     answerOnSubmit() async {
       print('kicked');
-      // DatabaseReference gameRef = ref.child('/game play/2022');
-      // RtdbGameService.getCurrentQuestion();
-      // var score = await RtdbGameService.getUserScore('31120');
-      // print('test 1 $score');
-      // await RtdbGameService.postTotalScore('31120', 3000);
-      // await RtdbGameService.postScoreChange('31120', 2, -20);
-      AuthService.signIn('31120');
+      _scoreController.fetchChange();
+      _scoreController.fetchTotalScore();
       print('done');
     }
 

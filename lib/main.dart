@@ -7,6 +7,7 @@ import 'package:trivia_app/controllers/game_controller.dart';
 import 'package:trivia_app/controllers/score_controller.dart';
 import 'package:trivia_app/services/auth_service.dart';
 import 'package:trivia_app/services/game_service.dart';
+import 'package:trivia_app/services/user_service.dart';
 import 'package:trivia_app/views/pages/admin/create_user.dart';
 import 'package:trivia_app/views/pages/end_page.dart';
 import 'package:trivia_app/views/pages/guidelines_page.dart';
@@ -32,25 +33,40 @@ void main() async {
 
   // available for web only
   // await FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
+  // delete this after done
   // await AuthService.signOut();
 
   GameController _gameController = Get.put(GameController());
   ScoreController _scoreController = Get.put(ScoreController());
 
-  final ref = FirebaseDatabase.instance
-      .ref().child('/gameplay/2022/game status/current');
-  ref.onValue.listen((event) async {
-    if (AuthService.isSignedIn()){
-      await _scoreController.fetchIndex();
-      await _gameController.fetchIndex();
+  final statusRef =
+  FirebaseDatabase.instance.ref().child('/gameplay/2022/game status/');
 
-      _gameController.gotoQuestionTitle();
+  statusRef.onChildChanged.listen((event) async {
+    var questionNum = event.snapshot.value ?? 1;
+    var pin = AuthService.getPin();
+    var isNamed = await RtdbUserService.isNamed(pin);
+
+    if (AuthService.isSignedIn() && isNamed) {
+      if(event.snapshot.key == 'current'){
+        print('proceed to question $questionNum');
+
+        _gameController.setIndexFromQuestionNum(questionNum);
+
+        _gameController.gotoQuestionTitle();
+      } else if (event.snapshot.key == 'reveal') {
+        print('proceed to answer reveal on question ${event.snapshot.value}');
+
+        _gameController.setIndexFromQuestionNum(questionNum);
+        await _scoreController.fetchTotalScore();
+        await _scoreController.fetchChange();
+
+        _gameController.gotoAnswerInfo();
+      }
     }
   });
 
   runApp(const MyApp());
-
-  // testt 2
 }
 
 class MyApp extends StatelessWidget {
@@ -90,6 +106,8 @@ class MyApp extends StatelessWidget {
         },
         // in case passing data to the next page
         // onGenerateRoute: (RouteSettings settings) {
+        //   print('hello');
+        //   return null;
         // },
         // onGenerateInitialRoutes: (settings) {
         //   return [MaterialPageRoute(builder: (context) => const LandingPage())];

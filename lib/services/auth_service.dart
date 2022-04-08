@@ -5,6 +5,7 @@ import '../consts/user_const.dart';
 class AuthService {
   static bool isSignedIn() {
     var currentUser = FirebaseAuth.instance.currentUser;
+    // print(currentUser);
     return currentUser != null;
   }
 
