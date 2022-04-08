@@ -101,5 +101,10 @@ class ScoreController extends GetxController with GetTickerProviderStateMixin {
     _index = await RtdbGameService.getCurrentIndex();
   }
 
+  Future<void> fetchCurrentScore() async {
+
+  }
+
   void resetAnswerState() {}
+
 }

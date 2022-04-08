@@ -44,6 +44,7 @@ void main() async {
     print('proceed to question ${event.snapshot.value}');
     if (AuthService.isSignedIn()){
       await _scoreController.fetchIndex();
+      await _scoreController.fetchCurrentScore();
       await _gameController.fetchIndex();
 
       _gameController.gotoQuestionTitle();
@@ -92,6 +93,8 @@ class MyApp extends StatelessWidget {
         },
         // in case passing data to the next page
         // onGenerateRoute: (RouteSettings settings) {
+        //   print('hello');
+        //   return null;
         // },
         // onGenerateInitialRoutes: (settings) {
         //   return [MaterialPageRoute(builder: (context) => const LandingPage())];

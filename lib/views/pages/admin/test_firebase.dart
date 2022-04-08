@@ -45,11 +45,13 @@ class _TestFirebasePageState extends State<TestFirebasePage> {
       print('kicked');
       // DatabaseReference gameRef = ref.child('/game play/2022');
       // RtdbGameService.getCurrentQuestion();
+      // AuthService.signIn('31120');
       // var score = await RtdbGameService.getUserScore('31120');
       // print('test 1 $score');
       // await RtdbGameService.postTotalScore('31120', 3000);
       // await RtdbGameService.postScoreChange('31120', 2, -20);
-      AuthService.signIn('31120');
+      print(await RtdbGameService.getCurrentQuestionScore('31120', -1));
+
       print('done');
     }
 
