@@ -38,10 +38,18 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
     }
 
     betValidator(value) {
-      if (value == null || value.isEmpty) {
-        return 'Please enter a number';
-      } else if (value < 0) {
+      var input = num.tryParse(value);
+
+      if (input == null) {
+        return 'Enter a valid number';
+      } else if (input < 0) {
         return 'Must be positive ?? :D';
+      } else if (input > _scoreController.totalPoint / 2 &&
+          _gameController.index < 11) {
+        return 'Must not exceed half of your score';
+      } else if (input > _scoreController.totalPoint &&
+          _gameController.index > 10) {
+        return 'Must not exceed your total score';
       }
       return null;
     }
@@ -61,7 +69,9 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
       FocusManager.instance.primaryFocus?.unfocus();
 
       if (_formKey.currentState!.validate()) {
-        if (!_scoreController.isAnswered) {
+        if (_gameController.countdown.isCompleted) {
+          CustomSnackBar.showFailSnackBar(context, 'Out of time!');
+        } else if (!_scoreController.isAnswered) {
           _scoreController.setAnswerState(true);
           _formKey.currentState!.save();
           await _scoreController.checkAndPostAnswer();
@@ -69,7 +79,6 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
         } else {
           CustomSnackBar.showFailSnackBar(context, 'Already submitted!');
         }
-
       }
     }
 

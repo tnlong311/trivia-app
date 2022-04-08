@@ -20,7 +20,7 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
   late Animation _countdown;
   final List<Question> _questionList = [];
   int _index = 0;
-  late final int questionLength;
+  final int questionLength = 20;
 
   // called immediately after the widget is allocated memory
   @override
@@ -38,8 +38,6 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
         }
       }
     }).catchError((error) => print(error));
-
-    questionLength = _questionList.length;
 
     // countdown
     _countdownController =
@@ -69,6 +67,8 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
   String? get additionInfo => _questionList[index].additionInfo;
 
   int get duration => _questionList[index].clock;
+
+  int get questionsLength => questionLength;
 
   // helpful methods
   Future<void> resetQuestionState() async {
