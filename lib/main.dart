@@ -7,6 +7,7 @@ import 'package:trivia_app/controllers/game_controller.dart';
 import 'package:trivia_app/controllers/score_controller.dart';
 import 'package:trivia_app/services/auth_service.dart';
 import 'package:trivia_app/services/game_service.dart';
+import 'package:trivia_app/services/user_service.dart';
 import 'package:trivia_app/views/pages/admin/create_user.dart';
 import 'package:trivia_app/views/pages/end_page.dart';
 import 'package:trivia_app/views/pages/guidelines_page.dart';
@@ -41,28 +42,27 @@ void main() async {
   final statusRef =
   FirebaseDatabase.instance.ref().child('/gameplay/2022/game status/');
 
-  statusRef.child('/current').onValue.listen((event) async {
+  statusRef.onChildChanged.listen((event) async {
     var questionNum = event.snapshot.value ?? 1;
+    var pin = AuthService.getPin();
+    var isNamed = await RtdbUserService.isNamed(pin);
 
-    print('proceed to question $questionNum');
+    if (AuthService.isSignedIn() && isNamed) {
+      if(event.snapshot.key == 'current'){
+        print('proceed to question $questionNum');
 
-    if (AuthService.isSignedIn()) {
-      _gameController.setIndexFromQuestionNum(questionNum);
+        _gameController.setIndexFromQuestionNum(questionNum);
 
-      _gameController.gotoQuestionTitle();
-    }
-  });
+        _gameController.gotoQuestionTitle();
+      } else if (event.snapshot.key == 'reveal') {
+        print('proceed to answer reveal on question ${event.snapshot.value}');
 
-  statusRef.child('/reveal').onValue.listen((event) async {
-    print('proceed to answer reveal on question ${event.snapshot.value}');
-    var questionNum = event.snapshot.value ?? 1;
+        _gameController.setIndexFromQuestionNum(questionNum);
+        await _scoreController.fetchTotalScore();
+        await _scoreController.fetchChange();
 
-    if (AuthService.isSignedIn()) {
-      _gameController.setIndexFromQuestionNum(questionNum);
-      await _scoreController.fetchTotalScore();
-      await _scoreController.fetchChange();
-
-      _gameController.gotoAnswerInfo();
+        _gameController.gotoAnswerInfo();
+      }
     }
   });
 
