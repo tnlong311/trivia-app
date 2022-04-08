@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:trivia_app/consts/app_styles.dart';
 import 'package:trivia_app/controllers/game_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:trivia_app/services/auth_service.dart';
+import 'package:trivia_app/services/user_service.dart';
 
 import '../../../models/custom_user.dart';
 
@@ -28,7 +30,16 @@ class _CreateUserPageState extends State<CreateUserPage> {
 
     answerOnSubmit() async {
       print('kicked');
-      CustomUser.createCustomUser();
+
+      var userRole = await RtdbUserService.getCurrentUserRole();
+
+      if (userRole == 'admin') {
+        // CustomUser.createCustomUser();
+        await CustomUser.changeUserGameStatus();
+      } else {
+        print('not authorize');
+      }
+
       // CustomUser.getPinList();
       // await auth.signInWithEmailAndPassword(email: '31120@trivia.com', password: 'triviaiscool');
       print('done');

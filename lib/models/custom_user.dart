@@ -36,19 +36,19 @@ class CustomUser {
     await userRef
         .child(pin)
         .update({
-      'pin': pin,
-      'role': 'user',
-    })
+          'pin': pin,
+          'role': 'user',
+        })
         .then((_) => print('User updated to RTDB'))
         .catchError((error) => print(error));
 
     await ref
         .child('gameplay/2022/scores')
         .update({
-      pin: {
-        'score': DEFAULT_SCORE,
-      }
-    })
+          pin: {
+              'changes': {0: DEFAULT_SCORE}
+          }
+        })
         .then((_) => print('User added to gameplay'))
         .catchError((error) => print(error));
 
@@ -60,10 +60,31 @@ class CustomUser {
 
     await userRef.get().then((DataSnapshot snapshot) {
       if (snapshot.exists) {
-        (snapshot.value as Map).forEach((key, value){
+        (snapshot.value as Map).forEach((key, value) {
           print(key);
         });
       }
     }).catchError((error) => print(error));
   }
+
+  static changeUserGameStatus() async {
+    DatabaseReference gameRef = ref.child('gameplay/2022/scores');
+    DatabaseReference userRef = ref.child('users');
+
+
+    await userRef.get().then((snapshot) async {
+      for (var data in snapshot.children) {
+        var pin = data.key ?? '31120';
+        // print(pin);
+        // print(data.value);
+        await gameRef.update({
+          pin: {
+            'changes': {'0': DEFAULT_SCORE}
+          }
+        });
+      }
+    });
+  }
+
+  // static add
 }

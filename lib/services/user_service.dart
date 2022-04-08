@@ -23,6 +23,21 @@ class RtdbUserService {
     return '';
   }
 
+  static getCurrentUserRole() async {
+    var currentUser = FirebaseAuth.instance.currentUser;
+    var pin = emailToPin(currentUser?.email);
+
+    DatabaseReference ref = FirebaseDatabase.instance.ref();
+    var role = await ref.child('users/$pin/role').get();
+
+    print('Current user role: ${role.value}');
+    if (role.exists) {
+      return role.value;
+    }
+
+    return '';
+  }
+
   static isNamed(String pin) async {
     bool exists = false;
     await userRef.child(pin).child('/name').get().then((DataSnapshot snapshot) {
