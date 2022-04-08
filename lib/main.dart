@@ -31,15 +31,17 @@ void main() async {
   ).whenComplete(() => print('initialized firebase'));
 
   // available for web only
-  // await FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
-  // await AuthService.signOut();
+  // await FirebaseAuth.instance.setPersistence(Persistence.NONE);
+  // delete this after done
+  await AuthService.signOut();
 
   GameController _gameController = Get.put(GameController());
   ScoreController _scoreController = Get.put(ScoreController());
 
   final ref = FirebaseDatabase.instance
       .ref().child('/gameplay/2022/game status/current');
-  ref.onValue.listen((event) async {
+  ref.onChildChanged.listen((event) async {
+    print('proceed to question ${event.snapshot.value}');
     if (AuthService.isSignedIn()){
       await _scoreController.fetchIndex();
       await _gameController.fetchIndex();
