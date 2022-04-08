@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:trivia_app/services/auth_service.dart';
 import 'package:trivia_app/services/user_service.dart';
 import 'package:trivia_app/views/widgets/TextFieldWithButton.dart';
 
