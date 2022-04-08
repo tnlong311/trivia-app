@@ -28,6 +28,8 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
     GameController _gameController = Get.put(GameController());
     ScoreController _scoreController = Get.put(ScoreController());
 
+    final totalPoint = _scoreController.totalPoint;
+
     answerValidator(value) {
       if (value == null || value.isEmpty) {
         return 'Please enter some text';
@@ -38,6 +40,8 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
     betValidator(value) {
       if (value == null || value.isEmpty) {
         return 'Please enter a number';
+      } else if (value < 0) {
+        return 'Must be positive ?? :D';
       }
       return null;
     }
@@ -52,13 +56,20 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
       // print(_scoreController.bet);
     }
 
-    answerOnSubmit() {
+    answerOnSubmit() async {
       // close keyboard
       FocusManager.instance.primaryFocus?.unfocus();
 
       if (_formKey.currentState!.validate()) {
-        _formKey.currentState!.save();
-        CustomSnackBar.showSuccessSnackBar(context, 'Answer submitted!');
+        if (!_scoreController.isAnswered) {
+          _scoreController.setAnswerState(true);
+          _formKey.currentState!.save();
+          await _scoreController.checkAndPostAnswer();
+          CustomSnackBar.showSuccessSnackBar(context, 'Answer submitted!');
+        } else {
+          CustomSnackBar.showFailSnackBar(context, 'Already submitted!');
+        }
+
       }
     }
 
@@ -79,7 +90,7 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
                             title: "Current Point",
                             width: 150,
                             height: 120,
-                            content: '${_scoreController.currentPoint}',
+                            content: '$totalPoint',
                           ),
                           InfoBox(
                             title: "Time Left",
@@ -135,11 +146,6 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
                   ],
                 );
               })),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _gameController.gotoAnswerInfo();
-        },
-      ),
     );
   }
 }

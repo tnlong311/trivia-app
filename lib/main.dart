@@ -33,27 +33,40 @@ void main() async {
   // available for web only
   // await FirebaseAuth.instance.setPersistence(Persistence.NONE);
   // delete this after done
-  await AuthService.signOut();
+  // await AuthService.signOut();
 
   GameController _gameController = Get.put(GameController());
   ScoreController _scoreController = Get.put(ScoreController());
 
-  final ref = FirebaseDatabase.instance
-      .ref().child('/gameplay/2022/game status/current');
-  ref.onChildChanged.listen((event) async {
-    print('proceed to question ${event.snapshot.value}');
-    if (AuthService.isSignedIn()){
-      await _scoreController.fetchIndex();
-      await _scoreController.fetchCurrentScore();
-      await _gameController.fetchIndex();
+  final statusRef =
+  FirebaseDatabase.instance.ref().child('/gameplay/2022/game status/');
+
+  statusRef.child('/current').onValue.listen((event) async {
+    var questionNum = event.snapshot.value ?? 1;
+
+    print('proceed to question $questionNum');
+
+    if (AuthService.isSignedIn()) {
+      _gameController.setIndexFromQuestionNum(questionNum);
 
       _gameController.gotoQuestionTitle();
     }
   });
 
-  runApp(const MyApp());
+  statusRef.child('/reveal').onValue.listen((event) async {
+    print('proceed to answer reveal on question ${event.snapshot.value}');
+    var questionNum = event.snapshot.value ?? 1;
 
-  // testt 2
+    if (AuthService.isSignedIn()) {
+      _gameController.setIndexFromQuestionNum(questionNum);
+      await _scoreController.fetchTotalScore();
+      await _scoreController.fetchChange();
+
+      _gameController.gotoAnswerInfo();
+    }
+  });
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

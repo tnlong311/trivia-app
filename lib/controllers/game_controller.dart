@@ -12,6 +12,7 @@ import 'package:trivia_app/views/pages/question_template/question_poll_page.dart
 import 'package:trivia_app/views/pages/question_template/question_title_page.dart';
 
 import '../models/question.dart';
+import '../services/auth_service.dart';
 import '../utils/helpers.dart';
 
 class GameController extends GetxController with GetTickerProviderStateMixin {
@@ -40,11 +41,9 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
 
     questionLength = _questionList.length;
 
-    await fetchIndex();
-
     // countdown
-    _countdownController = AnimationController(
-        duration: const Duration(seconds: 30), vsync: this);
+    _countdownController =
+        AnimationController(duration: const Duration(seconds: 30), vsync: this);
 
     _countdown = Tween<double>(begin: 1, end: 0).animate(_countdownController)
       ..addListener(() {
@@ -72,23 +71,26 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
   int get duration => _questionList[index].clock;
 
   // helpful methods
-
-  void resetQuestionState() {
+  Future<void> resetQuestionState() async {
     print("index $index, timer: ${_questionList[index].clock}");
 
-    fetchCountDown();
-
+    updateCountDown();
     _countdownController.reset();
 
     ScoreController _scoreController = Get.put(ScoreController());
-    _scoreController.resetAnswerState();
+    await _scoreController.resetAnswerState();
   }
 
-  Future<void> fetchIndex() async {
-    _index = await RtdbGameService.getCurrentIndex();
+  void setIndexFromQuestionNum(value) {
+    // _index = await RtdbGameService.getCurrentIndex();
+    _index = value - 1;
+    print(_index);
+
+    ScoreController _scoreController = Get.put(ScoreController());
+    _scoreController.setIndex(_index);
   }
 
-  void fetchCountDown() {
+  void updateCountDown() {
     _countdownController.duration =
         Duration(seconds: _questionList[index].clock);
     _countdown = Tween<double>(begin: 1, end: 0).animate(_countdownController);
@@ -97,7 +99,6 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
 
   // page 1
   Future<void> gotoQuestionTitle() async {
-    // placeholder for end of question list
     if (_index >= questionLength - 1) {
       Get.offAndToNamed(EndPage.routeName);
     } else {
@@ -111,7 +112,7 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
 
   // page 2
   Future<void> gotoPollPage() async {
-    resetQuestionState();
+    await resetQuestionState();
 
     customGetTo(const QuestionPollPage());
 
@@ -122,17 +123,19 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
   Future<void> gotoAnswerInfo() async {
     _countdownController.stop();
 
-    ScoreController _scoreController = Get.put(ScoreController());
-    _scoreController.checkAnswer();
-
-    // no fun facts to show, go to page 1
-    if (_questionList[index].additionInfo != "") {
-      customGetTo(const AnswerInfoPage());
-      await Future.delayed(const Duration(seconds: 5), () {
-        gotoAnswerReveal();
-      });
+    if (_index >= questionLength - 1) {
+      Get.offAndToNamed(EndPage.routeName);
     } else {
-      gotoAnswerReveal();
+      // no fun facts to show, go to page 1
+      if (_questionList[index].additionInfo != "" &&
+          _questionList[index].additionInfo != null) {
+        customGetTo(const AnswerInfoPage());
+        await Future.delayed(const Duration(seconds: 5), () {
+          gotoAnswerReveal();
+        });
+      } else {
+        gotoAnswerReveal();
+      }
     }
   }
 

@@ -20,7 +20,7 @@ class RtdbGameService {
     return index;
   }
 
-  static getUserScore(String id) async {
+  static getUserTotalScore(String id) async {
     final snapshot = await gameRef
         .child('scores/$id/changes')
         .get()
@@ -38,6 +38,7 @@ class RtdbGameService {
     for (var val in lst) {
       score += val;
     }
+    print('Fetched total score: $score');
 
     return score;
   }
@@ -55,13 +56,13 @@ class RtdbGameService {
     return 0;
   }
 
-  static Future<void> postTotalScore(String id, int score) async {
-    await gameRef
-        .child('scores/$id/score')
-        .set(score)
-        .then((value) => print('updated $score to $id'))
-        .catchError((error) => print(error));
-  }
+  // static Future<void> postTotalScore(String id, int score) async {
+  //   await gameRef
+  //       .child('scores/$id/score')
+  //       .set(score)
+  //       .then((value) => print('updated $score to $id'))
+  //       .catchError((error) => print(error));
+  // }
 
   static Future<void> postScoreChange(
       String id, int question, int score) async {
