@@ -68,12 +68,12 @@ class MyApp extends StatelessWidget {
           colorScheme:
               ColorScheme.fromSwatch().copyWith(secondary: Colors.cyanAccent),
         ),
-        // initialRoute: AuthService.isSignedIn()
-        //     ? LobbyPage.routeName
-        //     : LandingPage.routeName,
+        initialRoute: AuthService.isSignedIn()
+            ? LobbyPage.routeName
+            : LandingPage.routeName,
         // initialRoute: QuestionTitlePage.routeName,
         // initialRoute: TestFirebasePage.routeName,
-        initialRoute: CreateUserPage.routeName,
+        // initialRoute: CreateUserPage.routeName,
         routes: {
           LandingPage.routeName: (context) => const LandingPage(),
           TeamFormationPage.routeName: (context) => const TeamFormationPage(),
