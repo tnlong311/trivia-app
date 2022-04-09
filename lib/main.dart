@@ -43,11 +43,20 @@ void main() async {
       FirebaseDatabase.instance.ref().child('/gameplay/2022/game status/');
 
   statusRef.onChildChanged.listen((event) async {
-    var questionNum = event.snapshot.value ?? 1;
+    var questionNum = int.tryParse(event.snapshot.value.toString()) ?? 0;
     var pin = AuthService.getPin();
     var isNamed = await RtdbUserService.isNamed(pin);
+    GameController _gameController = Get.put(GameController());
+    ScoreController _scoreController = Get.put(ScoreController());
 
-    if (AuthService.isSignedIn() && isNamed) {
+    if(_gameController.questionsLength == 0) {
+      await _gameController.fetchQuestions();
+    }
+    if(_scoreController.questionsLength == 0) {
+      await _scoreController.fetchAnswers();
+    }
+
+    if (AuthService.isSignedIn() && isNamed && questionNum > 0) {
       if (event.snapshot.key == 'current') {
         print('proceed to question $questionNum');
 
@@ -61,7 +70,7 @@ void main() async {
         await _scoreController.fetchTotalScore();
         await _scoreController.fetchChange();
 
-        _gameController.gotoAnswerInfo();
+        _gameController.gotoAnswerReveal();
       }
     }
   });

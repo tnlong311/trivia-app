@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,7 +8,6 @@ import '../views/pages/end_page.dart';
 import '../views/pages/guidelines_page.dart';
 import '../views/pages/landing_page.dart';
 import '../views/pages/lobby_page.dart';
-import '../views/pages/question_template/answer_info_page.dart';
 import '../views/pages/question_template/answer_reveal_page.dart';
 import '../views/pages/question_template/question_poll_page.dart';
 import '../views/pages/question_template/question_title_page.dart';
@@ -49,8 +47,6 @@ class CustomRouter {
         return MaterialPageRoute(builder: (_) => const QuestionPollPage());
       case AnswerRevealPage.routeName:
         return MaterialPageRoute(builder: (_) => const AnswerRevealPage());
-      case AnswerInfoPage.routeName:
-        return MaterialPageRoute(builder: (_) => const AnswerInfoPage());
       case TestFirebasePage.routeName:
         return MaterialPageRoute(builder: (_) => const TestFirebasePage());
       case CreateUserPage.routeName:
