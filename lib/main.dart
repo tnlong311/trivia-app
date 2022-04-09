@@ -88,6 +88,8 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: LandingPage.routeName,
         // initialRoute: QuestionTitlePage.routeName,
+        // initialRoute: RulesPage.routeName,
+
         // initialRoute: TestFirebasePage.routeName,
         // initialRoute: CreateUserPage.routeName,
         onGenerateRoute: CustomRouter.generateRoute,

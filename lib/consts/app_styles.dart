@@ -30,13 +30,26 @@ const triviaSmall1 = TextStyle(
     decoration: TextDecoration.none);
 
 const triviaHeading2 = TextStyle(
-    color: Colors.pinkAccent,
+    color: Colors.white,
     fontWeight: FontWeight.w800,
     fontFamily: 'PixelFont',
     letterSpacing: 0.6,
-    fontSize: 30,
+    fontSize: 50,
     height: 2,
-    decoration: TextDecoration.none);
+    shadows: <Shadow> [
+      Shadow(
+        offset: Offset(4.0, 4.0),
+        blurRadius: 1.0,
+        color: Color.fromARGB(255, 232,27,119),
+      ),
+      Shadow(
+        offset: Offset(-4.0, -4.0),
+        blurRadius: 1.0,
+        color: Color.fromARGB(255, 67,230,244),
+      ),
+    ],
+    decoration: TextDecoration.none,
+);
 
 const triviaGreen = LinearGradient(
   colors: [Color(0xFF46A0AE), Color(0xFF00FFCB)],

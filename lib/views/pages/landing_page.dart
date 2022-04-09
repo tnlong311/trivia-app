@@ -1,5 +1,5 @@
 import 'dart:math';
-
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trivia_app/consts/app_styles.dart';
@@ -19,14 +19,36 @@ class LandingPage extends StatefulWidget {
   State<LandingPage> createState() => _LandingPageState();
 }
 
-class _LandingPageState extends State<LandingPage> {
+class _LandingPageState extends State<LandingPage>
+    with TickerProviderStateMixin {
+  late AnimationController anime;
+  late Animation movement;
+
   @override
   void initState() {
     super.initState();
+    anime =
+        AnimationController(vsync: this, duration: const Duration(seconds: 2));
+    movement = Tween(
+      begin: 0,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: anime, curve: Curves.easeInOutCubic));
+  }
+
+  void run_animation() {
+    anime.reset();
+    anime.forward();
+  }
+
+  @override
+  void didUpdateWidget(LandingPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    anime.duration = const Duration(seconds: 3);
   }
 
   @override
   void dispose() {
+    anime.dispose();
     super.dispose();
   }
 
@@ -56,43 +78,112 @@ class _LandingPageState extends State<LandingPage> {
   Widget build(BuildContext context) {
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
 
-    return SafeArea(
-      child: Stack(children: <Widget>[
-        Image.asset(
-          'assets/images/BackGround.png',
-          fit: BoxFit.cover,
-          height: double.infinity,
-          width: double.infinity,
-        ),
-        Layer(),
-        Planet(),
-        Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.transparent,
-          body: Column(children: [
-            Expanded(
-                flex: 1,
-                child: Align(
-                  alignment: Alignment(0, -0.6),
-                  child: Transform.scale(
-                      scale: 1.2, child: Image.asset('assets/images/logo.png')),
-                )),
-            Expanded(
-                flex: 1,
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  child: TextFieldWithButton(
-                      validator: inputValidator,
-                      updator: inputUpdator,
-                      routeName: TeamFormationPage.routeName,
-                      // routeName: TestFirebasePage.routeName,
-                      failMsg: 'Wrong game code!',
-                      successMsg: 'Game joined!',
-                      isKeyboard: isKeyboard),
-                ))
-          ]),
-        ),
-      ]),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: Stack(children: <Widget>[
+          Image.asset(
+            'assets/images/BackGround.png',
+            fit: BoxFit.cover,
+            height: double.infinity,
+            width: double.infinity,
+          ),
+          Layer(),
+          AnimatedBuilder(
+              animation: anime,
+              builder: (context, _) {
+                final p1 = Image.asset(
+                  'assets/images/planet.png',
+                  fit: BoxFit.cover,
+                );
+
+                return Positioned(
+                    top: 500,
+                    left: (MediaQuery.of(context).size.width - 700) / 2.0,
+                    child: Container(
+                      width: 700,
+                      child: Transform.rotate(
+                          angle: -2.0 / 3.0 * pi * (movement.value) + pi * 0.4,
+                          child: p1),
+                    ));
+              }),
+          AnimatedBuilder(
+              animation: anime,
+              builder: (context, _) {
+                final d = movement.value ?? 0.0;
+                return Positioned(
+                  top: -40,
+                  left: -d * 300,
+                  child: Container(
+                    color: Colors.black12,
+                    height: MediaQuery.of(context).size.height * 2.0 / 4.0,
+                    width: MediaQuery.of(context).size.width,
+                    child: Image.asset(
+                      'assets/images/logo.png',
+                      fit: BoxFit.contain,
+                      color: Colors.white.withOpacity(-d + 1),
+                      colorBlendMode: BlendMode.modulate,
+                    ),
+                  ),
+                );
+              }),
+          AnimatedBuilder(
+              animation: anime,
+              builder: (context, _) {
+                final d = movement.value ?? 0.0;
+                return Positioned(
+                  top: 0,
+                  left: (MediaQuery.of(context).size.width - 400) / 2.0 +
+                      (1 - d) * 350,
+                  child: Container(
+                    color: Colors.white30,
+                    width: 400,
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                          style: TextStyle(
+                            color: Colors.white.withOpacity(d),
+                            fontWeight: FontWeight.w800,
+                            fontFamily: 'PixelFont',
+                            letterSpacing: 0.6,
+                            fontSize: 50,
+                            height: 2,
+                            shadows: <Shadow>[
+                              Shadow(
+                                offset: Offset(4.0, 4.0),
+                                blurRadius: 1.0,
+                                color: Color.fromARGB(255, 232, 27, 119)
+                                    .withOpacity(d),
+                              ),
+                              Shadow(
+                                offset: Offset(-4.0, -4.0),
+                                blurRadius: 1.0,
+                                color: Color.fromARGB(255, 67, 230, 244)
+                                    .withOpacity(d),
+                              ),
+                            ],
+                            decoration: TextDecoration.none,
+                          ),
+                          text: "How can we call your group?"),
+                    ),
+                  ),
+                );
+              }),
+          Positioned(
+            top: MediaQuery.of(context).size.height * 2.0 / 4.0,
+            left: (MediaQuery.of(context).size.width - 250) / 2.0,
+            child: TextFieldWithButton(
+              validator: inputValidator,
+              updator: inputUpdator,
+              routeName: TeamFormationPage.routeName,
+              failMsg: 'Wrong game code!',
+              successMsg: 'Game joined!',
+              isKeyboard: isKeyboard,
+              run_animation: run_animation,
+            ),
+          ),
+        ]),
+      ),
     );
   }
 }
@@ -112,13 +203,13 @@ class _PlanetState extends State<Planet> with TickerProviderStateMixin {
     super.initState();
     anime =
         AnimationController(vsync: this, duration: const Duration(seconds: 2));
-    anime.forward();
   }
 
   @override
   void didUpdateWidget(Planet oldWidget) {
     super.didUpdateWidget(oldWidget);
     anime.duration = const Duration(seconds: 2);
+    anime.forward();
   }
 
   @override
