@@ -35,7 +35,7 @@ flutter:
 
   assets:
     - ./assets/pixelComponents/
-    - ./assets/images/
+    - ./assets/loading/
       #   - images/a_dot_ham.jpeg
 
 
