@@ -84,8 +84,7 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
   void setIndexFromQuestionNum(value) {
     // _index = await RtdbGameService.getCurrentIndex();
     _index = value - 1;
-    print(_index);
-
+    update();
     ScoreController _scoreController = Get.put(ScoreController());
     _scoreController.setIndex(_index);
   }
