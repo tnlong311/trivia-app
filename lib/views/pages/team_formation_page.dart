@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:trivia_app/services/auth_service.dart';
 import 'package:trivia_app/services/user_service.dart';
 import 'package:trivia_app/views/widgets/Layer.dart';
 import 'package:trivia_app/views/widgets/TextFieldWithButton.dart';
@@ -21,6 +20,7 @@ class _TeamFormationPageState extends State<TeamFormationPage>
     with TickerProviderStateMixin {
   late AnimationController anime;
   late Animation movement, movement2;
+  var _name = 'STEMer';
 
   @override
   void initState() {
@@ -56,15 +56,13 @@ class _TeamFormationPageState extends State<TeamFormationPage>
     super.dispose();
   }
 
-  void placeholder() {}
-
   inputValidator(value) {
     if (value == null || value.isEmpty) {
       return 'Please enter some text';
-    } else if (value.length < 6) {
-      return 'Must be at least 6 chars';
-    } else if (value.length > 15) {
-      return 'Must be at most 15 chars';
+    } else if (value.length < 4) {
+      return 'Must be at least 4 chars';
+    } else if (value.length > 30) {
+      return 'Must be at most 30 chars';
     }
 
     return null;
@@ -76,6 +74,9 @@ class _TeamFormationPageState extends State<TeamFormationPage>
     if (pin.toString() == '') {
       return false;
     } else {
+      setState(() {
+        _name = value;
+      });
       await RtdbUserService.setName(pin.toString(), value);
       print('Set group name $value with pin $pin');
       return true;
@@ -100,110 +101,108 @@ class _TeamFormationPageState extends State<TeamFormationPage>
         AnimatedBuilder(
             animation: anime,
             builder: (context, _) {
-              final d = movement2.value??0.0;
-              return
-                Positioned(
-                  top: 0,
-                  right: (MediaQuery.of(context).size.width - 400) / 2.0 + d * 350,
-                  child: Container(
-                    color: Colors.white30,
-                    width: 400,
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                          style: TextStyle(
-                            color: Colors.white.withOpacity(-d + 1),
-                            fontWeight: FontWeight.w800,
-                            fontFamily: 'PixelFont',
-                            letterSpacing: 0.6,
-                            fontSize: 50,
-                            height: 2,
-                            shadows: <Shadow> [
-                              Shadow(
-                                offset: Offset(4.0, 4.0),
-                                blurRadius: 1.0,
-                                color: Color.fromARGB(255, 232,27,119).withOpacity(-d + 1),
-                              ),
-                              Shadow(
-                                offset: Offset(-4.0, -4.0),
-                                blurRadius: 1.0,
-                                color: Color.fromARGB(255, 67,230,244).withOpacity(-d + 1),
-                              ),
-                            ],
-                            decoration: TextDecoration.none,
-                          ), text: "How can we call your group?"),
-                    ),
+              final d = movement2.value ?? 0.0;
+              return Positioned(
+                top: 0,
+                right:
+                    (MediaQuery.of(context).size.width - 400) / 2.0 + d * 350,
+                child: Container(
+                  color: Colors.white30,
+                  width: 400,
+                  child: RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                        style: TextStyle(
+                          color: Colors.white.withOpacity(-d + 1),
+                          fontWeight: FontWeight.w800,
+                          fontFamily: 'PixelFont',
+                          letterSpacing: 0.6,
+                          fontSize: 50,
+                          height: 2,
+                          shadows: <Shadow>[
+                            Shadow(
+                              offset: Offset(4.0, 4.0),
+                              blurRadius: 1.0,
+                              color: Color.fromARGB(255, 232, 27, 119)
+                                  .withOpacity(-d + 1),
+                            ),
+                            Shadow(
+                              offset: Offset(-4.0, -4.0),
+                              blurRadius: 1.0,
+                              color: Color.fromARGB(255, 67, 230, 244)
+                                  .withOpacity(-d + 1),
+                            ),
+                          ],
+                          decoration: TextDecoration.none,
+                        ),
+                        text: "How can we call your group?"),
                   ),
-                );
-            }
-        ),
+                ),
+              );
+            }),
         AnimatedBuilder(
             animation: anime,
             builder: (context, _) {
-              final d = movement2.value??0.0;
-              return
-                Positioned(
-                  top: 0,
-                  left: (MediaQuery.of(context).size.width - 400) / 2.0 + (1 - d) * 350,
-                  child: Container(
-                    color: Colors.white30,
-                    width: 400,
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                          style: TextStyle(
-                            color: Colors.white.withOpacity(d),
-                            fontWeight: FontWeight.w800,
-                            fontFamily: 'PixelFont',
-                            letterSpacing: 0.6,
-                            fontSize: 50,
-                            height: 2,
-                            shadows: <Shadow> [
-                              Shadow(
-                                offset: Offset(4.0, 4.0),
-                                blurRadius: 1.0,
-                                color: Color.fromARGB(255, 232,27,119).withOpacity(d),
-                              ),
-                              Shadow(
-                                offset: Offset(-4.0, -4.0),
-                                blurRadius: 1.0,
-                                color: Color.fromARGB(255, 67,230,244).withOpacity(d),
-                              ),
-                            ],
-                            decoration: TextDecoration.none,
-                          ), text: "Waiting for host..."),
-                    ),
-                  ),
-                );
-            }
-        ),
-        AnimatedBuilder(
-          animation: anime,
-          builder: (context, _) {
-            final mv = movement2.value??0;
-            return Positioned(
-                top: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 2.0 / 4.0,
-                left: (MediaQuery
-                    .of(context)
-                    .size
-                    .width - (-mv * 100 + 250)) / 2.0,
+              final d = movement2.value ?? 0.0;
+              return Positioned(
+                top: 0,
+                left: (MediaQuery.of(context).size.width - 400) / 2.0 +
+                    (1 - d) * 350,
                 child: Container(
-                  width: -mv * 100 + 250,
-                  child: TextFieldWithButton(
-                      run_animation: run_animation,
-                      validator: inputValidator,
-                      updator: inputUpdator,
-                      routeName: LobbyPage.routeName,
-                      failMsg: 'An error has occured',
-                      successMsg: 'Welcome, ${RtdbUserService
-                          .getCurrentUserName()}!',
-                      isKeyboard: isKeyboard),
-                ));
-          }
-        ),
+                  color: Colors.white30,
+                  width: 400,
+                  child: RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                        style: TextStyle(
+                          color: Colors.white.withOpacity(d),
+                          fontWeight: FontWeight.w800,
+                          fontFamily: 'PixelFont',
+                          letterSpacing: 0.6,
+                          fontSize: 50,
+                          height: 2,
+                          shadows: <Shadow>[
+                            Shadow(
+                              offset: Offset(4.0, 4.0),
+                              blurRadius: 1.0,
+                              color: Color.fromARGB(255, 232, 27, 119)
+                                  .withOpacity(d),
+                            ),
+                            Shadow(
+                              offset: Offset(-4.0, -4.0),
+                              blurRadius: 1.0,
+                              color: Color.fromARGB(255, 67, 230, 244)
+                                  .withOpacity(d),
+                            ),
+                          ],
+                          decoration: TextDecoration.none,
+                        ),
+                        text: "Waiting for host..."),
+                  ),
+                ),
+              );
+            }),
+        AnimatedBuilder(
+            animation: anime,
+            builder: (context, _) {
+              final mv = movement2.value ?? 0;
+              return Positioned(
+                  top: MediaQuery.of(context).size.height * 2.0 / 4.0,
+                  left:
+                      (MediaQuery.of(context).size.width - (-mv * 100 + 250)) /
+                          2.0,
+                  child: Container(
+                    width: -mv * 100 + 250,
+                    child: TextFieldWithButton(
+                        run_animation: run_animation,
+                        validator: inputValidator,
+                        updator: inputUpdator,
+                        routeName: LobbyPage.routeName,
+                        failMsg: 'An error has occured',
+                        successMsg: 'Welcome, $_name',
+                        isKeyboard: isKeyboard),
+                  ));
+            }),
         AnimatedBuilder(
             animation: anime,
             builder: (context, _) {
@@ -211,10 +210,13 @@ class _TeamFormationPageState extends State<TeamFormationPage>
                 'assets/images/planet.png',
                 fit: BoxFit.cover,
               );
-              final mv = movement.value??0.0;
+              final mv = movement.value ?? 0.0;
               return Positioned(
                   top: 500,
-                  left: (MediaQuery.of(context).size.width - 700 + 300 * movement.value) / 2.0,
+                  left: (MediaQuery.of(context).size.width -
+                          700 +
+                          300 * movement.value) /
+                      2.0,
                   child: Container(
                       width: -mv * 300 + 700,
                       child: Transform.translate(

@@ -4,34 +4,28 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:trivia_app/controllers/score_controller.dart';
+import 'package:trivia_app/services/game_service.dart';
+import 'package:trivia_app/views/pages/end_page.dart';
 import 'package:trivia_app/views/pages/question_template/answer_info_page.dart';
 import 'package:trivia_app/views/pages/question_template/answer_reveal_page.dart';
 import 'package:trivia_app/views/pages/question_template/question_poll_page.dart';
 import 'package:trivia_app/views/pages/question_template/question_title_page.dart';
 
 import '../models/question.dart';
+import '../services/auth_service.dart';
+import '../utils/helpers.dart';
 
 class GameController extends GetxController with GetTickerProviderStateMixin {
   late AnimationController _countdownController;
   late Animation _countdown;
-
   final List<Question> _questionList = [];
-
-  // final List<Question> questionList = sampleQuestions
-  //     .map((question) =>
-  //     Question(
-  //       id: question['id'],
-  //       additionInfo: question['addition info'],
-  //       clock: question['clock'],
-  //     ))
-  //     .toList();
-
   int _index = 0;
-  late final int questionLength;
+  final int questionLength = 20;
 
   // called immediately after the widget is allocated memory
   @override
   void onInit() async {
+    // questions
     DatabaseReference questionRef =
         FirebaseDatabase.instance.ref().child('/game bank/2022/questions');
 
@@ -45,10 +39,9 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
       }
     }).catchError((error) => print(error));
 
-    questionLength = _questionList.length;
-
-    _countdownController = AnimationController(
-        duration: Duration(seconds: _questionList[index].clock), vsync: this);
+    // countdown
+    _countdownController =
+        AnimationController(duration: const Duration(seconds: 30), vsync: this);
 
     _countdown = Tween<double>(begin: 1, end: 0).animate(_countdownController)
       ..addListener(() {
@@ -75,69 +68,83 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
 
   int get duration => _questionList[index].clock;
 
-  // helpful methods
+  int get questionsLength => questionLength;
 
-  void resetQuestionState() {
+  // helpful methods
+  Future<void> resetQuestionState() async {
     print("index $index, timer: ${_questionList[index].clock}");
 
-    // _countdownController.dispose();
+    updateCountDown();
+    _countdownController.reset();
 
+    ScoreController _scoreController = Get.put(ScoreController());
+    await _scoreController.resetAnswerState();
+  }
+
+  void setIndexFromQuestionNum(value) {
+    // _index = await RtdbGameService.getCurrentIndex();
+    _index = value - 1;
+    print(_index);
+
+    ScoreController _scoreController = Get.put(ScoreController());
+    _scoreController.setIndex(_index);
+  }
+
+  void updateCountDown() {
     _countdownController.duration =
         Duration(seconds: _questionList[index].clock);
     _countdown = Tween<double>(begin: 1, end: 0).animate(_countdownController);
     update();
-
-    // _countdownController.resync(this);
-    _countdownController.reset();
-    _countdownController.forward();
   }
 
   // page 1
-  void gotoQuestionTitle() {
-    // placeholder for end of question list
+  Future<void> gotoQuestionTitle() async {
     if (_index >= questionLength - 1) {
-      _index = 0;
+      Get.offAndToNamed(EndPage.routeName);
     } else {
-      ScoreController _scoreController = Get.put(ScoreController());
-      _scoreController.increaseIndex();
-      _index++;
+      // Get.offAndToNamed(QuestionTitlePage.routeName);
+      customGetTo(const QuestionTitlePage());
+      await Future.delayed(const Duration(seconds: 3), () {
+        gotoPollPage();
+      });
     }
-
-    Get.toNamed(QuestionTitlePage.routeName);
-
-    Future.delayed(const Duration(seconds: 3), () {
-      gotoPollPage();
-    });
   }
 
   // page 2
-  void gotoPollPage() {
-    resetQuestionState();
+  Future<void> gotoPollPage() async {
+    await resetQuestionState();
 
-    Get.toNamed(QuestionPollPage.routeName);
+    customGetTo(const QuestionPollPage());
+
+    _countdownController.forward();
   }
 
   // page 3
-  void gotoAnswerInfo() {
+  Future<void> gotoAnswerInfo() async {
     _countdownController.stop();
 
-    // no fun facts to show, go to page 1
-    if (_questionList[index].additionInfo != "") {
-      Get.toNamed(AnswerInfoPage.routeName);
-      Future.delayed(const Duration(seconds: 3), () {
-        gotoAnswerReveal();
-      });
+    if (_index >= questionLength - 1) {
+      Get.offAndToNamed(EndPage.routeName);
     } else {
-      gotoAnswerReveal();
+      // no fun facts to show, go to page 1
+      if (_questionList[index].additionInfo != "" &&
+          _questionList[index].additionInfo != null) {
+        customGetTo(const AnswerInfoPage());
+        await Future.delayed(const Duration(seconds: 5), () {
+          gotoAnswerReveal();
+        });
+      } else {
+        gotoAnswerReveal();
+      }
     }
   }
 
   // page 4
   void gotoAnswerReveal() {
-    Get.toNamed(AnswerRevealPage.routeName);
+    customGetTo(const AnswerRevealPage());
 
-    Future.delayed(const Duration(seconds: 6), () {
-      gotoQuestionTitle();
-    });
+    // Future.delayed(const Duration(seconds: 6), () {
+    //   gotoQuestionTitle();
+    // });
   }
 }

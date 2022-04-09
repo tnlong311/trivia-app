@@ -2,58 +2,25 @@ import 'dart:async';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
+import 'package:trivia_app/consts/user_const.dart';
+import 'package:trivia_app/services/auth_service.dart';
+import 'package:trivia_app/services/user_service.dart';
 
 import '../models/answer.dart';
-import '../models/mock_questions.dart';
+import '../services/game_service.dart';
 
 class ScoreController extends GetxController with GetTickerProviderStateMixin {
-  int _currentPoint = 2000;
+  int _total = -1;
   int _index = 0;
   String _userAnswer = "";
   int _bet = 0;
   int _result = 0;
-  late final int questionLength;
+  bool _isAnswered = false;
 
   final List<Answer> _answerList = [];
 
-  // final List<Answer> answerList = sampleQuestions
-  //     .map((question) =>
-  //     Answer(
-  //       id: question['id'],
-  //       type: question['type'],
-  //       correct: question['correct'],
-  //       fullCorrect: question['full correct'],
-  //     ))
-  //     .toList();
-
-  // called immediately after the widget is allocated memory
-  @override
-  void onInit() async {
-    DatabaseReference questionRef =
-        FirebaseDatabase.instance.ref().child('/game bank/2022/questions');
-
-    await questionRef.get().then((DataSnapshot snapshot) {
-      for (var q in (snapshot.value as List)) {
-        if (q != null) {
-          Answer answer = Answer.fromRTDB(q);
-          _answerList.add(answer);
-        }
-      }
-    }).catchError((error) => print(error));
-
-    questionLength = _answerList.length;
-
-    super.onInit();
-  }
-
-  @override
-  void onClose() {
-    print("ScoreController closed");
-    super.onClose();
-  }
-
   // getters
-  int get currentPoint => _currentPoint;
+  int get totalPoint => _total;
 
   int get index => _index;
 
@@ -64,9 +31,15 @@ class ScoreController extends GetxController with GetTickerProviderStateMixin {
 
   String get userAnswer => _userAnswer;
 
+  bool get isAnswered => _isAnswered;
+
   String get fullCorrectAnswer => _answerList[index].fullCorrect;
 
   // settlers
+  void setIndex(int value) {
+    _index = value;
+  }
+
   void setUserAnswer(value) {
     _userAnswer = value.toString().toUpperCase();
   }
@@ -75,27 +48,76 @@ class ScoreController extends GetxController with GetTickerProviderStateMixin {
     _bet = int.parse(value);
   }
 
-  // helpful methods
+  void setAnswerState(bool state) {
+    _isAnswered = state;
+  }
 
-  void checkAnswer() {
-    // _countdownController.stop();
-    print(_answerList[index].correct);
+  // helpful methods
+  Future<void> fetchAnswers() async {
+    if (_answerList.isEmpty) {
+      DatabaseReference questionRef =
+          FirebaseDatabase.instance.ref().child('/game bank/2022/questions');
+
+      await questionRef.get().then((DataSnapshot snapshot) {
+        for (var q in (snapshot.value as List)) {
+          if (q != null) {
+            Answer answer = Answer.fromRTDB(q);
+            _answerList.add(answer);
+          }
+        }
+      }).catchError((error) => print(error));
+    }
+  }
+
+  Future<void> fetchChange() async {
+    var pin = await RtdbUserService.getCurrentUserPin();
+
+    _result = await RtdbGameService.getCurrentQuestionScore(pin, _index + 1);
+    print('score is $_result');
+  }
+
+  Future<void> fetchTotalScore() async {
+    var pin = await RtdbUserService.getCurrentUserPin();
+
+    _total = await RtdbGameService.getUserTotalScore(pin);
+  }
+
+  Future<void> checkAndPostAnswer() async {
+    print('bet=$_bet, user answered=$_userAnswer');
+    print(
+        'user answered '
+            '${_answerList[index].correct == _userAnswer
+            ? 'correct' : 'wrong'}');
 
     if (_userAnswer == _answerList[index].correct) {
       _result = _bet;
-      print("correct answer");
     } else {
       _result = -_bet;
-      print("wrong answer");
     }
 
-    _currentPoint += _result;
-    update();
+    // update();
+
+    await RtdbGameService.postScoreChange(
+        AuthService.getPin(), _index + 1, _result);
+    // await RtdbGameService.postTotalScore(AuthService.getPin(), _currentPoint);
   }
 
-  void resetAnswerState() {}
+  Future<void> resetAnswerState() async {
+    _isAnswered = false;
+    await fetchTotalScore();
+  }
 
-  void increaseIndex() {
-    _index++;
+  // called immediately after the widget is allocated memory
+  @override
+  void onInit() async {
+    super.onInit();
+
+    await fetchAnswers();
+  }
+
+  @override
+  void onClose() {
+    print("ScoreController closed");
+    super.onClose();
   }
 }

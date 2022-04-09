@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:trivia_app/consts/app_styles.dart';
 import 'package:trivia_app/services/auth_service.dart';
 import 'package:trivia_app/views/pages/team_formation_page.dart';
+import 'package:trivia_app/views/pages/admin/test_firebase.dart';
 
 import '../widgets/Layer.dart';
 import '../widgets/TextFieldWithButton.dart';
@@ -53,25 +54,22 @@ class _LandingPageState extends State<LandingPage>
 
   // bool _isLoggedIn = false;
 
-  validateSignIn(value) async {
-    var pin = await AuthService.signIn(value);
-
-    if (pin != '') {
-      print(pin);
-      return true;
-    } else {
-      return false;
-    }
-  }
+  // validateSignIn(value) async {
+  //   var pin = await AuthService.signIn(value).pin;
+  //
+  //   if (pin != '') {
+  //     print(pin);
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   inputValidator(value) {
     // print(_isLoggedIn);
     if (value == null || value.isEmpty) {
       return 'Please enter some text';
     }
-    // else if (!_isLoggedIn) {
-    //   return 'Wrong game code';
-    // }
 
     return null;
   }
@@ -81,7 +79,9 @@ class _LandingPageState extends State<LandingPage>
 
     if (pin == null || pin == '') {
       return false;
-    } else {
+    }
+    // login success
+    else {
       print(pin);
       return true;
     }
@@ -89,6 +89,7 @@ class _LandingPageState extends State<LandingPage>
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     final isKeyboard = MediaQuery
         .of(context)
         .viewInsets
@@ -215,6 +216,47 @@ class _LandingPageState extends State<LandingPage>
           ),
         ]),
       ),
+=======
+    final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
+
+    return SafeArea(
+      child: Stack(children: <Widget>[
+        Image.asset(
+          'assets/images/BackGround.png',
+          fit: BoxFit.cover,
+          height: double.infinity,
+          width: double.infinity,
+        ),
+        Layer(),
+        Planet(),
+        Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: Colors.transparent,
+          body: Column(children: [
+            Expanded(
+                flex: 1,
+                child: Align(
+                  alignment: Alignment(0, -0.6),
+                  child: Transform.scale(
+                      scale: 1.2, child: Image.asset('assets/images/logo.png')),
+                )),
+            Expanded(
+                flex: 1,
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: TextFieldWithButton(
+                      validator: inputValidator,
+                      updator: inputUpdator,
+                      routeName: TeamFormationPage.routeName,
+                      // routeName: TestFirebasePage.routeName,
+                      failMsg: 'Wrong game code!',
+                      successMsg: 'Game joined!',
+                      isKeyboard: isKeyboard),
+                ))
+          ]),
+        ),
+      ]),
+>>>>>>> master
     );
   }
 }

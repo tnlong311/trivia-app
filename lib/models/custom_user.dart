@@ -17,6 +17,7 @@ class CustomUser {
   static createCustomUser() async {
     DatabaseReference userRef = ref.child('/users');
     final String pin = (Random().nextInt(900000) + 100000).toString();
+    // final String pin = '31120';
     final String accountName = pin + EMAIL_TAIL;
 
     // final res = auth.signInWithEmailAndPassword(
@@ -24,17 +25,6 @@ class CustomUser {
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
           email: accountName, password: DEFAULT_PASSWORD);
-
-      await userRef
-          .child(pin)
-          .update({
-            'pin': pin,
-            'role': 'user',
-          })
-          .then((_) => print('User updated to RTDB'))
-          .catchError((error) => print(error));
-
-      print('User created');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
         print('The account already exists.');
@@ -42,6 +32,27 @@ class CustomUser {
     } catch (e) {
       print(e);
     }
+
+    await userRef
+        .child(pin)
+        .update({
+          'pin': pin,
+          'role': 'user',
+        })
+        .then((_) => print('User updated to RTDB'))
+        .catchError((error) => print(error));
+
+    await ref
+        .child('gameplay/2022/scores')
+        .update({
+          pin: {
+              'changes': {0: DEFAULT_SCORE}
+          }
+        })
+        .then((_) => print('User added to gameplay'))
+        .catchError((error) => print(error));
+
+    print('User created');
   }
 
   static getPinList() async {
@@ -49,10 +60,30 @@ class CustomUser {
 
     await userRef.get().then((DataSnapshot snapshot) {
       if (snapshot.exists) {
-        (snapshot.value as Map).forEach((key, value){
+        (snapshot.value as Map).forEach((key, value) {
           print(key);
         });
       }
     }).catchError((error) => print(error));
   }
+
+  static changeUserGameStatus() async {
+    DatabaseReference gameRef = ref.child('gameplay/2022/scores');
+    DatabaseReference userRef = ref.child('users');
+
+    await userRef.get().then((snapshot) async {
+      for (var data in snapshot.children) {
+        var pin = data.key ?? '31120';
+        // print(pin);
+        // print(data.value);
+        await gameRef.update({
+          pin: {
+            'changes': {'0': DEFAULT_SCORE}
+          }
+        });
+      }
+    });
+  }
+
+  // static add
 }
