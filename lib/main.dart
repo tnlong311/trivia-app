@@ -12,6 +12,8 @@ import 'package:trivia_app/utils/custom_routing.dart';
 // import 'package:trivia_app/views/pages/end_page.dart';
 // import 'package:trivia_app/views/pages/guidelines_page.dart';
 import 'package:trivia_app/views/pages/landing_page.dart';
+import 'package:trivia_app/views/pages/lobby_page.dart';
+import 'package:trivia_app/views/pages/rules_page.dart';
 // import 'package:trivia_app/views/pages/lobby_page.dart';
 // import 'package:trivia_app/views/pages/question_template/answer_info_page.dart';
 // import 'package:trivia_app/views/pages/question_template/answer_reveal_page.dart';
@@ -92,7 +94,7 @@ class MyApp extends StatelessWidget {
           colorScheme:
               ColorScheme.fromSwatch().copyWith(secondary: Colors.cyanAccent),
         ),
-        initialRoute: LandingPage.routeName,
+        initialRoute: RulesPage.routeName,
         // initialRoute: QuestionTitlePage.routeName,
         // initialRoute: RulesPage.routeName,
         // initialRoute: TestFirebasePage.routeName,
