@@ -26,7 +26,7 @@ class _LobbyPageState extends State<LobbyPage> with TickerProviderStateMixin {
     anime.repeat();
   }
 
-  void runAnimation() {
+  void run_animation() {
     anime.reset();
     anime.forward();
   }
