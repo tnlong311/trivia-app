@@ -35,7 +35,6 @@ void main() async {
   // await FirebaseAuth.instance.setPersistence(Persistence.SESSION);
   // delete this after done
   // await AuthService.signOut();
-
   GameController _gameController = Get.put(GameController());
   ScoreController _scoreController = Get.put(ScoreController());
 
