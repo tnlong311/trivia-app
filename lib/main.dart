@@ -37,36 +37,44 @@ void main() async {
   // await FirebaseAuth.instance.setPersistence(Persistence.SESSION);
   // delete this after done
   // await AuthService.signOut();
-
   GameController _gameController = Get.put(GameController());
   ScoreController _scoreController = Get.put(ScoreController());
 
   final statusRef =
       FirebaseDatabase.instance.ref().child('/gameplay/2022/game status/');
-  //
-  // statusRef.onChildChanged.listen((event) async {
-  //   var questionNum = event.snapshot.value ?? 1;
-  //   var pin = AuthService.getPin();
-  //   var isNamed = await RtdbUserService.isNamed(pin);
-  //
-  //   if (AuthService.isSignedIn() && isNamed) {
-  //     if (event.snapshot.key == 'current') {
-  //       print('proceed to question $questionNum');
-  //
-  //       _gameController.setIndexFromQuestionNum(questionNum);
-  //
-  //       _gameController.gotoQuestionTitle();
-  //     } else if (event.snapshot.key == 'reveal') {
-  //       print('proceed to answer reveal on question $questionNum');
-  //
-  //       _gameController.setIndexFromQuestionNum(questionNum);
-  //       await _scoreController.fetchTotalScore();
-  //       await _scoreController.fetchChange();
-  //
-  //       _gameController.gotoAnswerInfo();
-  //     }
-  //   }
-  // });
+
+  statusRef.onChildChanged.listen((event) async {
+    var questionNum = int.tryParse(event.snapshot.value.toString()) ?? 0;
+    var pin = AuthService.getPin();
+    var isNamed = await RtdbUserService.isNamed(pin);
+    GameController _gameController = Get.put(GameController());
+    ScoreController _scoreController = Get.put(ScoreController());
+
+    if(_gameController.questionsLength == 0) {
+      await _gameController.fetchQuestions();
+    }
+    if(_scoreController.questionsLength == 0) {
+      await _scoreController.fetchAnswers();
+    }
+
+    if (AuthService.isSignedIn() && isNamed && questionNum > 0) {
+      if (event.snapshot.key == 'current') {
+        print('proceed to question $questionNum');
+
+        _gameController.setIndexFromQuestionNum(questionNum);
+
+        _gameController.gotoQuestionTitle();
+      } else if (event.snapshot.key == 'reveal') {
+        print('proceed to answer reveal on question $questionNum');
+
+        _gameController.setIndexFromQuestionNum(questionNum);
+        await _scoreController.fetchTotalScore();
+        await _scoreController.fetchChange();
+
+        _gameController.gotoAnswerReveal();
+      }
+    }
+  });
 
   runApp(const MyApp());
 }

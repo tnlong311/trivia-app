@@ -35,6 +35,8 @@ class ScoreController extends GetxController with GetTickerProviderStateMixin {
 
   String get fullCorrectAnswer => _answerList[index].fullCorrect;
 
+  int get questionsLength => _answerList.length;
+
   // settlers
   void setIndex(int value) {
     _index = value;
@@ -58,14 +60,18 @@ class ScoreController extends GetxController with GetTickerProviderStateMixin {
       DatabaseReference questionRef =
           FirebaseDatabase.instance.ref().child('/game bank/2022/questions');
 
-      await questionRef.get().then((DataSnapshot snapshot) {
-        for (var q in (snapshot.value as List)) {
-          if (q != null) {
-            Answer answer = Answer.fromRTDB(q);
-            _answerList.add(answer);
-          }
-        }
-      }).catchError((error) => print(error));
+      await questionRef
+          .get()
+          .then((DataSnapshot snapshot) {
+            for (var q in (snapshot.value as List)) {
+              if (q != null) {
+                Answer answer = Answer.fromRTDB(q);
+                _answerList.add(answer);
+              }
+            }
+          })
+          .then((_) => print('answer list fetched'))
+          .catchError((error) => print(error));
     }
   }
 
@@ -84,10 +90,8 @@ class ScoreController extends GetxController with GetTickerProviderStateMixin {
 
   Future<void> checkAndPostAnswer() async {
     print('bet=$_bet, user answered=$_userAnswer');
-    print(
-        'user answered '
-            '${_answerList[index].correct == _userAnswer
-            ? 'correct' : 'wrong'}');
+    print('user answered '
+        '${_answerList[index].correct == _userAnswer ? 'correct' : 'wrong'}');
 
     if (_userAnswer == _answerList[index].correct) {
       _result = _bet;
