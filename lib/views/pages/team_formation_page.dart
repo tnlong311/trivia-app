@@ -59,10 +59,8 @@ class _TeamFormationPageState extends State<TeamFormationPage>
   inputValidator(value) {
     if (value == null || value.isEmpty) {
       return 'Please enter some text';
-    } else if (value.length < 4) {
-      return 'Must be at least 4 chars';
-    } else if (value.length > 30) {
-      return 'Must be at most 30 chars';
+    } else if (value.length < 4 || value.length > 30) {
+      return 'Must be between 4 & 30 chars';
     }
 
     return null;

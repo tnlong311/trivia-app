@@ -52,19 +52,6 @@ class _LandingPageState extends State<LandingPage>
     super.dispose();
   }
 
-  // bool _isLoggedIn = false;
-
-  // validateSignIn(value) async {
-  //   var pin = await AuthService.signIn(value).pin;
-  //
-  //   if (pin != '') {
-  //     print(pin);
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
-
   inputValidator(value) {
     // print(_isLoggedIn);
     if (value == null || value.isEmpty) {

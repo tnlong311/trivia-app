@@ -13,6 +13,7 @@ import 'package:trivia_app/views/pages/question_template/question_title_page.dar
 
 import '../models/question.dart';
 import '../services/auth_service.dart';
+import '../utils/custom_routing.dart';
 import '../utils/helpers.dart';
 
 class GameController extends GetxController with GetTickerProviderStateMixin {
@@ -84,8 +85,7 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
   void setIndexFromQuestionNum(value) {
     // _index = await RtdbGameService.getCurrentIndex();
     _index = value - 1;
-    print(_index);
-
+    update();
     ScoreController _scoreController = Get.put(ScoreController());
     _scoreController.setIndex(_index);
   }
@@ -103,7 +103,7 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
       Get.offAndToNamed(EndPage.routeName);
     } else {
       // Get.offAndToNamed(QuestionTitlePage.routeName);
-      customGetTo(const QuestionTitlePage());
+      CustomRouter.customGetTo(const QuestionTitlePage());
       await Future.delayed(const Duration(seconds: 3), () {
         gotoPollPage();
       });
@@ -114,7 +114,7 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
   Future<void> gotoPollPage() async {
     await resetQuestionState();
 
-    customGetTo(const QuestionPollPage());
+    CustomRouter.customGetTo(const QuestionPollPage());
 
     _countdownController.forward();
   }
@@ -129,7 +129,7 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
       // no fun facts to show, go to page 1
       if (_questionList[index].additionInfo != "" &&
           _questionList[index].additionInfo != null) {
-        customGetTo(const AnswerInfoPage());
+        CustomRouter.customGetTo(const AnswerInfoPage());
         await Future.delayed(const Duration(seconds: 5), () {
           gotoAnswerReveal();
         });
@@ -141,7 +141,7 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
 
   // page 4
   void gotoAnswerReveal() {
-    customGetTo(const AnswerRevealPage());
+    CustomRouter.customGetTo(const AnswerRevealPage());
 
     // Future.delayed(const Duration(seconds: 6), () {
     //   gotoQuestionTitle();
