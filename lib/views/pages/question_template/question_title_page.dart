@@ -1,6 +1,10 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:trivia_app/consts/app_styles.dart';
+import 'package:flutter/material.dart';
+
 import '../../widgets/Layer.dart';
 
 class QuestionTitlePage extends StatefulWidget {
@@ -94,6 +98,17 @@ class _QuestionTitlePageState extends State<QuestionTitlePage> with TickerProvid
           );},
         ),
       ]),
+//     GameController _gameController = Get.put(GameController());
+
+//     return Scaffold(
+//       body: SafeArea(
+//         child: Center(
+//           child: Text(
+//             "Question #${_gameController.index + 1}",
+//             style: triviaHeading1,
+//           ),
+//         ),
+//       ),
     );
   }
 }

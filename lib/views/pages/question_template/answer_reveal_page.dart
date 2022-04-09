@@ -39,7 +39,7 @@ class AnswerRevealPage extends StatelessWidget {
               flex: 1,
               child: CorrectAnswerWidget(
                   header: "Your current point:",
-                  content: _scoreController.currentPoint.toString()),
+                  content: _scoreController.totalPoint.toString()),
             ),
           ],
         ),

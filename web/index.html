@@ -14,7 +14,7 @@
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
   -->
-  <base href="$FLUTTER_BASE_HREF">
+  <base href="/trivia-app/">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
@@ -31,8 +31,29 @@
 
   <title>trivia_app</title>
   <link rel="manifest" href="manifest.json">
+
+  <!--  loading screen style -->
+  <style>
+      .loading_container {
+        width: 100vw;
+        height: 100vh;
+        background-color: ;
+        display: flex; /* Default Axis is X*/
+        justify-content: center; /* Main Axis */
+        align-items: center; /* Cross Axis */
+        background-image: url('./assets/loading/BackGround.png');
+      }
+      .app_logo{
+        width: 30vw;
+      }
+  </style>
 </head>
 <body>
+  <!-- on web loading -->
+  <div id="loading_indicator" class="loading_container">
+<!--    <img class="app_logo" src="./assets/loading/logo_splash.png" />-->
+    <img class="app_logo" src="./assets/loading/doge_coin.gif"/>
+  </div>
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trivia_app/consts/app_styles.dart';
 import 'package:trivia_app/views/pages/team_formation_page.dart';
-import 'package:trivia_app/views/widgets/custom_snackbar.dart';
+import 'package:trivia_app/views/dialogs/custom_snackbar.dart';
 
 class TextFieldWithButton extends StatefulWidget {
   const TextFieldWithButton(
@@ -88,7 +88,7 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
                         iconSize: 40,
                         onPressed: () async {
                           widget.run_animation();
-                          Future.delayed(Duration(seconds: 5));
+                          Future.delayed(const Duration(seconds: 5));
                           if (_formKey.currentState!.validate()) {
                             // close keyboard
                             FocusManager.instance.primaryFocus?.unfocus();

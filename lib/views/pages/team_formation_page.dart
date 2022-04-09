@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:trivia_app/services/auth_service.dart';
 import 'package:trivia_app/services/user_service.dart';
 import 'package:trivia_app/views/widgets/Layer.dart';
 import 'package:trivia_app/views/widgets/TextFieldWithButton.dart';
@@ -21,6 +20,7 @@ class _TeamFormationPageState extends State<TeamFormationPage>
     with TickerProviderStateMixin {
   late AnimationController anime;
   late Animation movement, movement2;
+  var _name = 'STEMer';
 
   @override
   void initState() {
@@ -56,15 +56,11 @@ class _TeamFormationPageState extends State<TeamFormationPage>
     super.dispose();
   }
 
-  void placeholder() {}
-
   inputValidator(value) {
     if (value == null || value.isEmpty) {
       return 'Please enter some text';
-    } else if (value.length < 6) {
-      return 'Must be at least 6 chars';
-    } else if (value.length > 15) {
-      return 'Must be at most 15 chars';
+    } else if (value.length < 4 || value.length > 30) {
+      return 'Must be between 4 & 30 chars';
     }
 
     return null;
@@ -76,6 +72,9 @@ class _TeamFormationPageState extends State<TeamFormationPage>
     if (pin.toString() == '') {
       return false;
     } else {
+      setState(() {
+        _name = value;
+      });
       await RtdbUserService.setName(pin.toString(), value);
       print('Set group name $value with pin $pin');
       return true;

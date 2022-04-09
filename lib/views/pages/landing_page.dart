@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:trivia_app/consts/app_styles.dart';
 import 'package:trivia_app/services/auth_service.dart';
 import 'package:trivia_app/views/pages/team_formation_page.dart';
+import 'package:trivia_app/views/pages/admin/test_firebase.dart';
 
 import '../widgets/Layer.dart';
 import '../widgets/TextFieldWithButton.dart';
@@ -51,27 +52,11 @@ class _LandingPageState extends State<LandingPage>
     super.dispose();
   }
 
-  // bool _isLoggedIn = false;
-
-  validateSignIn(value) async {
-    var pin = await AuthService.signIn(value);
-
-    if (pin != '') {
-      print(pin);
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   inputValidator(value) {
     // print(_isLoggedIn);
     if (value == null || value.isEmpty) {
       return 'Please enter some text';
     }
-    // else if (!_isLoggedIn) {
-    //   return 'Wrong game code';
-    // }
 
     return null;
   }
@@ -81,7 +66,9 @@ class _LandingPageState extends State<LandingPage>
 
     if (pin == null || pin == '') {
       return false;
-    } else {
+    }
+    // login success
+    else {
       print(pin);
       return true;
     }
@@ -89,10 +76,7 @@ class _LandingPageState extends State<LandingPage>
 
   @override
   Widget build(BuildContext context) {
-    final isKeyboard = MediaQuery
-        .of(context)
-        .viewInsets
-        .bottom != 0;
+    final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -151,9 +135,9 @@ class _LandingPageState extends State<LandingPage>
                         colorBlendMode: BlendMode.modulate,
                       ),
                     ),
-                  );
-              }
-          ),
+                  ),
+                );
+              }),
           AnimatedBuilder(
               animation: anime,
               builder: (context, _) {
@@ -191,18 +175,12 @@ class _LandingPageState extends State<LandingPage>
                             ), text: "How can we call your group?"),
                       ),
                     ),
-                  );
-              }
-          ),
+                  ),
+                );
+              }),
           Positioned(
-            top: MediaQuery
-                .of(context)
-                .size
-                .height * 2.0 / 4.0,
-            left: (MediaQuery
-                .of(context)
-                .size
-                .width - 250) / 2.0,
+            top: MediaQuery.of(context).size.height * 2.0 / 4.0,
+            left: (MediaQuery.of(context).size.width - 250) / 2.0,
             child: TextFieldWithButton(
               validator: inputValidator,
               updator: inputUpdator,
