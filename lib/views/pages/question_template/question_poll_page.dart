@@ -24,39 +24,43 @@ class QuestionPollPage extends StatefulWidget {
 class _QuestionPollPageState extends State<QuestionPollPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _controller = TextEditingController();
+  final GameController _gameController = Get.put(GameController());
+  final ScoreController _scoreController = Get.put(ScoreController());
 
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
-    final keyboard_height = MediaQuery
-        .of(context)
-        .viewInsets
-        .bottom;
-    GameController _gameController = Get.put(GameController());
-    ScoreController _scoreController = Get.put(ScoreController());
+    final keyboard_height = MediaQuery.of(context).viewInsets.bottom;
 
     final totalPoint = _scoreController.totalPoint;
 
     answerValidator(value) {
-      if (value == null || value.isEmpty) {
+      String input = value.toString().trim();
+
+      if (input.isEmpty) {
         return 'Please enter some text';
       }
       return null;
     }
 
     betValidator(value) {
-      var input = num.tryParse(value);
+      String input = value.toString().trim();
 
-      if (input == null) {
-        return 'Enter a valid number';
-      } else if (input < 0) {
-        return 'Must be positive ?? :D';
-      } else if (input > _scoreController.totalPoint / 2 &&
-          _gameController.index < 11) {
-        return 'Must not exceed half of your score';
-      } else if (input > _scoreController.totalPoint &&
-          _gameController.index > 10) {
-        return 'Must not exceed your total score';
+      if (input.isEmpty) {
+        return 'Please enter a number';
+      } else {
+        var num = int.tryParse(input);
+        if (num == null) {
+          return 'Enter a valid number';
+        } else if (num < 0) {
+          return 'Must be positive ?? :D';
+        } else if (num > _scoreController.totalPoint / 2 &&
+            _gameController.index + 1 < 11) {
+          return 'Must not exceed half of your score';
+        } else if (num > _scoreController.totalPoint &&
+            _gameController.index + 1 > 10) {
+          return 'Must not exceed your total score';
+        }
       }
       return null;
     }
@@ -81,13 +85,17 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
         } else if (!_scoreController.isAnswered) {
           _scoreController.setAnswerState(true);
           _formKey.currentState!.save();
-          await _scoreController.checkAndPostAnswer();
-          CustomSnackBar.showSuccessSnackBar(context, 'Answer submitted!');
+          if (await _scoreController.checkAndPostAnswer()) {
+            CustomSnackBar.showSuccessSnackBar(context, 'Answer submitted!');
+          } else {
+            CustomSnackBar.showFailSnackBar(context, 'Submit failed!');
+          }
         } else {
           CustomSnackBar.showFailSnackBar(context, 'Already submitted!');
         }
       }
     }
+
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -156,14 +164,14 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
                             TextFieldSingle(
                                 width: 250,
                                 title: "Answer",
-                                description: "Enter your answer...",
+                                description: "Enter your answer",
                                 validator: answerValidator,
                                 updator: answerUpdator,
                                 onEnter: answerOnSubmit),
                             TextFieldSingle(
                                 width: 250,
                                 title: "Bet",
-                                description: "Enter your bet...",
+                                description: "Enter an integer",
                                 validator: betValidator,
                                 updator: betUpdator,
                                 onEnter: answerOnSubmit),
@@ -181,7 +189,7 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
                           width: 70,
                           child: RichText(
                             textAlign: TextAlign.center,
-                            text: TextSpan(style: triviaSmall2, text: "1234"),
+                            text: const TextSpan(style: triviaSmall2, text: "1234"),
                           ),
                         )),
                     Positioned(
@@ -194,26 +202,30 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
                           width: 70,
                           child: RichText(
                             textAlign: TextAlign.center,
-                            text: TextSpan(style: triviaSmall2, text: "1234"),
+                            text: const TextSpan(style: triviaSmall2, text: "1234"),
                           ),
                         )),
                     Positioned(
-                        top: (MediaQuery.of(context).size.height - keyboard_height) / 2.0,
-                        child: Text('Hello', style: triviaHeading2,)),
+                        top: (MediaQuery.of(context).size.height -
+                                keyboard_height) /
+                            2.0,
+                        child: const Text(
+                          'Hello',
+                          style: triviaHeading2,
+                        )),
                     TextFormField(
                       style: triviaSmall1,
-
                       controller: _controller,
                       textAlignVertical: TextAlignVertical.bottom,
                       decoration: const InputDecoration(
                         contentPadding: EdgeInsets.only(bottom: 8, left: 15),
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                          BorderSide(color: Colors.transparent, width: 4.0),
+                              BorderSide(color: Colors.transparent, width: 4.0),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide:
-                          BorderSide(color: Colors.transparent, width: 5.0),
+                              BorderSide(color: Colors.transparent, width: 5.0),
                         ),
                         hintText: 'Enter game code',
                       ),
