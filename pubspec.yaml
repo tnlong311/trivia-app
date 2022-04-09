@@ -35,14 +35,7 @@ flutter:
 
   assets:
     - ./assets/pixelComponents/
-    - ./assets/images/logo.png
-    - ./assets/images/InputBox1.png
-    - ./assets/images/InputBox2.png
-    - ./assets/images/BackGround.png
-    - ./assets/images/layer1.png
-    - ./assets/images/layer2.png
-    - ./assets/images/planet.png
-    - ./assets/images/nextButton.png
+    - ./assets/images/
       #   - images/a_dot_ham.jpeg
 
 
