@@ -98,8 +98,11 @@ class _LandingPageState extends State<LandingPage>
                 );
 
                 return Positioned(
-                    top: 500,
-                    left: (MediaQuery.of(context).size.width - 700) / 2.0,
+                    top: MediaQuery.of(context).size.height / 1.35,
+                    left: (MediaQuery
+                        .of(context)
+                        .size
+                        .width - 700) / 2.0,
                     child: Container(
                       width: 700,
                       child: Transform.rotate(
@@ -110,19 +113,27 @@ class _LandingPageState extends State<LandingPage>
           AnimatedBuilder(
               animation: anime,
               builder: (context, _) {
-                final d = movement.value ?? 0.0;
-                return Positioned(
-                  top: -40,
-                  left: -d * 300,
-                  child: Container(
-                    color: Colors.black12,
-                    height: MediaQuery.of(context).size.height * 2.0 / 4.0,
-                    width: MediaQuery.of(context).size.width,
-                    child: Image.asset(
-                      'assets/images/logo.png',
-                      fit: BoxFit.contain,
-                      color: Colors.white.withOpacity(-d + 1),
-                      colorBlendMode: BlendMode.modulate,
+                final d = movement.value.toDouble();
+                return
+                  Positioned(
+                    top: -40,
+                    left: -d * 300,
+                    child: Container(
+                      color: Colors.black12,
+                      height: MediaQuery
+                          .of(context)
+                          .size
+                          .height * 2.0 / 4.0,
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width,
+                      child: Image.asset(
+                        'assets/images/logo.png',
+                        fit: BoxFit.contain,
+                        color: Colors.white.withOpacity(-d + 1),
+                        colorBlendMode: BlendMode.modulate,
+                      ),
                     ),
                   ),
                 );
@@ -130,41 +141,39 @@ class _LandingPageState extends State<LandingPage>
           AnimatedBuilder(
               animation: anime,
               builder: (context, _) {
-                final d = movement.value ?? 0.0;
-                return Positioned(
-                  top: 0,
-                  left: (MediaQuery.of(context).size.width - 400) / 2.0 +
-                      (1 - d) * 350,
-                  child: Container(
-                    color: Colors.white30,
-                    width: 400,
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                          style: TextStyle(
-                            color: Colors.white.withOpacity(d),
-                            fontWeight: FontWeight.w800,
-                            fontFamily: 'PixelFont',
-                            letterSpacing: 0.6,
-                            fontSize: 50,
-                            height: 2,
-                            shadows: <Shadow>[
-                              Shadow(
-                                offset: Offset(4.0, 4.0),
-                                blurRadius: 1.0,
-                                color: Color.fromARGB(255, 232, 27, 119)
-                                    .withOpacity(d),
-                              ),
-                              Shadow(
-                                offset: Offset(-4.0, -4.0),
-                                blurRadius: 1.0,
-                                color: Color.fromARGB(255, 67, 230, 244)
-                                    .withOpacity(d),
-                              ),
-                            ],
-                            decoration: TextDecoration.none,
-                          ),
-                          text: "How can we call your group?"),
+                final d = movement.value.toDouble();
+                return
+                  Positioned(
+                    top: 0,
+                    left: (MediaQuery.of(context).size.width - 400) / 2.0 + (1 - d) * 350,
+                    child: Container(
+                      color: Colors.transparent,
+                      width: 400,
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(d),
+                              fontWeight: FontWeight.w800,
+                              fontFamily: 'PixelFont',
+                              letterSpacing: 0.6,
+                              fontSize: 50,
+                              height: 2,
+                              shadows: <Shadow> [
+                                Shadow(
+                                  offset: Offset(4.0, 4.0),
+                                  blurRadius: 1.0,
+                                  color: Color.fromARGB(255, 232,27,119).withOpacity(d),
+                                ),
+                                Shadow(
+                                  offset: Offset(-4.0, -4.0),
+                                  blurRadius: 1.0,
+                                  color: Color.fromARGB(255, 67,230,244).withOpacity(d),
+                                ),
+                              ],
+                              decoration: TextDecoration.none,
+                            ), text: "How can we call your group?"),
+                      ),
                     ),
                   ),
                 );
@@ -178,6 +187,7 @@ class _LandingPageState extends State<LandingPage>
               routeName: TeamFormationPage.routeName,
               failMsg: 'Wrong game code!',
               successMsg: 'Game joined!',
+              hintText: 'Enter game code',
               isKeyboard: isKeyboard,
               run_animation: run_animation,
             ),
