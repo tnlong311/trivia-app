@@ -78,7 +78,7 @@ class _LobbyPageState extends State<LobbyPage> with TickerProviderStateMixin {
                 'assets/images/planet.png',
                 fit: BoxFit.cover,
               );
-              final mv = anime.value??0.0;
+              final mv = anime.value ?? 0.0;
               return Positioned(
                   top: 500,
                   left: (MediaQuery.of(context).size.width - 700 + 300) / 2.0,

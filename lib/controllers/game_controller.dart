@@ -4,7 +4,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:trivia_app/controllers/score_controller.dart';
-import 'package:trivia_app/services/game_service.dart';
 import 'package:trivia_app/views/pages/end_page.dart';
 import 'package:trivia_app/views/pages/question_template/answer_info_page.dart';
 import 'package:trivia_app/views/pages/question_template/answer_reveal_page.dart';
@@ -12,9 +11,8 @@ import 'package:trivia_app/views/pages/question_template/question_poll_page.dart
 import 'package:trivia_app/views/pages/question_template/question_title_page.dart';
 
 import '../models/question.dart';
-import '../services/auth_service.dart';
 import '../utils/custom_routing.dart';
-import '../utils/helpers.dart';
+
 
 class GameController extends GetxController with GetTickerProviderStateMixin {
   late AnimationController _countdownController;
