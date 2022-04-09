@@ -12,8 +12,6 @@ import 'package:trivia_app/utils/custom_routing.dart';
 // import 'package:trivia_app/views/pages/end_page.dart';
 // import 'package:trivia_app/views/pages/guidelines_page.dart';
 import 'package:trivia_app/views/pages/landing_page.dart';
-import 'package:trivia_app/views/pages/lobby_page.dart';
-import 'package:trivia_app/views/pages/rules_page.dart';
 // import 'package:trivia_app/views/pages/lobby_page.dart';
 // import 'package:trivia_app/views/pages/question_template/answer_info_page.dart';
 // import 'package:trivia_app/views/pages/question_template/answer_reveal_page.dart';
@@ -43,30 +41,30 @@ void main() async {
 
   final statusRef =
       FirebaseDatabase.instance.ref().child('/gameplay/2022/game status/');
-  //
-  // statusRef.onChildChanged.listen((event) async {
-  //   var questionNum = event.snapshot.value ?? 1;
-  //   var pin = AuthService.getPin();
-  //   var isNamed = await RtdbUserService.isNamed(pin);
-  //
-  //   if (AuthService.isSignedIn() && isNamed) {
-  //     if (event.snapshot.key == 'current') {
-  //       print('proceed to question $questionNum');
-  //
-  //       _gameController.setIndexFromQuestionNum(questionNum);
-  //
-  //       _gameController.gotoQuestionTitle();
-  //     } else if (event.snapshot.key == 'reveal') {
-  //       print('proceed to answer reveal on question $questionNum');
-  //
-  //       _gameController.setIndexFromQuestionNum(questionNum);
-  //       await _scoreController.fetchTotalScore();
-  //       await _scoreController.fetchChange();
-  //
-  //       _gameController.gotoAnswerInfo();
-  //     }
-  //   }
-  // });
+
+  statusRef.onChildChanged.listen((event) async {
+    var questionNum = event.snapshot.value ?? 1;
+    var pin = AuthService.getPin();
+    var isNamed = await RtdbUserService.isNamed(pin);
+
+    if (AuthService.isSignedIn() && isNamed) {
+      if (event.snapshot.key == 'current') {
+        print('proceed to question $questionNum');
+
+        _gameController.setIndexFromQuestionNum(questionNum);
+
+        _gameController.gotoQuestionTitle();
+      } else if (event.snapshot.key == 'reveal') {
+        print('proceed to answer reveal on question $questionNum');
+
+        _gameController.setIndexFromQuestionNum(questionNum);
+        await _scoreController.fetchTotalScore();
+        await _scoreController.fetchChange();
+
+        _gameController.gotoAnswerInfo();
+      }
+    }
+  });
 
   runApp(const MyApp());
 }
@@ -86,7 +84,7 @@ class MyApp extends StatelessWidget {
           colorScheme:
               ColorScheme.fromSwatch().copyWith(secondary: Colors.cyanAccent),
         ),
-        initialRoute: RulesPage.routeName,
+        initialRoute: LandingPage.routeName,
         // initialRoute: QuestionTitlePage.routeName,
         // initialRoute: RulesPage.routeName,
         // initialRoute: TestFirebasePage.routeName,

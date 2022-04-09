@@ -38,7 +38,7 @@ class _TeamFormationPageState extends State<TeamFormationPage>
     ).animate(CurvedAnimation(parent: anime, curve: Curves.easeInOutCubic));
   }
 
-  void run_animation() {
+  void runAnimation() {
     anime.reset();
     anime.forward();
   }
@@ -187,21 +187,19 @@ class _TeamFormationPageState extends State<TeamFormationPage>
               builder: (context, _) {
                 final mv = movement2.value.toDouble();
                 return Positioned(
-                    top: viewHeight * 2.0 / 4.0 - max(0, MediaQuery.of(context).viewInsets.bottom - viewHeight * 2.0 / 4.0),
+                    top: viewHeight * 2.0 / 4.0,
                     left: (viewWidth -
-                            (-mv * 150 + 300 * 0.8)) /
+                            (-mv * 100 + 250)) /
                         2.0,
                     child: Container(
-                      width: -mv * 150 + 300,
+                      width: -mv * 100 + 250,
                       child: TextFieldWithButton(
-                          run_animation: run_animation,
+                          runAnimation: runAnimation,
                           validator: inputValidator,
                           updator: inputUpdator,
                           routeName: LobbyPage.routeName,
                           failMsg: 'An error has occured',
-                          hintText: 'Your group name',
-                          width: 300,
-                          height: 80,
+                          hintText: 'Enter your group name',
                           successMsg:
                               'Welcome, $_name!',
                           isKeyboard: isKeyboard),

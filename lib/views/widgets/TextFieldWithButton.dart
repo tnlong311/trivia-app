@@ -13,10 +13,8 @@ class TextFieldWithButton extends StatefulWidget {
       required this.updator,
       required this.failMsg,
       required this.successMsg,
-      required this.run_animation,
-      required this.hintText,
-      required this.width,
-      required this.height})
+      required this.runAnimation,
+      required this.hintText})
       : super(key: key);
 
   final String routeName;
@@ -25,10 +23,8 @@ class TextFieldWithButton extends StatefulWidget {
   final bool isKeyboard;
   final Function validator;
   final Function updator;
-  final Function run_animation;
+  final Function runAnimation;
   final String hintText;
-  final double width;
-  final double height;
 
   // final Function customValidate;
 
@@ -39,12 +35,6 @@ class TextFieldWithButton extends StatefulWidget {
 class _TextFieldWithButtonState extends State<TextFieldWithButton> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _controller = TextEditingController();
-  var p1;
-
-  @override
-  void initState() {
-    p1 = Image.asset('assets/images/next_page_button.png');
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +43,7 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
 
       if (status) {
         CustomSnackBar.showSuccessSnackBar(context, widget.successMsg);
-        widget.run_animation();
+        widget.runAnimation();
         await Future.delayed(const Duration(milliseconds: 1500));
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
         await Future.delayed(const Duration(milliseconds: 5000));
@@ -71,55 +61,50 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
     }
 
     return Container(
-      width: widget.width,
-      height: widget.height,
-      color: Colors.transparent,
+      width: 270,
+      height: 100,
+      color: Colors.black45,
       child: Stack(children: <Widget>[
-        Container(
-          width: 250.0 / 300.0 * widget.width,
-          height: widget.height,
-          child: Image.asset(
-            'assets/images/InputBox2.png',
-            fit: BoxFit.fill,
-            height: widget.height,
-          ),
-        ),
-        widget.isKeyboard
-            ? Align(
-                alignment: Alignment.centerRight,
-                child: GestureDetector(
-                  onTapDown: (tap) async {
-                    setState(() {
-                      p1 = Image.asset(
-                          'assets/images/next_page_button_pressed.png');
-                    });
-                  },
-                  onTapCancel: () => {
-                    setState(() {
-                      p1 = Image.asset('assets/images/next_page_button.png');
-                    })
-                  },
-                  onTapUp: (tap) async {
-                    setState(() {
-                      p1 = Image.asset('assets/images/next_page_button.png');
-                    });
-                    Future.delayed(Duration(seconds: 5));
-                    if (_formKey.currentState!.validate()) {
-                      // close keyboard
-                      FocusManager.instance.primaryFocus?.unfocus();
-
-                      await onSubmitValidate();
-                    }
-                    ;
-                  },
-                  child: Container(width: widget.width / 9, child: p1),
+        Row(
+          children: [
+            Expanded(
+              flex: 4,
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: Image.asset(
+                  'assets/images/InputBox2.png',
+                  fit: BoxFit.fill,
+                  height: 80,
                 ),
-              )
-            : const SizedBox.shrink(),
-        Positioned(
-          left: 0,
+              ),
+            ),
+            widget.isKeyboard
+                ? Expanded(
+                    flex: 1,
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: IconButton(
+                        icon: const Icon(Icons.navigate_next),
+                        iconSize: 40,
+                        onPressed: () async {
+                          widget.runAnimation();
+                          Future.delayed(const Duration(seconds: 5));
+                          if (_formKey.currentState!.validate()) {
+                            // close keyboard
+                            FocusManager.instance.primaryFocus?.unfocus();
+
+                            await onSubmitValidate();
+                          }
+                        },
+                      ),
+                    ))
+                : const SizedBox.shrink()
+          ],
+        ),
+        Align(
+          alignment: const Alignment(0.1, -1),
           child: Container(
-            width: widget.width * 0.8,
+            width: 240,
             child: Form(
               key: _formKey,
               child: TextFormField(
@@ -131,9 +116,9 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
                   }
                 },
                 controller: _controller,
-                textAlign: TextAlign.center,
-                // textAlignVertical: TextAlignVertical.bottom,
+                textAlignVertical: TextAlignVertical.bottom,
                 decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.only(bottom: 8, left: 15),
                   focusedBorder: const OutlineInputBorder(
                     borderSide:
                         BorderSide(color: Colors.transparent, width: 4.0),

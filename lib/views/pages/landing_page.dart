@@ -31,7 +31,7 @@ class _LandingPageState extends State<LandingPage>
     ).animate(CurvedAnimation(parent: anime, curve: Curves.easeInOutCubic));
   }
 
-  void run_animation() {
+  void runAnimation() {
     anime.reset();
     anime.forward();
   }
@@ -126,7 +126,7 @@ class _LandingPageState extends State<LandingPage>
                     top: -40,
                     left: -d * 300,
                     child: Container(
-                      color: Colors.transparent,
+                      color: Colors.black12,
                       height: MediaQuery
                           .of(context)
                           .size
@@ -186,7 +186,7 @@ class _LandingPageState extends State<LandingPage>
                   );
               }),
           Positioned(
-            top: viewHeight * 2.0 / 4.0 - max(0, MediaQuery.of(context).viewInsets.bottom - viewHeight * 2.0 / 4.0),
+            top: viewHeight * 2.0 / 4.0,
             left: (viewWidth - 250) / 2.0,
             child: TextFieldWithButton(
               validator: inputValidator,
@@ -196,9 +196,7 @@ class _LandingPageState extends State<LandingPage>
               successMsg: 'Game joined!',
               hintText: 'Enter game code',
               isKeyboard: isKeyboard,
-              width: 300,
-              height: 80,
-              run_animation: run_animation,
+              runAnimation: runAnimation,
             ),
           ),
         ]),
