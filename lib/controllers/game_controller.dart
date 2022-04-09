@@ -73,12 +73,11 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
 
   // page 1
   Future<void> gotoQuestionTitle() async {
-    if (_index >= questionsLength - 1) {
+    if (_index >= questionsLength) {
       Get.offAndToNamed(EndPage.routeName);
     } else {
-      // Get.offAndToNamed(QuestionTitlePage.routeName);
       CustomRouter.customGetTo(const QuestionTitlePage());
-      await Future.delayed(const Duration(seconds: 3), () {
+      await Future.delayed(const Duration(seconds: 10), () {
         gotoPollPage();
       });
     }

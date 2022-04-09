@@ -48,13 +48,14 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
         await Future.delayed(const Duration(milliseconds: 5000));
 
-        Navigator.push(
-            context,
-            PageRouteBuilder(
-                pageBuilder: (context, animation1, animation2) =>
-                    const TeamFormationPage(),
-                transitionDuration: Duration.zero,
-                reverseTransitionDuration: Duration.zero));
+        Navigator.pushNamed(context, widget.routeName);
+        // Navigator.push(
+        //     context,
+        //     PageRouteBuilder(
+        //         pageBuilder: (context, animation1, animation2) =>
+        //             const TeamFormationPage(),
+        //         transitionDuration: Duration.zero,
+        //         reverseTransitionDuration: Duration.zero));
       } else {
         CustomSnackBar.showFailSnackBar(context, widget.failMsg);
       }
@@ -125,9 +126,9 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
                   ),
                   enabledBorder: const OutlineInputBorder(
                     borderSide:
-                        const BorderSide(color: Colors.transparent, width: 5.0),
+                        BorderSide(color: Colors.transparent, width: 5.0),
                   ),
-                  hintText: this.widget.hintText,
+                  hintText: widget.hintText,
                 ),
               ),
             ),
