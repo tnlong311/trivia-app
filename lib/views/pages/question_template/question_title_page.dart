@@ -1,10 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:trivia_app/consts/app_styles.dart';
-import 'package:flutter/material.dart';
 
+import '../../../controllers/game_controller.dart';
 import '../../widgets/Layer.dart';
 
 class QuestionTitlePage extends StatefulWidget {
@@ -16,7 +14,8 @@ class QuestionTitlePage extends StatefulWidget {
   State<QuestionTitlePage> createState() => _QuestionTitlePageState();
 }
 
-class _QuestionTitlePageState extends State<QuestionTitlePage> with TickerProviderStateMixin {
+class _QuestionTitlePageState extends State<QuestionTitlePage>
+    with TickerProviderStateMixin {
   late AnimationController anime;
 
   @override
@@ -24,7 +23,7 @@ class _QuestionTitlePageState extends State<QuestionTitlePage> with TickerProvid
     super.initState();
     anime =
         AnimationController(vsync: this, duration: const Duration(seconds: 6));
-    Future.delayed(Duration(seconds: 10));
+    Future.delayed(const Duration(seconds: 10));
     anime.repeat(reverse: true);
   }
 
@@ -48,6 +47,7 @@ class _QuestionTitlePageState extends State<QuestionTitlePage> with TickerProvid
   @override
   Widget build(BuildContext context) {
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
+    GameController _gameController = Get.put(GameController());
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -59,56 +59,53 @@ class _QuestionTitlePageState extends State<QuestionTitlePage> with TickerProvid
           height: double.infinity,
           width: double.infinity,
         ),
-        Layer(),
+        const Layer(),
         AnimatedBuilder(
           animation: anime,
           builder: (context, _) {
             return Positioned(
-            top: (MediaQuery.of(context).size.height - 100) / 2.0,
-            left: (MediaQuery.of(context).size.width - 400) / 2.0 + max(0, anime.value * 6 - 4) / 2 * 400,
-            child: Container(
-              color: Colors.white30,
-              width: 400,
-              child: RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                    style: TextStyle(
-                      color: Colors.white.withOpacity(max(0,1 - max(0, anime.value * 6 - 4))),
-                      fontWeight: FontWeight.w800,
-                      fontFamily: 'PixelFont',
-                      letterSpacing: 0.6,
-                      fontSize: 50,
-                      height: 2,
-                      shadows: <Shadow> [
-                        Shadow(
-                          offset: Offset(4.0, 4.0),
-                          blurRadius: 1.0,
-                          color: Color.fromARGB(255, 232,27,119).withOpacity(max(0,1 - max(0, anime.value * 6 - 4))),
-                        ),
-                        Shadow(
-                          offset: Offset(-4.0, -4.0),
-                          blurRadius: 1.0,
-                          color: Color.fromARGB(255, 67,230,244).withOpacity(max(0,1 - max(0, anime.value * 6 - 4))),
-                        ),
-                      ],
-                      decoration: TextDecoration.none,
-                    ), text: "Question 1"),
+              top: (MediaQuery.of(context).size.height - 100) / 2.0,
+              left: (MediaQuery.of(context).size.width - 400) / 2.0 +
+                  max(0, anime.value * 6 - 4) / 2 * 400,
+              child: Container(
+                color: Colors.white30,
+                width: 400,
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                      style: TextStyle(
+                        color: Colors.white.withOpacity(
+                            max(0, 1 - max(0, anime.value * 6 - 4))),
+                        fontWeight: FontWeight.w800,
+                        fontFamily: 'PixelFont',
+                        letterSpacing: 0.6,
+                        fontSize: 50,
+                        height: 2,
+                        shadows: <Shadow>[
+                          Shadow(
+                            offset: const Offset(4.0, 4.0),
+                            blurRadius: 1.0,
+                            color: const Color.fromARGB(255, 232, 27, 119)
+                                .withOpacity(
+                                    max(0, 1 - max(0, anime.value * 6 - 4))),
+                          ),
+                          Shadow(
+                            offset: const Offset(-4.0, -4.0),
+                            blurRadius: 1.0,
+                            color: const Color.fromARGB(255, 67, 230, 244)
+                                .withOpacity(
+                                    max(0, 1 - max(0, anime.value * 6 - 4))),
+                          ),
+                        ],
+                        decoration: TextDecoration.none,
+                      ),
+                      text: "Question #${_gameController.index + 1}"),
+                ),
               ),
-            ),
-          );},
+            );
+          },
         ),
       ]),
-//     GameController _gameController = Get.put(GameController());
-
-//     return Scaffold(
-//       body: SafeArea(
-//         child: Center(
-//           child: Text(
-//             "Question #${_gameController.index + 1}",
-//             style: triviaHeading1,
-//           ),
-//         ),
-//       ),
     );
   }
 }

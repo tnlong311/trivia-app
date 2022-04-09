@@ -26,7 +26,7 @@ class _LobbyPageState extends State<LobbyPage> with TickerProviderStateMixin {
     anime.repeat();
   }
 
-  void run_animation() {
+  void runAnimation() {
     anime.reset();
     anime.forward();
   }
@@ -46,6 +46,8 @@ class _LobbyPageState extends State<LobbyPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
+    final viewHeight = MediaQuery.of(context).size.height;
+    final viewWidth = MediaQuery.of(context).size.width;
 
     return SafeArea(
       child: Scaffold(
@@ -58,10 +60,10 @@ class _LobbyPageState extends State<LobbyPage> with TickerProviderStateMixin {
             height: double.infinity,
             width: double.infinity,
           ),
-          Layer(),
+          const Layer(),
           Positioned(
             top: 0,
-            left: (MediaQuery.of(context).size.width - 400) / 2.0,
+            left: (viewWidth - 400) / 2.0,
             child: Container(
               color: Colors.transparent,
               width: 400,
@@ -81,12 +83,12 @@ class _LobbyPageState extends State<LobbyPage> with TickerProviderStateMixin {
                 );
                 final mv = anime.value.toDouble();
                 return Positioned(
-                    top: MediaQuery.of(context).size.height / 1.35,
-                    left: (MediaQuery.of(context).size.width - 700 + 300) / 2.0,
+                    top: viewHeight / 1.35,
+                    left: (viewWidth - 700 + 300) / 2.0,
                     child: Container(
                         width: 400,
                         child: Transform.translate(
-                          offset: Offset(0, -300),
+                          offset: const Offset(0, -300),
                           child: Transform.rotate(
                               angle: -2.0 / 3.0 * pi * 1 + pi * 0.4 - 2 * pi * mv, child: p1),
                         )));

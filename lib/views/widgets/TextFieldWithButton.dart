@@ -13,7 +13,7 @@ class TextFieldWithButton extends StatefulWidget {
       required this.updator,
       required this.failMsg,
       required this.successMsg,
-      required this.run_animation,
+      required this.runAnimation,
       required this.hintText})
       : super(key: key);
 
@@ -23,7 +23,7 @@ class TextFieldWithButton extends StatefulWidget {
   final bool isKeyboard;
   final Function validator;
   final Function updator;
-  final Function run_animation;
+  final Function runAnimation;
   final String hintText;
 
   // final Function customValidate;
@@ -43,7 +43,7 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
 
       if (status) {
         CustomSnackBar.showSuccessSnackBar(context, widget.successMsg);
-        widget.run_animation();
+        widget.runAnimation();
         await Future.delayed(const Duration(milliseconds: 1500));
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
         await Future.delayed(const Duration(milliseconds: 5000));
@@ -52,7 +52,7 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
             context,
             PageRouteBuilder(
                 pageBuilder: (context, animation1, animation2) =>
-                    TeamFormationPage(),
+                    const TeamFormationPage(),
                 transitionDuration: Duration.zero,
                 reverseTransitionDuration: Duration.zero));
       } else {
@@ -87,7 +87,7 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
                         icon: const Icon(Icons.navigate_next),
                         iconSize: 40,
                         onPressed: () async {
-                          widget.run_animation();
+                          widget.runAnimation();
                           Future.delayed(const Duration(seconds: 5));
                           if (_formKey.currentState!.validate()) {
                             // close keyboard
@@ -123,9 +123,9 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
                     borderSide:
                         BorderSide(color: Colors.transparent, width: 4.0),
                   ),
-                  enabledBorder: OutlineInputBorder(
+                  enabledBorder: const OutlineInputBorder(
                     borderSide:
-                        BorderSide(color: Colors.transparent, width: 5.0),
+                        const BorderSide(color: Colors.transparent, width: 5.0),
                   ),
                   hintText: this.widget.hintText,
                 ),

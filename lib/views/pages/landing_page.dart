@@ -1,11 +1,7 @@
 import 'dart:math';
-import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:trivia_app/consts/app_styles.dart';
 import 'package:trivia_app/services/auth_service.dart';
 import 'package:trivia_app/views/pages/team_formation_page.dart';
-import 'package:trivia_app/views/pages/admin/test_firebase.dart';
 
 import '../widgets/Layer.dart';
 import '../widgets/TextFieldWithButton.dart';
@@ -35,7 +31,7 @@ class _LandingPageState extends State<LandingPage>
     ).animate(CurvedAnimation(parent: anime, curve: Curves.easeInOutCubic));
   }
 
-  void run_animation() {
+  void runAnimation() {
     anime.reset();
     anime.forward();
   }
@@ -76,7 +72,18 @@ class _LandingPageState extends State<LandingPage>
 
   @override
   Widget build(BuildContext context) {
-    final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
+    final isKeyboard = MediaQuery
+        .of(context)
+        .viewInsets
+        .bottom != 0;
+    final viewHeight = MediaQuery
+        .of(context)
+        .size
+        .height;
+    final viewWidth = MediaQuery
+        .of(context)
+        .size
+        .width;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -88,7 +95,7 @@ class _LandingPageState extends State<LandingPage>
             height: double.infinity,
             width: double.infinity,
           ),
-          Layer(),
+          const Layer(),
           AnimatedBuilder(
               animation: anime,
               builder: (context, _) {
@@ -98,7 +105,7 @@ class _LandingPageState extends State<LandingPage>
                 );
 
                 return Positioned(
-                    top: MediaQuery.of(context).size.height / 1.35,
+                    top: viewHeight / 1.35,
                     left: (MediaQuery
                         .of(context)
                         .size
@@ -135,7 +142,6 @@ class _LandingPageState extends State<LandingPage>
                         colorBlendMode: BlendMode.modulate,
                       ),
                     ),
-                  ),
                 );
               }),
           AnimatedBuilder(
@@ -145,7 +151,7 @@ class _LandingPageState extends State<LandingPage>
                 return
                   Positioned(
                     top: 0,
-                    left: (MediaQuery.of(context).size.width - 400) / 2.0 + (1 - d) * 350,
+                    left: (viewWidth - 400) / 2.0 + (1 - d) * 350,
                     child: Container(
                       color: Colors.transparent,
                       width: 400,
@@ -159,28 +165,29 @@ class _LandingPageState extends State<LandingPage>
                               letterSpacing: 0.6,
                               fontSize: 50,
                               height: 2,
-                              shadows: <Shadow> [
+                              shadows: <Shadow>[
                                 Shadow(
-                                  offset: Offset(4.0, 4.0),
+                                  offset: const Offset(4.0, 4.0),
                                   blurRadius: 1.0,
-                                  color: Color.fromARGB(255, 232,27,119).withOpacity(d),
+                                  color: const Color.fromARGB(255, 232, 27, 119)
+                                      .withOpacity(d),
                                 ),
                                 Shadow(
-                                  offset: Offset(-4.0, -4.0),
+                                  offset: const Offset(-4.0, -4.0),
                                   blurRadius: 1.0,
-                                  color: Color.fromARGB(255, 67,230,244).withOpacity(d),
+                                  color: const Color.fromARGB(255, 67, 230, 244)
+                                      .withOpacity(d),
                                 ),
                               ],
                               decoration: TextDecoration.none,
                             ), text: "How can we call your group?"),
                       ),
                     ),
-                  ),
-                );
+                  );
               }),
           Positioned(
-            top: MediaQuery.of(context).size.height * 2.0 / 4.0,
-            left: (MediaQuery.of(context).size.width - 250) / 2.0,
+            top: viewHeight * 2.0 / 4.0,
+            left: (viewWidth - 250) / 2.0,
             child: TextFieldWithButton(
               validator: inputValidator,
               updator: inputUpdator,
@@ -189,7 +196,7 @@ class _LandingPageState extends State<LandingPage>
               successMsg: 'Game joined!',
               hintText: 'Enter game code',
               isKeyboard: isKeyboard,
-              run_animation: run_animation,
+              runAnimation: runAnimation,
             ),
           ),
         ]),

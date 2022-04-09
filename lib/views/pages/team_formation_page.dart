@@ -4,7 +4,6 @@ import 'package:trivia_app/views/widgets/Layer.dart';
 import 'package:trivia_app/views/widgets/TextFieldWithButton.dart';
 import 'dart:math';
 
-import '../../consts/app_styles.dart';
 import 'lobby_page.dart';
 
 class TeamFormationPage extends StatefulWidget {
@@ -39,7 +38,7 @@ class _TeamFormationPageState extends State<TeamFormationPage>
     ).animate(CurvedAnimation(parent: anime, curve: Curves.easeInOutCubic));
   }
 
-  void run_animation() {
+  void runAnimation() {
     anime.reset();
     anime.forward();
   }
@@ -84,6 +83,8 @@ class _TeamFormationPageState extends State<TeamFormationPage>
   @override
   Widget build(BuildContext context) {
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
+    final viewHeight = MediaQuery.of(context).size.height;
+    final viewWidth = MediaQuery.of(context).size.width;
 
     return SafeArea(
       child: Scaffold(
@@ -96,115 +97,114 @@ class _TeamFormationPageState extends State<TeamFormationPage>
             height: double.infinity,
             width: double.infinity,
           ),
-          Layer(),
+          const Layer(),
           AnimatedBuilder(
               animation: anime,
               builder: (context, _) {
                 final d = movement2.value.toDouble();
-                return
-                  Positioned(
-                    top: 0,
-                    right: (MediaQuery.of(context).size.width - 400) / 2.0 + d * 350,
-                    child: Container(
-                      color: Colors.transparent,
-                      width: 400,
-                      child: RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                            style: TextStyle(
-                              color: Colors.white.withOpacity(-d + 1),
-                              fontWeight: FontWeight.w800,
-                              fontFamily: 'PixelFont',
-                              letterSpacing: 0.6,
-                              fontSize: 50,
-                              height: 2,
-                              shadows: <Shadow> [
-                                Shadow(
-                                  offset: Offset(4.0, 4.0),
-                                  blurRadius: 1.0,
-                                  color: Color.fromARGB(255, 232,27,119).withOpacity(-d + 1),
-                                ),
-                                Shadow(
-                                  offset: Offset(-4.0, -4.0),
-                                  blurRadius: 1.0,
-                                  color: Color.fromARGB(255, 67,230,244).withOpacity(-d + 1),
-                                ),
-                              ],
-                              decoration: TextDecoration.none,
-                            ), text: "How can we call your group?"),
-                      ),
-                    ),
-                  );
-              }
-          ),
-          AnimatedBuilder(
-              animation: anime,
-              builder: (context, _) {
-                final d = movement2.value.toDouble();
-                return
-                  Positioned(
-                    top: 0,
-                    left: (MediaQuery.of(context).size.width - 400) / 2.0 + (1 - d) * 350,
-                    child: Container(
-                      color: Colors.transparent,
-                      width: 400,
-                      child: RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                            style: TextStyle(
-                              color: Colors.white.withOpacity(d),
-                              fontWeight: FontWeight.w800,
-                              fontFamily: 'PixelFont',
-                              letterSpacing: 0.6,
-                              fontSize: 50,
-                              height: 2,
-                              shadows: <Shadow> [
-                                Shadow(
-                                  offset: Offset(4.0, 4.0),
-                                  blurRadius: 1.0,
-                                  color: Color.fromARGB(255, 232,27,119).withOpacity(d),
-                                ),
-                                Shadow(
-                                  offset: Offset(-4.0, -4.0),
-                                  blurRadius: 1.0,
-                                  color: Color.fromARGB(255, 67,230,244).withOpacity(d),
-                                ),
-                              ],
-                              decoration: TextDecoration.none,
-                            ), text: "Waiting for host..."),
-                      ),
-                    ),
-                  );
-              }
-          ),
-          AnimatedBuilder(
-            animation: anime,
-            builder: (context, _) {
-              final mv = movement2.value.toDouble();
-              return Positioned(
-                  top: MediaQuery
-                      .of(context)
-                      .size
-                      .height * 2.0 / 4.0,
-                  left: (MediaQuery
-                      .of(context)
-                      .size
-                      .width - (-mv * 100 + 250)) / 2.0,
+                return Positioned(
+                  top: 0,
+                  right:
+                      (viewWidth - 400) / 2.0 + d * 350,
                   child: Container(
-                    width: -mv * 100 + 250,
-                    child: TextFieldWithButton(
-                        run_animation: run_animation,
-                        validator: inputValidator,
-                        updator: inputUpdator,
-                        routeName: LobbyPage.routeName,
-                        failMsg: 'An error has occured',
-                        hintText: 'Enter your group name',
-                        successMsg: 'Welcome, ${RtdbUserService
-                            .getCurrentUserName()}!',
-                        isKeyboard: isKeyboard),
-                  ));
-            }
-          ),
+                    color: Colors.transparent,
+                    width: 400,
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                          style: TextStyle(
+                            color: Colors.white.withOpacity(-d + 1),
+                            fontWeight: FontWeight.w800,
+                            fontFamily: 'PixelFont',
+                            letterSpacing: 0.6,
+                            fontSize: 50,
+                            height: 2,
+                            shadows: <Shadow>[
+                              Shadow(
+                                offset: const Offset(4.0, 4.0),
+                                blurRadius: 1.0,
+                                color: const Color.fromARGB(255, 232, 27, 119)
+                                    .withOpacity(-d + 1),
+                              ),
+                              Shadow(
+                                offset: const Offset(-4.0, -4.0),
+                                blurRadius: 1.0,
+                                color: const Color.fromARGB(255, 67, 230, 244)
+                                    .withOpacity(-d + 1),
+                              ),
+                            ],
+                            decoration: TextDecoration.none,
+                          ),
+                          text: "How can we call your group?"),
+                    ),
+                  ),
+                );
+              }),
+          AnimatedBuilder(
+              animation: anime,
+              builder: (context, _) {
+                final d = movement2.value.toDouble();
+                return Positioned(
+                  top: 0,
+                  left: (viewWidth - 400) / 2.0 +
+                      (1 - d) * 350,
+                  child: Container(
+                    color: Colors.transparent,
+                    width: 400,
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                          style: TextStyle(
+                            color: Colors.white.withOpacity(d),
+                            fontWeight: FontWeight.w800,
+                            fontFamily: 'PixelFont',
+                            letterSpacing: 0.6,
+                            fontSize: 50,
+                            height: 2,
+                            shadows: <Shadow>[
+                              Shadow(
+                                offset: const Offset(4.0, 4.0),
+                                blurRadius: 1.0,
+                                color: const Color.fromARGB(255, 232, 27, 119)
+                                    .withOpacity(d),
+                              ),
+                              Shadow(
+                                offset: const Offset(-4.0, -4.0),
+                                blurRadius: 1.0,
+                                color: const Color.fromARGB(255, 67, 230, 244)
+                                    .withOpacity(d),
+                              ),
+                            ],
+                            decoration: TextDecoration.none,
+                          ),
+                          text: "Waiting for host..."),
+                    ),
+                  ),
+                );
+              }),
+          AnimatedBuilder(
+              animation: anime,
+              builder: (context, _) {
+                final mv = movement2.value.toDouble();
+                return Positioned(
+                    top: viewHeight * 2.0 / 4.0,
+                    left: (viewWidth -
+                            (-mv * 100 + 250)) /
+                        2.0,
+                    child: Container(
+                      width: -mv * 100 + 250,
+                      child: TextFieldWithButton(
+                          runAnimation: runAnimation,
+                          validator: inputValidator,
+                          updator: inputUpdator,
+                          routeName: LobbyPage.routeName,
+                          failMsg: 'An error has occured',
+                          hintText: 'Enter your group name',
+                          successMsg:
+                              'Welcome, $_name!',
+                          isKeyboard: isKeyboard),
+                    ));
+              }),
           AnimatedBuilder(
               animation: anime,
               builder: (context, _) {
@@ -214,8 +214,9 @@ class _TeamFormationPageState extends State<TeamFormationPage>
                 );
                 final mv = movement.value.toDouble();
                 return Positioned(
-                    top: MediaQuery.of(context).size.height / 1.35,
-                    left: (MediaQuery.of(context).size.width - 700 + 300 * mv) / 2.0,
+                    top: viewHeight / 1.35,
+                    left: (viewWidth - 700 + 300 * mv) /
+                        2.0,
                     child: Container(
                         width: -mv * 300 + 700,
                         child: Transform.translate(

@@ -1,27 +1,25 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/utils/stream_subscriber_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trivia_app/controllers/game_controller.dart';
 import 'package:trivia_app/controllers/score_controller.dart';
 import 'package:trivia_app/services/auth_service.dart';
-import 'package:trivia_app/services/game_service.dart';
 import 'package:trivia_app/services/user_service.dart';
 import 'package:trivia_app/utils/custom_routing.dart';
-import 'package:trivia_app/views/pages/admin/create_user.dart';
-import 'package:trivia_app/views/pages/end_page.dart';
-import 'package:trivia_app/views/pages/guidelines_page.dart';
+// import 'package:trivia_app/views/pages/admin/create_user.dart';
+// import 'package:trivia_app/views/pages/end_page.dart';
+// import 'package:trivia_app/views/pages/guidelines_page.dart';
 import 'package:trivia_app/views/pages/landing_page.dart';
-import 'package:trivia_app/views/pages/lobby_page.dart';
-import 'package:trivia_app/views/pages/question_template/answer_info_page.dart';
-import 'package:trivia_app/views/pages/question_template/answer_reveal_page.dart';
-import 'package:trivia_app/views/pages/question_template/question_poll_page.dart';
-import 'package:trivia_app/views/pages/question_template/question_title_page.dart';
-import 'package:trivia_app/views/pages/rules_page.dart';
-import 'package:trivia_app/views/pages/team_formation_page.dart';
-import 'package:trivia_app/views/pages/admin/test_firebase.dart';
+// import 'package:trivia_app/views/pages/lobby_page.dart';
+// import 'package:trivia_app/views/pages/question_template/answer_info_page.dart';
+// import 'package:trivia_app/views/pages/question_template/answer_reveal_page.dart';
+// import 'package:trivia_app/views/pages/question_template/question_poll_page.dart';
+// import 'package:trivia_app/views/pages/question_template/question_title_page.dart';
+// import 'package:trivia_app/views/pages/rules_page.dart';
+// import 'package:trivia_app/views/pages/team_formation_page.dart';
+// import 'package:trivia_app/views/pages/admin/test_firebase.dart';
 import 'package:trivia_app/views/pages/unknown_page.dart';
 import 'firebase_options.dart';
 
@@ -89,7 +87,6 @@ class MyApp extends StatelessWidget {
         initialRoute: LandingPage.routeName,
         // initialRoute: QuestionTitlePage.routeName,
         // initialRoute: RulesPage.routeName,
-
         // initialRoute: TestFirebasePage.routeName,
         // initialRoute: CreateUserPage.routeName,
         onGenerateRoute: CustomRouter.generateRoute,
