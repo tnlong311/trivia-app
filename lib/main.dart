@@ -50,12 +50,12 @@ class MyApp extends StatelessWidget {
         // initialRoute: AuthService.isSignedIn()
         //     ? LobbyPage.routeName
         //     : LandingPage.routeName,
-        initialRoute: RulesPage.routeName,
+        initialRoute: LandingPage.routeName,
         // initialRoute: TestFirebasePage.routeName,
         routes: {
           LandingPage.routeName: (context) => const LandingPage(),
           TeamFormationPage.routeName: (context) => const TeamFormationPage(),
-          LobbyPage.routeName: (context) => LobbyPage(),
+          LobbyPage.routeName: (context) => const LobbyPage(),
           RulesPage.routeName: (context) => const RulesPage(),
           GuidelinesPage.routeName: (context) => const GuidelinesPage(),
           QuestionTitlePage.routeName: (context) => const QuestionTitlePage(),

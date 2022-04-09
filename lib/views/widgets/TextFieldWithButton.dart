@@ -13,7 +13,8 @@ class TextFieldWithButton extends StatefulWidget {
       required this.updator,
       required this.failMsg,
       required this.successMsg,
-      required this.run_animation})
+      required this.run_animation,
+      required this.hintText})
       : super(key: key);
 
   final String routeName;
@@ -23,6 +24,7 @@ class TextFieldWithButton extends StatefulWidget {
   final Function validator;
   final Function updator;
   final Function run_animation;
+  final String hintText;
 
   // final Function customValidate;
 
@@ -59,7 +61,7 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
     }
 
     return Container(
-      width: 250,
+      width: 270,
       height: 100,
       color: Colors.black45,
       child: Stack(children: <Widget>[
@@ -115,9 +117,9 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
                 },
                 controller: _controller,
                 textAlignVertical: TextAlignVertical.bottom,
-                decoration: const InputDecoration(
-                  contentPadding: EdgeInsets.only(bottom: 8, left: 15),
-                  focusedBorder: OutlineInputBorder(
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.only(bottom: 8, left: 15),
+                  focusedBorder: const OutlineInputBorder(
                     borderSide:
                         BorderSide(color: Colors.transparent, width: 4.0),
                   ),
@@ -125,7 +127,7 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
                     borderSide:
                         BorderSide(color: Colors.transparent, width: 5.0),
                   ),
-                  hintText: 'Enter game code',
+                  hintText: this.widget.hintText,
                 ),
               ),
             ),

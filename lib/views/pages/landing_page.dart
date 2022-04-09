@@ -114,7 +114,7 @@ class _LandingPageState extends State<LandingPage>
                 );
 
                 return Positioned(
-                    top: 500,
+                    top: MediaQuery.of(context).size.height / 1.35,
                     left: (MediaQuery
                         .of(context)
                         .size
@@ -129,7 +129,7 @@ class _LandingPageState extends State<LandingPage>
           AnimatedBuilder(
               animation: anime,
               builder: (context, _) {
-                final d = movement.value??0.0;
+                final d = movement.value.toDouble();
                 return
                   Positioned(
                     top: -40,
@@ -157,13 +157,13 @@ class _LandingPageState extends State<LandingPage>
           AnimatedBuilder(
               animation: anime,
               builder: (context, _) {
-                final d = movement.value??0.0;
+                final d = movement.value.toDouble();
                 return
                   Positioned(
                     top: 0,
                     left: (MediaQuery.of(context).size.width - 400) / 2.0 + (1 - d) * 350,
                     child: Container(
-                      color: Colors.white30,
+                      color: Colors.transparent,
                       width: 400,
                       child: RichText(
                         textAlign: TextAlign.center,
@@ -209,6 +209,7 @@ class _LandingPageState extends State<LandingPage>
               routeName: TeamFormationPage.routeName,
               failMsg: 'Wrong game code!',
               successMsg: 'Game joined!',
+              hintText: 'Enter game code',
               isKeyboard: isKeyboard,
               run_animation: run_animation,
             ),
