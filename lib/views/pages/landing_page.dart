@@ -89,11 +89,7 @@ class _LandingPageState extends State<LandingPage>
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-    final isKeyboard = MediaQuery
-        .of(context)
-        .viewInsets
-        .bottom != 0;
+    final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -116,10 +112,7 @@ class _LandingPageState extends State<LandingPage>
 
                 return Positioned(
                     top: 500,
-                    left: (MediaQuery
-                        .of(context)
-                        .size
-                        .width - 700) / 2.0,
+                    left: (MediaQuery.of(context).size.width - 700) / 2.0,
                     child: Container(
                       width: 700,
                       child: Transform.rotate(
@@ -130,80 +123,68 @@ class _LandingPageState extends State<LandingPage>
           AnimatedBuilder(
               animation: anime,
               builder: (context, _) {
-                final d = movement.value??0.0;
-                return
-                  Positioned(
-                    top: -40,
-                    left: -d * 300,
-                    child: Container(
-                      color: Colors.black12,
-                      height: MediaQuery
-                          .of(context)
-                          .size
-                          .height * 2.0 / 4.0,
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width,
-                      child: Image.asset(
-                        'assets/images/logo.png',
-                        fit: BoxFit.contain,
-                        color: Colors.white.withOpacity(-d + 1),
-                        colorBlendMode: BlendMode.modulate,
-                      ),
+                final d = movement.value ?? 0.0;
+                return Positioned(
+                  top: -40,
+                  left: -d * 300,
+                  child: Container(
+                    color: Colors.black12,
+                    height: MediaQuery.of(context).size.height * 2.0 / 4.0,
+                    width: MediaQuery.of(context).size.width,
+                    child: Image.asset(
+                      'assets/images/logo.png',
+                      fit: BoxFit.contain,
+                      color: Colors.white.withOpacity(-d + 1),
+                      colorBlendMode: BlendMode.modulate,
                     ),
-                  );
-              }
-          ),
+                  ),
+                );
+              }),
           AnimatedBuilder(
               animation: anime,
               builder: (context, _) {
-                final d = movement.value??0.0;
-                return
-                  Positioned(
-                    top: 0,
-                    left: (MediaQuery.of(context).size.width - 400) / 2.0 + (1 - d) * 350,
-                    child: Container(
-                      color: Colors.white30,
-                      width: 400,
-                      child: RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                            style: TextStyle(
-                              color: Colors.white.withOpacity(d),
-                              fontWeight: FontWeight.w800,
-                              fontFamily: 'PixelFont',
-                              letterSpacing: 0.6,
-                              fontSize: 50,
-                              height: 2,
-                              shadows: <Shadow> [
-                                Shadow(
-                                  offset: Offset(4.0, 4.0),
-                                  blurRadius: 1.0,
-                                  color: Color.fromARGB(255, 232,27,119).withOpacity(d),
-                                ),
-                                Shadow(
-                                  offset: Offset(-4.0, -4.0),
-                                  blurRadius: 1.0,
-                                  color: Color.fromARGB(255, 67,230,244).withOpacity(d),
-                                ),
-                              ],
-                              decoration: TextDecoration.none,
-                            ), text: "How can we call your group?"),
-                      ),
+                final d = movement.value ?? 0.0;
+                return Positioned(
+                  top: 0,
+                  left: (MediaQuery.of(context).size.width - 400) / 2.0 +
+                      (1 - d) * 350,
+                  child: Container(
+                    color: Colors.white30,
+                    width: 400,
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                          style: TextStyle(
+                            color: Colors.white.withOpacity(d),
+                            fontWeight: FontWeight.w800,
+                            fontFamily: 'PixelFont',
+                            letterSpacing: 0.6,
+                            fontSize: 50,
+                            height: 2,
+                            shadows: <Shadow>[
+                              Shadow(
+                                offset: Offset(4.0, 4.0),
+                                blurRadius: 1.0,
+                                color: Color.fromARGB(255, 232, 27, 119)
+                                    .withOpacity(d),
+                              ),
+                              Shadow(
+                                offset: Offset(-4.0, -4.0),
+                                blurRadius: 1.0,
+                                color: Color.fromARGB(255, 67, 230, 244)
+                                    .withOpacity(d),
+                              ),
+                            ],
+                            decoration: TextDecoration.none,
+                          ),
+                          text: "How can we call your group?"),
                     ),
-                  );
-              }
-          ),
+                  ),
+                );
+              }),
           Positioned(
-            top: MediaQuery
-                .of(context)
-                .size
-                .height * 2.0 / 4.0,
-            left: (MediaQuery
-                .of(context)
-                .size
-                .width - 250) / 2.0,
+            top: MediaQuery.of(context).size.height * 2.0 / 4.0,
+            left: (MediaQuery.of(context).size.width - 250) / 2.0,
             child: TextFieldWithButton(
               validator: inputValidator,
               updator: inputUpdator,
@@ -216,47 +197,6 @@ class _LandingPageState extends State<LandingPage>
           ),
         ]),
       ),
-=======
-    final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
-
-    return SafeArea(
-      child: Stack(children: <Widget>[
-        Image.asset(
-          'assets/images/BackGround.png',
-          fit: BoxFit.cover,
-          height: double.infinity,
-          width: double.infinity,
-        ),
-        Layer(),
-        Planet(),
-        Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.transparent,
-          body: Column(children: [
-            Expanded(
-                flex: 1,
-                child: Align(
-                  alignment: Alignment(0, -0.6),
-                  child: Transform.scale(
-                      scale: 1.2, child: Image.asset('assets/images/logo.png')),
-                )),
-            Expanded(
-                flex: 1,
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  child: TextFieldWithButton(
-                      validator: inputValidator,
-                      updator: inputUpdator,
-                      routeName: TeamFormationPage.routeName,
-                      // routeName: TestFirebasePage.routeName,
-                      failMsg: 'Wrong game code!',
-                      successMsg: 'Game joined!',
-                      isKeyboard: isKeyboard),
-                ))
-          ]),
-        ),
-      ]),
->>>>>>> master
     );
   }
 }
