@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -40,63 +38,41 @@ void main() async {
   // delete this after done
   // await AuthService.signOut();
 
+  GameController _gameController = Get.put(GameController());
+  ScoreController _scoreController = Get.put(ScoreController());
+
+  final statusRef =
+      FirebaseDatabase.instance.ref().child('/gameplay/2022/game status/');
+
+  statusRef.onChildChanged.listen((event) async {
+    var questionNum = event.snapshot.value ?? 1;
+    var pin = AuthService.getPin();
+    var isNamed = await RtdbUserService.isNamed(pin);
+
+    if (AuthService.isSignedIn() && isNamed) {
+      if (event.snapshot.key == 'current') {
+        print('proceed to question $questionNum');
+
+        _gameController.setIndexFromQuestionNum(questionNum);
+
+        _gameController.gotoQuestionTitle();
+      } else if (event.snapshot.key == 'reveal') {
+        print('proceed to answer reveal on question $questionNum');
+
+        _gameController.setIndexFromQuestionNum(questionNum);
+        await _scoreController.fetchTotalScore();
+        await _scoreController.fetchChange();
+
+        _gameController.gotoAnswerInfo();
+      }
+    }
+  });
+
   runApp(const MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  late StreamSubscription _gameListener;
-
-  @override
-  void initState() {
-    super.initState();
-    print('main initiated');
-
-    GameController _gameController = Get.put(GameController());
-    ScoreController _scoreController = Get.put(ScoreController());
-
-    final statusRef =
-    FirebaseDatabase.instance.ref().child('/gameplay/2022/game status/');
-    _gameListener = statusRef.onChildChanged.listen((event) async {
-      var questionNum = event.snapshot.value ?? 1;
-      var pin = AuthService.getPin();
-      var isNamed = await RtdbUserService.isNamed(pin);
-
-      if (AuthService.isSignedIn() && isNamed) {
-        if (event.snapshot.key == 'current') {
-          print('proceed to question $questionNum');
-
-          _gameController.setIndexFromQuestionNum(questionNum);
-
-          _gameController.gotoQuestionTitle();
-        } else if (event.snapshot.key == 'reveal') {
-          print('proceed to answer reveal on question ${event.snapshot.value}');
-
-          _gameController.setIndexFromQuestionNum(questionNum);
-          await _scoreController.fetchTotalScore();
-          await _scoreController.fetchChange();
-
-          _gameController.gotoAnswerInfo();
-        }
-      }
-    });
-
-  }
-
-  @override
-  void deactivate() {
-    // super.dispose();
-    super.deactivate();
-    print('main disposed');
-
-    _gameListener.cancel();
-  }
 
   @override
   Widget build(BuildContext context) {

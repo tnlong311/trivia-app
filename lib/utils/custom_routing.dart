@@ -62,3 +62,18 @@ class CustomRouter {
     }
   }
 }
+
+// routes: {
+//   LandingPage.routeName: (context) => const LandingPage(),
+//   TeamFormationPage.routeName: (context) => const TeamFormationPage(),
+//   LobbyPage.routeName: (context) => LobbyPage(),
+//   RulesPage.routeName: (context) => const RulesPage(),
+//   GuidelinesPage.routeName: (context) => const GuidelinesPage(),
+//   QuestionTitlePage.routeName: (context) => const QuestionTitlePage(),
+//   QuestionPollPage.routeName: (context) => const QuestionPollPage(),
+//   AnswerRevealPage.routeName: (context) => const AnswerRevealPage(),
+//   AnswerInfoPage.routeName: (context) => const AnswerInfoPage(),
+//   TestFirebasePage.routeName: (context) => const TestFirebasePage(),
+//   CreateUserPage.routeName: (context) => const CreateUserPage(),
+//   EndPage.routeName: (context) => const EndPage(),
+// },
