@@ -8,6 +8,7 @@ import 'package:trivia_app/controllers/score_controller.dart';
 import 'package:trivia_app/services/auth_service.dart';
 import 'package:trivia_app/services/game_service.dart';
 import 'package:trivia_app/services/user_service.dart';
+import 'package:trivia_app/utils/custom_routing.dart';
 import 'package:trivia_app/views/pages/admin/create_user.dart';
 import 'package:trivia_app/views/pages/end_page.dart';
 import 'package:trivia_app/views/pages/guidelines_page.dart';
@@ -40,7 +41,7 @@ void main() async {
   ScoreController _scoreController = Get.put(ScoreController());
 
   final statusRef =
-  FirebaseDatabase.instance.ref().child('/gameplay/2022/game status/');
+      FirebaseDatabase.instance.ref().child('/gameplay/2022/game status/');
 
   statusRef.onChildChanged.listen((event) async {
     var questionNum = event.snapshot.value ?? 1;
@@ -48,7 +49,7 @@ void main() async {
     var isNamed = await RtdbUserService.isNamed(pin);
 
     if (AuthService.isSignedIn() && isNamed) {
-      if(event.snapshot.key == 'current'){
+      if (event.snapshot.key == 'current') {
         print('proceed to question $questionNum');
 
         _gameController.setIndexFromQuestionNum(questionNum);
@@ -84,34 +85,11 @@ class MyApp extends StatelessWidget {
           colorScheme:
               ColorScheme.fromSwatch().copyWith(secondary: Colors.cyanAccent),
         ),
-        initialRoute: AuthService.isSignedIn()
-            ? LobbyPage.routeName
-            : LandingPage.routeName,
+        initialRoute: LandingPage.routeName,
         // initialRoute: QuestionTitlePage.routeName,
         // initialRoute: TestFirebasePage.routeName,
         // initialRoute: CreateUserPage.routeName,
-        routes: {
-          LandingPage.routeName: (context) => const LandingPage(),
-          TeamFormationPage.routeName: (context) => const TeamFormationPage(),
-          LobbyPage.routeName: (context) => LobbyPage(),
-          RulesPage.routeName: (context) => const RulesPage(),
-          GuidelinesPage.routeName: (context) => const GuidelinesPage(),
-          QuestionTitlePage.routeName: (context) => const QuestionTitlePage(),
-          QuestionPollPage.routeName: (context) => const QuestionPollPage(),
-          AnswerRevealPage.routeName: (context) => const AnswerRevealPage(),
-          AnswerInfoPage.routeName: (context) => const AnswerInfoPage(),
-          TestFirebasePage.routeName: (context) => const TestFirebasePage(),
-          CreateUserPage.routeName: (context) => const CreateUserPage(),
-          EndPage.routeName: (context) => const EndPage(),
-        },
-        // in case passing data to the next page
-        // onGenerateRoute: (RouteSettings settings) {
-        //   print('hello');
-        //   return null;
-        // },
-        // onGenerateInitialRoutes: (settings) {
-        //   return [MaterialPageRoute(builder: (context) => const LandingPage())];
-        // },
+        onGenerateRoute: CustomRouter.generateRoute,
         onUnknownRoute: (RouteSettings settings) {
           return MaterialPageRoute(builder: (context) => const UnknownPage());
         });
