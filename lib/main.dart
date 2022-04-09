@@ -32,7 +32,7 @@ void main() async {
   ).whenComplete(() => print('initialized firebase'));
 
   // available for web only
-  // await FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
+  // await FirebaseAuth.instance.setPersistence(Persistence.SESSION);
   // delete this after done
   // await AuthService.signOut();
 
