@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:trivia_app/views/widgets/InfoBox.dart';
 
 import '../../../controllers/game_controller.dart';
@@ -18,30 +17,34 @@ class AnswerRevealPage extends StatelessWidget {
 
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              flex: 1,
-              child: Center(
-                  child: InfoBox(
-                      title: "",
-                      width: 200,
-                      height: 120,
-                      content: _scoreController.resultString)),
-            ),
-            Expanded(
-              flex: 1,
-              child: CorrectAnswerWidget(
-                  header: "The correct answer is:",
-                  content: _scoreController.fullCorrectAnswer),
-            ),
-            Expanded(
-              flex: 1,
-              child: CorrectAnswerWidget(
-                  header: "Your current point:",
-                  content: _scoreController.totalPoint.toString()),
-            ),
-          ],
+        top: false,
+        child: WillPopScope(
+          onWillPop: () async => false,
+          child: Column(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Center(
+                    child: InfoBox(
+                        title: "",
+                        width: 200,
+                        height: 120,
+                        content: _scoreController.resultString)),
+              ),
+              Expanded(
+                flex: 1,
+                child: CorrectAnswerWidget(
+                    header: "The correct answer is:",
+                    content: _scoreController.fullCorrectAnswer),
+              ),
+              Expanded(
+                flex: 1,
+                child: CorrectAnswerWidget(
+                    header: "Your current point:",
+                    content: _scoreController.totalPoint.toString()),
+              ),
+            ],
+          ),
         ),
       ),
     );

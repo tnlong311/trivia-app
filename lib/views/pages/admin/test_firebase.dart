@@ -14,6 +14,7 @@ import 'package:trivia_app/views/widgets/TextFieldSingle.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../controllers/score_controller.dart';
+import '../../dialogs/custom_spinner.dart';
 import '../../widgets/InfoBox.dart';
 
 class TestFirebasePage extends StatefulWidget {
@@ -27,6 +28,7 @@ class TestFirebasePage extends StatefulWidget {
 
 class _TestFirebasePageState extends State<TestFirebasePage> {
   final _formKey = GlobalKey<FormState>();
+  bool _isPressing = false;
 
   // @override
   // void initState() {
@@ -45,9 +47,15 @@ class _TestFirebasePageState extends State<TestFirebasePage> {
 
     answerOnSubmit() async {
       print('kicked');
-      _scoreController.fetchChange();
-      _scoreController.fetchTotalScore();
+      setState(() {
+        _isPressing = true;
+      });
+      await Future.delayed(Duration(seconds: 3));
+      setState(() {
+        _isPressing = false;
+      });
       print('done');
+
     }
 
     return Scaffold(
@@ -68,7 +76,7 @@ class _TestFirebasePageState extends State<TestFirebasePage> {
                       child: Center(
                         child: SizedBox(
                           height: 60,
-                          child: ElevatedButton(
+                          child: _isPressing ? Spinner.Spinkit() : ElevatedButton(
                             onPressed: answerOnSubmit,
                             child: Text(
                               "Submit",

@@ -68,6 +68,7 @@ class _RulesPageState extends State<RulesPage> {
         ? 1.1
         : ((screenHeight / 1.1) * ratio / 375.0);
     return SafeArea(
+      top: false,
       child: Scaffold(
         body: Stack(
           children: <Widget>[
