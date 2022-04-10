@@ -90,144 +90,147 @@ class _TeamFormationPageState extends State<TeamFormationPage>
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.transparent,
-        body: Stack(children: <Widget>[
-          Image.asset(
-            'assets/images/BackGround.png',
-            fit: BoxFit.cover,
-            height: double.infinity,
-            width: double.infinity,
-          ),
-          const Layer(),
-          AnimatedBuilder(
-              animation: anime,
-              builder: (context, _) {
-                final d = movement2.value.toDouble();
-                return Positioned(
-                  top: 0,
-                  right:
-                      (viewWidth - 400) / 2.0 + d * 350,
-                  child: Container(
-                    color: Colors.transparent,
-                    width: 400,
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                          style: TextStyle(
-                            color: Colors.white.withOpacity(-d + 1),
-                            fontWeight: FontWeight.w800,
-                            fontFamily: 'PixelFont',
-                            letterSpacing: 0.6,
-                            fontSize: 50,
-                            height: 2,
-                            shadows: <Shadow>[
-                              Shadow(
-                                offset: const Offset(4.0, 4.0),
-                                blurRadius: 1.0,
-                                color: const Color.fromARGB(255, 232, 27, 119)
-                                    .withOpacity(-d + 1),
-                              ),
-                              Shadow(
-                                offset: const Offset(-4.0, -4.0),
-                                blurRadius: 1.0,
-                                color: const Color.fromARGB(255, 67, 230, 244)
-                                    .withOpacity(-d + 1),
-                              ),
-                            ],
-                            decoration: TextDecoration.none,
-                          ),
-                          text: "How can we call your group?"),
-                    ),
-                  ),
-                );
-              }),
-          AnimatedBuilder(
-              animation: anime,
-              builder: (context, _) {
-                final d = movement2.value.toDouble();
-                return Positioned(
-                  top: 0,
-                  left: (viewWidth - 400) / 2.0 +
-                      (1 - d) * 350,
-                  child: Container(
-                    color: Colors.transparent,
-                    width: 400,
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                          style: TextStyle(
-                            color: Colors.white.withOpacity(d),
-                            fontWeight: FontWeight.w800,
-                            fontFamily: 'PixelFont',
-                            letterSpacing: 0.6,
-                            fontSize: 50,
-                            height: 2,
-                            shadows: <Shadow>[
-                              Shadow(
-                                offset: const Offset(4.0, 4.0),
-                                blurRadius: 1.0,
-                                color: const Color.fromARGB(255, 232, 27, 119)
-                                    .withOpacity(d),
-                              ),
-                              Shadow(
-                                offset: const Offset(-4.0, -4.0),
-                                blurRadius: 1.0,
-                                color: const Color.fromARGB(255, 67, 230, 244)
-                                    .withOpacity(d),
-                              ),
-                            ],
-                            decoration: TextDecoration.none,
-                          ),
-                          text: "Waiting for host..."),
-                    ),
-                  ),
-                );
-              }),
-          AnimatedBuilder(
-              animation: anime,
-              builder: (context, _) {
-                final mv = movement2.value.toDouble();
-                return Positioned(
-                    top: viewHeight * 2.0 / 4.0 - max(0, MediaQuery.of(context).viewInsets.bottom - viewHeight * 2.0 / 4.0),
-                    left: (viewWidth -
-                            (-mv * 150 + 300 * 0.8)) /
-                        2.0,
+        body: WillPopScope(
+          onWillPop: () async => false,
+          child: Stack(children: <Widget>[
+            Image.asset(
+              'assets/images/BackGround.png',
+              fit: BoxFit.cover,
+              height: double.infinity,
+              width: double.infinity,
+            ),
+            const Layer(),
+            AnimatedBuilder(
+                animation: anime,
+                builder: (context, _) {
+                  final d = movement2.value.toDouble();
+                  return Positioned(
+                    top: 0,
+                    right:
+                        (viewWidth - 400) / 2.0 + d * 350,
                     child: Container(
-                      width: -mv * 150 + 300,
-                      child: TextFieldWithButton(
-                          run_animation: run_animation,
-                          validator: inputValidator,
-                          updator: inputUpdator,
-                          routeName: LobbyPage.routeName,
-                          failMsg: 'An error has occured',
-                          hintText: 'Your group name',
-                          width: 300,
-                          height: 80,
-                          successMsg:
-                              'Welcome, $_name!',
-                          isKeyboard: isKeyboard),
-                    ));
-              }),
-          AnimatedBuilder(
-              animation: anime,
-              builder: (context, _) {
-                var p1 = Image.asset(
-                  'assets/images/planet.png',
-                  fit: BoxFit.cover,
-                );
-                final mv = movement.value.toDouble();
-                return Positioned(
-                    top: viewHeight / 1.35,
-                    left: (viewWidth - 700 + 300 * mv) /
-                        2.0,
+                      color: Colors.transparent,
+                      width: 400,
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(-d + 1),
+                              fontWeight: FontWeight.w800,
+                              fontFamily: 'PixelFont',
+                              letterSpacing: 0.6,
+                              fontSize: 50,
+                              height: 2,
+                              shadows: <Shadow>[
+                                Shadow(
+                                  offset: const Offset(4.0, 4.0),
+                                  blurRadius: 1.0,
+                                  color: const Color.fromARGB(255, 232, 27, 119)
+                                      .withOpacity(-d + 1),
+                                ),
+                                Shadow(
+                                  offset: const Offset(-4.0, -4.0),
+                                  blurRadius: 1.0,
+                                  color: const Color.fromARGB(255, 67, 230, 244)
+                                      .withOpacity(-d + 1),
+                                ),
+                              ],
+                              decoration: TextDecoration.none,
+                            ),
+                            text: "How can we call your group?"),
+                      ),
+                    ),
+                  );
+                }),
+            AnimatedBuilder(
+                animation: anime,
+                builder: (context, _) {
+                  final d = movement2.value.toDouble();
+                  return Positioned(
+                    top: 0,
+                    left: (viewWidth - 400) / 2.0 +
+                        (1 - d) * 350,
                     child: Container(
-                        width: -mv * 300 + 700,
-                        child: Transform.translate(
-                          offset: Offset(0, mv * -300),
-                          child: Transform.rotate(
-                              angle: -2.0 / 3.0 * pi * 1 + pi * 0.4, child: p1),
-                        )));
-              }),
-        ]),
+                      color: Colors.transparent,
+                      width: 400,
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(d),
+                              fontWeight: FontWeight.w800,
+                              fontFamily: 'PixelFont',
+                              letterSpacing: 0.6,
+                              fontSize: 50,
+                              height: 2,
+                              shadows: <Shadow>[
+                                Shadow(
+                                  offset: const Offset(4.0, 4.0),
+                                  blurRadius: 1.0,
+                                  color: const Color.fromARGB(255, 232, 27, 119)
+                                      .withOpacity(d),
+                                ),
+                                Shadow(
+                                  offset: const Offset(-4.0, -4.0),
+                                  blurRadius: 1.0,
+                                  color: const Color.fromARGB(255, 67, 230, 244)
+                                      .withOpacity(d),
+                                ),
+                              ],
+                              decoration: TextDecoration.none,
+                            ),
+                            text: "Waiting for host..."),
+                      ),
+                    ),
+                  );
+                }),
+            AnimatedBuilder(
+                animation: anime,
+                builder: (context, _) {
+                  final mv = movement2.value.toDouble();
+                  return Positioned(
+                      top: viewHeight * 2.0 / 4.0 - max(0, MediaQuery.of(context).viewInsets.bottom - viewHeight * 2.0 / 4.0),
+                      left: (viewWidth -
+                              (-mv * 150 + 300 * 0.8)) /
+                          2.0,
+                      child: Container(
+                        width: -mv * 150 + 300,
+                        child: TextFieldWithButton(
+                            run_animation: run_animation,
+                            validator: inputValidator,
+                            updator: inputUpdator,
+                            routeName: LobbyPage.routeName,
+                            failMsg: 'An error has occured',
+                            hintText: 'Your group name',
+                            width: 300,
+                            height: 80,
+                            successMsg:
+                                'Welcome, $_name!',
+                            isKeyboard: isKeyboard),
+                      ));
+                }),
+            AnimatedBuilder(
+                animation: anime,
+                builder: (context, _) {
+                  var p1 = Image.asset(
+                    'assets/images/planet.png',
+                    fit: BoxFit.cover,
+                  );
+                  final mv = movement.value.toDouble();
+                  return Positioned(
+                      top: viewHeight / 1.35,
+                      left: (viewWidth - 700 + 300 * mv) /
+                          2.0,
+                      child: Container(
+                          width: -mv * 300 + 700,
+                          child: Transform.translate(
+                            offset: Offset(0, mv * -300),
+                            child: Transform.rotate(
+                                angle: -2.0 / 3.0 * pi * 1 + pi * 0.4, child: p1),
+                          )));
+                }),
+          ]),
+        ),
       ),
     );
   }
