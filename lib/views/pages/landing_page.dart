@@ -88,7 +88,7 @@ class _LandingPageState extends State<LandingPage>
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
-        // top: false,
+        top: false,
         child: WillPopScope(
           onWillPop: () async => false,
           child: Stack(children: <Widget>[

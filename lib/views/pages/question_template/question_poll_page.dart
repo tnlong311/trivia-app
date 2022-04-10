@@ -100,6 +100,7 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
+          top: false,
           child: WillPopScope(
             onWillPop: () async => false,
             child: GetBuilder<GameController>(

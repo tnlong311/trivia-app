@@ -17,6 +17,7 @@ class AnswerRevealPage extends StatelessWidget {
 
     return Scaffold(
       body: SafeArea(
+        top: false,
         child: WillPopScope(
           onWillPop: () async => false,
           child: Column(

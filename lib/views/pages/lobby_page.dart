@@ -50,6 +50,7 @@ class _LobbyPageState extends State<LobbyPage> with TickerProviderStateMixin {
     final viewWidth = MediaQuery.of(context).size.width;
 
     return SafeArea(
+      top: false,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.transparent,

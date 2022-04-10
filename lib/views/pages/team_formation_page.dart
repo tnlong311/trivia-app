@@ -87,6 +87,7 @@ class _TeamFormationPageState extends State<TeamFormationPage>
     final viewWidth = MediaQuery.of(context).size.width;
 
     return SafeArea(
+      top: false,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.transparent,

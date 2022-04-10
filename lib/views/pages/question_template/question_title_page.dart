@@ -52,62 +52,65 @@ class _QuestionTitlePageState extends State<QuestionTitlePage>
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.transparent,
-      body: WillPopScope(
-        onWillPop: () async => false,
-        child: Stack(children: <Widget>[
-          Image.asset(
-            'assets/images/BackGround.png',
-            fit: BoxFit.cover,
-            height: double.infinity,
-            width: double.infinity,
-          ),
-          const Layer(),
-          AnimatedBuilder(
-            animation: anime,
-            builder: (context, _) {
-              return Positioned(
-                top: (MediaQuery.of(context).size.height - 100) / 2.0,
-                left: (MediaQuery.of(context).size.width - 400) / 2.0 +
-                    max(0, anime.value * 6 - 4) / 2 * 400,
-                child: Container(
-                  color: Colors.white30,
-                  width: 400,
-                  child: RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                        style: TextStyle(
-                          color: Colors.white.withOpacity(
-                              max(0, 1 - max(0, anime.value * 6 - 4))),
-                          fontWeight: FontWeight.w800,
-                          fontFamily: 'PixelFont',
-                          letterSpacing: 0.6,
-                          fontSize: 50,
-                          height: 2,
-                          shadows: <Shadow>[
-                            Shadow(
-                              offset: const Offset(4.0, 4.0),
-                              blurRadius: 1.0,
-                              color: const Color.fromARGB(255, 232, 27, 119)
-                                  .withOpacity(
-                                      max(0, 1 - max(0, anime.value * 6 - 4))),
-                            ),
-                            Shadow(
-                              offset: const Offset(-4.0, -4.0),
-                              blurRadius: 1.0,
-                              color: const Color.fromARGB(255, 67, 230, 244)
-                                  .withOpacity(
-                                      max(0, 1 - max(0, anime.value * 6 - 4))),
-                            ),
-                          ],
-                          decoration: TextDecoration.none,
-                        ),
-                        text: "Question #${_gameController.index + 1}"),
+      body: SafeArea(
+        top: false,
+        child: WillPopScope(
+          onWillPop: () async => false,
+          child: Stack(children: <Widget>[
+            Image.asset(
+              'assets/images/BackGround.png',
+              fit: BoxFit.cover,
+              height: double.infinity,
+              width: double.infinity,
+            ),
+            const Layer(),
+            AnimatedBuilder(
+              animation: anime,
+              builder: (context, _) {
+                return Positioned(
+                  top: (MediaQuery.of(context).size.height - 100) / 2.0,
+                  left: (MediaQuery.of(context).size.width - 400) / 2.0 +
+                      max(0, anime.value * 6 - 4) / 2 * 400,
+                  child: Container(
+                    color: Colors.white30,
+                    width: 400,
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                          style: TextStyle(
+                            color: Colors.white.withOpacity(
+                                max(0, 1 - max(0, anime.value * 6 - 4))),
+                            fontWeight: FontWeight.w800,
+                            fontFamily: 'PixelFont',
+                            letterSpacing: 0.6,
+                            fontSize: 50,
+                            height: 2,
+                            shadows: <Shadow>[
+                              Shadow(
+                                offset: const Offset(4.0, 4.0),
+                                blurRadius: 1.0,
+                                color: const Color.fromARGB(255, 232, 27, 119)
+                                    .withOpacity(
+                                        max(0, 1 - max(0, anime.value * 6 - 4))),
+                              ),
+                              Shadow(
+                                offset: const Offset(-4.0, -4.0),
+                                blurRadius: 1.0,
+                                color: const Color.fromARGB(255, 67, 230, 244)
+                                    .withOpacity(
+                                        max(0, 1 - max(0, anime.value * 6 - 4))),
+                              ),
+                            ],
+                            decoration: TextDecoration.none,
+                          ),
+                          text: "Question #${_gameController.index + 1}"),
+                    ),
                   ),
-                ),
-              );
-            },
-          ),
-        ]),
+                );
+              },
+            ),
+          ]),
+        ),
       ),
     );
   }
