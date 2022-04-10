@@ -12,7 +12,7 @@ import 'dart:ui';
 
 
 const triviaHeading1 = TextStyle(
-    color: Colors.pinkAccent,
+    color: Colors.black,
     fontWeight: FontWeight.w600,
     fontFamily: 'PixelFont',
     letterSpacing: 0.6,
@@ -28,12 +28,22 @@ const triviaSmall1 = TextStyle(
     fontSize: 13,
     height: 2,
     decoration: TextDecoration.none);
+
 const triviaSmall2 = TextStyle(
     color: Colors.redAccent,
     fontWeight: FontWeight.w200,
     fontFamily: 'PixelFont',
     letterSpacing: 0.6,
     fontSize: 20,
+    height: 2,
+    decoration: TextDecoration.none);
+
+const triviaSmall3 = TextStyle(
+    color: Colors.redAccent,
+    fontWeight: FontWeight.w500,
+    fontFamily: 'PixelFont',
+    letterSpacing: 0.6,
+    fontSize: 30,
     height: 2,
     decoration: TextDecoration.none);
 
