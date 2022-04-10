@@ -23,6 +23,8 @@ dependencies:
   firebase_auth: ^3.3.12
 #  cloud_firestore: ^3.1.11
 
+  flutter_spinkit: ^5.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -36,7 +38,7 @@ flutter:
   assets:
     - ./assets/loading/
     - ./assets/images/
-      #   - images/a_dot_ham.jpeg
+    #   - images/a_dot_ham.jpeg
 
 
   fonts:

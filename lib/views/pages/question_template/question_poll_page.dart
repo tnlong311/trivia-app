@@ -100,9 +100,12 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
-          child: GetBuilder<GameController>(
-              init: GameController(),
-              builder: (gameController) {
+          top: false,
+          child: WillPopScope(
+            onWillPop: () async => false,
+            child: GetBuilder<GameController>(
+                init: GameController(),
+                builder: (gameController) {
 //                 return Stack(
 //                   children: <Widget>[
 //                     Image.asset(
@@ -129,110 +132,111 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
 //                           width: 200,
 //                           child: Image.asset(
 //                               'assets/images/current_point_box.png')),
-                return Column(
-                  children: [
-                    ProgressBar(progress: gameController.countdown.value),
-                    Expanded(
-                      flex: 2,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          InfoBox(
-                            title: "Current Point",
-                            width: 150,
-                            height: 120,
-                            content: '$totalPoint',
-                          ),
-                          InfoBox(
-                            title: "Time Left",
-                            width: 150,
-                            height: 120,
-                            content:
-                                '${(gameController.countdown.value * gameController.duration).round()}s',
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
+                  return Column(
+                    children: [
+                      ProgressBar(progress: gameController.countdown.value),
+                      Expanded(
+                        flex: 2,
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            const SizedBox(height: 30),
-                            TextFieldSingle(
-                                width: 250,
-                                title: "Answer",
-                                description: "Enter your answer",
-                                validator: answerValidator,
-                                updator: answerUpdator,
-                                onEnter: answerOnSubmit),
-                            TextFieldSingle(
-                                width: 250,
-                                title: "Bet",
-                                description: "Enter an integer",
-                                validator: betValidator,
-                                updator: betUpdator,
-                                onEnter: answerOnSubmit),
+                            InfoBox(
+                              title: "Current Point",
+                              width: 150,
+                              height: 120,
+                              content: '$totalPoint',
+                            ),
+                            InfoBox(
+                              title: "Time Left",
+                              width: 150,
+                              height: 120,
+                              content:
+                                  '${(gameController.countdown.value * gameController.duration).round()}s',
+                            ),
                           ],
                         ),
                       ),
-                    ),
-                    Positioned(
-                        top: 105,
-                        right: (MediaQuery.of(context).size.width / 2.0 - 200) /
-                                2.0 +
-                            (200 - 70) / 2.0 -
-                            3,
-                        child: Container(
-                          width: 70,
-                          child: RichText(
-                            textAlign: TextAlign.center,
-                            text: const TextSpan(style: triviaSmall2, text: "1234"),
+                      Expanded(
+                        flex: 2,
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              const SizedBox(height: 30),
+                              TextFieldSingle(
+                                  width: 250,
+                                  title: "Answer",
+                                  description: "Enter your answer",
+                                  validator: answerValidator,
+                                  updator: answerUpdator,
+                                  onEnter: answerOnSubmit),
+                              TextFieldSingle(
+                                  width: 250,
+                                  title: "Bet",
+                                  description: "Enter an integer",
+                                  validator: betValidator,
+                                  updator: betUpdator,
+                                  onEnter: answerOnSubmit),
+                            ],
                           ),
-                        )),
-                    Positioned(
-                        top: 105,
-                        left: (MediaQuery.of(context).size.width / 2.0 - 200) /
-                                2.0 +
-                            (200 - 70) / 2.0 -
-                            3,
-                        child: Container(
-                          width: 70,
-                          child: RichText(
-                            textAlign: TextAlign.center,
-                            text: const TextSpan(style: triviaSmall2, text: "1234"),
-                          ),
-                        )),
-                    Positioned(
-                        top: (MediaQuery.of(context).size.height -
-                                keyboard_height) /
-                            2.0,
-                        child: const Text(
-                          'Hello',
-                          style: triviaHeading2,
-                        )),
-                    TextFormField(
-                      style: triviaSmall1,
-                      controller: _controller,
-                      textAlignVertical: TextAlignVertical.bottom,
-                      decoration: const InputDecoration(
-                        contentPadding: EdgeInsets.only(bottom: 8, left: 15),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.transparent, width: 4.0),
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.transparent, width: 5.0),
-                        ),
-                        hintText: 'Enter game code',
                       ),
-                    )
-                  ],
-                );
-              })),
+                      Positioned(
+                          top: 105,
+                          right: (MediaQuery.of(context).size.width / 2.0 - 200) /
+                                  2.0 +
+                              (200 - 70) / 2.0 -
+                              3,
+                          child: Container(
+                            width: 70,
+                            child: RichText(
+                              textAlign: TextAlign.center,
+                              text: const TextSpan(style: triviaSmall2, text: "1234"),
+                            ),
+                          )),
+                      Positioned(
+                          top: 105,
+                          left: (MediaQuery.of(context).size.width / 2.0 - 200) /
+                                  2.0 +
+                              (200 - 70) / 2.0 -
+                              3,
+                          child: Container(
+                            width: 70,
+                            child: RichText(
+                              textAlign: TextAlign.center,
+                              text: const TextSpan(style: triviaSmall2, text: "1234"),
+                            ),
+                          )),
+                      Positioned(
+                          top: (MediaQuery.of(context).size.height -
+                                  keyboard_height) /
+                              2.0,
+                          child: const Text(
+                            'Hello',
+                            style: triviaHeading2,
+                          )),
+                      TextFormField(
+                        style: triviaSmall1,
+                        controller: _controller,
+                        textAlignVertical: TextAlignVertical.bottom,
+                        decoration: const InputDecoration(
+                          contentPadding: EdgeInsets.only(bottom: 8, left: 15),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.transparent, width: 4.0),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.transparent, width: 5.0),
+                          ),
+                          hintText: 'Enter game code',
+                        ),
+                      )
+                    ],
+                  );
+                }),
+          )),
     );
   }
 }

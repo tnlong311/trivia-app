@@ -21,6 +21,7 @@ class _RulesPageState extends State<RulesPage> {
     double height_ratio = 1.0;
     var border_space = (400 - 357 * border_ratio) / 2.0;
     return SafeArea(
+      top: false,
       child: Scaffold(
         body: Stack(
           children: <Widget>[

@@ -9,12 +9,18 @@ class UnknownPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: ElevatedButton(
-          child: const Text('404 not found'),
-          onPressed: () {
-            Navigator.pushNamed(context, LandingPage.routeName);
-          },
+      body: SafeArea(
+        top: false,
+        child: WillPopScope(
+          onWillPop: () async => false,
+          child: Center(
+            child: ElevatedButton(
+              child: const Text('404 not found'),
+              onPressed: () {
+                Navigator.pushNamed(context, LandingPage.routeName);
+              },
+            ),
+          ),
         ),
       ),
     );
