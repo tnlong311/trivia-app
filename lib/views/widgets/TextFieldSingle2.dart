@@ -4,41 +4,33 @@ import 'package:trivia_app/consts/app_styles.dart';
 import 'package:trivia_app/views/pages/team_formation_page.dart';
 import 'package:trivia_app/views/dialogs/custom_snackbar.dart';
 
-class TextFieldWithButton extends StatefulWidget {
-  const TextFieldWithButton(
-      {Key? key,
-      required this.routeName,
-      required this.isKeyboard,
-      required this.validator,
-      required this.updator,
-      required this.failMsg,
-      required this.successMsg,
-      required this.run_animation,
-      required this.hintText,
-      required this.width,
-      required this.height,
-      required this.nextPage})
-      : super(key: key);
+class TextFieldSingle2 extends StatefulWidget {
+  const TextFieldSingle2({
+    Key? key,
+    required this.isKeyboard,
+    required this.validator,
+    required this.updator,
+    required this.hintText,
+    required this.width,
+    required this.height,
+    required this.onEnter,
+  }) : super(key: key);
 
-  final String routeName;
-  final String failMsg;
-  final String successMsg;
   final bool isKeyboard;
   final Function validator;
   final Function updator;
-  final Function run_animation;
+  final Function onEnter;
   final String hintText;
   final double width;
   final double height;
-  final Function nextPage;
 
   // final Function customValidate;
 
   @override
-  State<TextFieldWithButton> createState() => _TextFieldWithButtonState();
+  State<TextFieldSingle2> createState() => _TextFieldSingle2State();
 }
 
-class _TextFieldWithButtonState extends State<TextFieldWithButton> {
+class _TextFieldSingle2State extends State<TextFieldSingle2> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _controller = TextEditingController();
   var p1;
@@ -50,16 +42,6 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
 
   @override
   Widget build(BuildContext context) {
-    onSubmitValidate() async {
-      var status = await widget.updator(_controller.value.text);
-
-      if (status) {
-        widget.nextPage();
-      } else {
-        CustomSnackBar.showFailSnackBar(context, widget.failMsg);
-      }
-    }
-
     return Container(
       width: widget.width,
       height: widget.height,
@@ -97,10 +79,7 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
                     if (_formKey.currentState!.validate()) {
                       // close keyboard
                       FocusManager.instance.primaryFocus?.unfocus();
-
-                      await onSubmitValidate();
-                    }
-                    ;
+                    };
                   },
                   child: Container(width: widget.width / 9, child: p1),
                 ),
@@ -115,11 +94,7 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
               child: TextFormField(
                 style: triviaSmall1,
                 validator: (value) => widget.validator(value),
-                onFieldSubmitted: (value) async {
-                  if (_formKey.currentState!.validate()) {
-                    await onSubmitValidate();
-                  }
-                },
+                onFieldSubmitted: (_) async => widget.onEnter(),
                 controller: _controller,
                 textAlign: TextAlign.center,
                 // textAlignVertical: TextAlignVertical.bottom,
@@ -134,6 +109,7 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
                   ),
                   hintText: widget.hintText,
                 ),
+                onSaved: (value) => widget.updator(value),
               ),
             ),
           ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:trivia_app/services/auth_service.dart';
 import 'package:trivia_app/views/pages/team_formation_page.dart';
 
+import '../dialogs/custom_snackbar.dart';
 import '../widgets/Layer.dart';
 import '../widgets/TextFieldWithButton.dart';
 
@@ -70,6 +71,22 @@ class _LandingPageState extends State<LandingPage>
     }
   }
 
+  Future<void> nextPage() async {
+    CustomSnackBar.showSuccessSnackBar(context, 'Game joined!');
+    run_animation();
+    await Future.delayed(const Duration(milliseconds: 1500));
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    Navigator.push(
+        context,
+        PageRouteBuilder(
+            pageBuilder: (context, animation1, animation2) =>
+            const TeamFormationPage(),
+            transitionDuration: Duration.zero,
+            reverseTransitionDuration: Duration.zero));
+  }
+
   @override
   Widget build(BuildContext context) {
     final isKeyboard = MediaQuery
@@ -106,7 +123,6 @@ class _LandingPageState extends State<LandingPage>
                     'assets/images/planet.png',
                     fit: BoxFit.cover,
                   );
-
                   return Positioned(
                       top: viewHeight / 1.35,
                       left: (MediaQuery
@@ -146,63 +162,79 @@ class _LandingPageState extends State<LandingPage>
                         ),
                       ),
                   );
-                }),
-            AnimatedBuilder(
-                animation: anime,
-                builder: (context, _) {
-                  final d = movement.value.toDouble();
-                  return
-                    Positioned(
-                      top: 0,
-                      left: (viewWidth - 400) / 2.0 + (1 - d) * 350,
-                      child: Container(
-                        color: Colors.transparent,
-                        width: 400,
-                        child: RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(
-                              style: TextStyle(
-                                color: Colors.white.withOpacity(d),
-                                fontWeight: FontWeight.w800,
-                                fontFamily: 'PixelFont',
-                                letterSpacing: 0.6,
-                                fontSize: 50,
-                                height: 2,
-                                shadows: <Shadow>[
-                                  Shadow(
-                                    offset: const Offset(4.0, 4.0),
-                                    blurRadius: 1.0,
-                                    color: const Color.fromARGB(255, 232, 27, 119)
-                                        .withOpacity(d),
-                                  ),
-                                  Shadow(
-                                    offset: const Offset(-4.0, -4.0),
-                                    blurRadius: 1.0,
-                                    color: const Color.fromARGB(255, 67, 230, 244)
-                                        .withOpacity(d),
-                                  ),
-                                ],
-                                decoration: TextDecoration.none,
-                              ), text: "How can we call your group?"),
-                        ),
-                      ),
-                    );
-                }),
-            Positioned(
-              top: viewHeight * 2.0 / 4.0 - max(0, MediaQuery.of(context).viewInsets.bottom - viewHeight * 2.0 / 4.0),
-              left: (viewWidth - 250) / 2.0,
-              child: TextFieldWithButton(
-                validator: inputValidator,
-                updator: inputUpdator,
-                routeName: TeamFormationPage.routeName,
-                failMsg: 'Wrong game code!',
-                successMsg: 'Game joined!',
-                hintText: 'Enter game code',
-                isKeyboard: isKeyboard,
-                width: 300,
-                height: 80,
-                run_animation: run_animation,
-              ),
+              }),
+          Positioned(
+            top: viewHeight * 2.0 / 4.0 - max(0, MediaQuery.of(context).viewInsets.bottom - viewHeight * 2.0 / 4.0),
+            left: (viewWidth - 300 * 0.8) / 2.0,
+            child: TextFieldWithButton(
+              validator: inputValidator,
+              updator: inputUpdator,
+              routeName: TeamFormationPage.routeName,
+              failMsg: 'Wrong game code!',
+              successMsg: 'Game joined!',
+              hintText: 'Enter game code',
+              isKeyboard: isKeyboard,
+              nextPage: nextPage,
+              width: 300,
+              height: 80,
+              run_animation: run_animation,
+//                 }),
+//             AnimatedBuilder(
+//                 animation: anime,
+//                 builder: (context, _) {
+//                   final d = movement.value.toDouble();
+//                   return
+//                     Positioned(
+//                       top: 0,
+//                       left: (viewWidth - 400) / 2.0 + (1 - d) * 350,
+//                       child: Container(
+//                         color: Colors.transparent,
+//                         width: 400,
+//                         child: RichText(
+//                           textAlign: TextAlign.center,
+//                           text: TextSpan(
+//                               style: TextStyle(
+//                                 color: Colors.white.withOpacity(d),
+//                                 fontWeight: FontWeight.w800,
+//                                 fontFamily: 'PixelFont',
+//                                 letterSpacing: 0.6,
+//                                 fontSize: 50,
+//                                 height: 2,
+//                                 shadows: <Shadow>[
+//                                   Shadow(
+//                                     offset: const Offset(4.0, 4.0),
+//                                     blurRadius: 1.0,
+//                                     color: const Color.fromARGB(255, 232, 27, 119)
+//                                         .withOpacity(d),
+//                                   ),
+//                                   Shadow(
+//                                     offset: const Offset(-4.0, -4.0),
+//                                     blurRadius: 1.0,
+//                                     color: const Color.fromARGB(255, 67, 230, 244)
+//                                         .withOpacity(d),
+//                                   ),
+//                                 ],
+//                                 decoration: TextDecoration.none,
+//                               ), text: "How can we call your group?"),
+//                         ),
+//                       ),
+//                     );
+//                 }),
+//             Positioned(
+//               top: viewHeight * 2.0 / 4.0 - max(0, MediaQuery.of(context).viewInsets.bottom - viewHeight * 2.0 / 4.0),
+//               left: (viewWidth - 250) / 2.0,
+//               child: TextFieldWithButton(
+//                 validator: inputValidator,
+//                 updator: inputUpdator,
+//                 routeName: TeamFormationPage.routeName,
+//                 failMsg: 'Wrong game code!',
+//                 successMsg: 'Game joined!',
+//                 hintText: 'Enter game code',
+//                 isKeyboard: isKeyboard,
+//                 width: 300,
+//                 height: 80,
+//                 run_animation: run_animation,
+//               ),
             ),
           ]),
         ),
