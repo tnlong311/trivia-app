@@ -4,6 +4,7 @@ import 'package:trivia_app/views/widgets/Layer.dart';
 import 'package:trivia_app/views/widgets/TextFieldWithButton.dart';
 import 'dart:math';
 
+import '../dialogs/custom_snackbar.dart';
 import 'lobby_page.dart';
 
 class TeamFormationPage extends StatefulWidget {
@@ -80,6 +81,21 @@ class _TeamFormationPageState extends State<TeamFormationPage>
     }
   }
 
+  Future<void> nextPage() async {
+    CustomSnackBar.showSuccessSnackBar(context, 'Welcome, $_name!');
+    run_animation();
+    await Future.delayed(const Duration(milliseconds: 1500));
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    await Future.delayed(const Duration(milliseconds: 300));
+
+    Navigator.push(
+        context,
+        PageRouteBuilder(
+            pageBuilder: (context, animation1, animation2) => const LobbyPage(),
+            transitionDuration: Duration.zero,
+            reverseTransitionDuration: Duration.zero));
+  }
+
   @override
   Widget build(BuildContext context) {
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
@@ -104,8 +120,7 @@ class _TeamFormationPageState extends State<TeamFormationPage>
                 final d = movement2.value.toDouble();
                 return Positioned(
                   top: 0,
-                  right:
-                      (viewWidth - 400) / 2.0 + d * 350,
+                  right: (viewWidth - 400) / 2.0 + d * 350,
                   child: Container(
                     color: Colors.transparent,
                     width: 400,
@@ -146,8 +161,7 @@ class _TeamFormationPageState extends State<TeamFormationPage>
                 final d = movement2.value.toDouble();
                 return Positioned(
                   top: 0,
-                  left: (viewWidth - 400) / 2.0 +
-                      (1 - d) * 350,
+                  left: (viewWidth - 400) / 2.0 + (1 - d) * 350,
                   child: Container(
                     color: Colors.transparent,
                     width: 400,
@@ -187,13 +201,16 @@ class _TeamFormationPageState extends State<TeamFormationPage>
               builder: (context, _) {
                 final mv = movement2.value.toDouble();
                 return Positioned(
-                    top: viewHeight * 2.0 / 4.0 - max(0, MediaQuery.of(context).viewInsets.bottom - viewHeight * 2.0 / 4.0),
-                    left: (viewWidth -
-                            (-mv * 150 + 300)) /
-                        2.0,
+                    top: viewHeight * 2.0 / 4.0 -
+                        max(
+                            0,
+                            MediaQuery.of(context).viewInsets.bottom -
+                                viewHeight * 2.0 / 4.0),
+                    left: (viewWidth - (-mv * 150 + 300 * 0.8)) / 2.0,
                     child: Container(
                       width: -mv * 150 + 300,
                       child: TextFieldWithButton(
+                          nextPage: nextPage,
                           run_animation: run_animation,
                           validator: inputValidator,
                           updator: inputUpdator,
@@ -202,8 +219,7 @@ class _TeamFormationPageState extends State<TeamFormationPage>
                           hintText: 'Your group name',
                           width: 300,
                           height: 80,
-                          successMsg:
-                              'Welcome, $_name!',
+                          successMsg: 'Welcome, $_name!',
                           isKeyboard: isKeyboard),
                     ));
               }),
@@ -217,8 +233,7 @@ class _TeamFormationPageState extends State<TeamFormationPage>
                 final mv = movement.value.toDouble();
                 return Positioned(
                     top: viewHeight / 1.35,
-                    left: (viewWidth - 700 + 300 * mv) /
-                        2.0,
+                    left: (viewWidth - 700 + 300 * mv) / 2.0,
                     child: Container(
                         width: -mv * 300 + 700,
                         child: Transform.translate(

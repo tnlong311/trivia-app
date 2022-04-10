@@ -26,9 +26,9 @@ class CustomRouter {
   }
 
   static Route<dynamic>? generateRoute(RouteSettings settings) {
-    if (!AuthService.isSignedIn()) {
-      return MaterialPageRoute(builder: (_) => const LandingPage());
-    }
+    // if (!AuthService.isSignedIn()) {
+    //   return MaterialPageRoute(builder: (_) => const LandingPage());
+    // }
 
     switch (settings.name) {
       case LandingPage.routeName:

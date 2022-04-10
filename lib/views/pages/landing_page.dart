@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:trivia_app/services/auth_service.dart';
 import 'package:trivia_app/views/pages/team_formation_page.dart';
 
+import '../dialogs/custom_snackbar.dart';
 import '../widgets/Layer.dart';
 import '../widgets/TextFieldWithButton.dart';
 
@@ -70,6 +71,22 @@ class _LandingPageState extends State<LandingPage>
     }
   }
 
+  Future<void> nextPage() async {
+    CustomSnackBar.showSuccessSnackBar(context, 'Game joined!');
+    run_animation();
+    await Future.delayed(const Duration(milliseconds: 1500));
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    Navigator.push(
+        context,
+        PageRouteBuilder(
+            pageBuilder: (context, animation1, animation2) =>
+            const TeamFormationPage(),
+            transitionDuration: Duration.zero,
+            reverseTransitionDuration: Duration.zero));
+  }
+
   @override
   Widget build(BuildContext context) {
     final isKeyboard = MediaQuery
@@ -85,10 +102,10 @@ class _LandingPageState extends State<LandingPage>
         .size
         .width;
 
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: Stack(children: <Widget>[
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Stack(children: <Widget>[
           Image.asset(
             'assets/images/BackGround.png',
             fit: BoxFit.cover,
@@ -187,7 +204,7 @@ class _LandingPageState extends State<LandingPage>
               }),
           Positioned(
             top: viewHeight * 2.0 / 4.0 - max(0, MediaQuery.of(context).viewInsets.bottom - viewHeight * 2.0 / 4.0),
-            left: (viewWidth - 300) / 2.0,
+            left: (viewWidth - 300 * 0.8) / 2.0,
             child: TextFieldWithButton(
               validator: inputValidator,
               updator: inputUpdator,
@@ -196,6 +213,7 @@ class _LandingPageState extends State<LandingPage>
               successMsg: 'Game joined!',
               hintText: 'Enter game code',
               isKeyboard: isKeyboard,
+              nextPage: nextPage,
               width: 300,
               height: 80,
               run_animation: run_animation,
