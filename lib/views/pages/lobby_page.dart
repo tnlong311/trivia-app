@@ -58,7 +58,7 @@ class _LobbyPageState extends State<LobbyPage> with TickerProviderStateMixin {
           onWillPop: () async => false,
           child: Stack(children: <Widget>[
             Image.asset(
-              'assets/images/BackGround.png',
+              'assets/images/background.png',
               fit: BoxFit.cover,
               height: double.infinity,
               width: double.infinity,
