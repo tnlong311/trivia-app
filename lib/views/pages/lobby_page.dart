@@ -50,50 +50,54 @@ class _LobbyPageState extends State<LobbyPage> with TickerProviderStateMixin {
     final viewWidth = MediaQuery.of(context).size.width;
 
     return SafeArea(
+      top: false,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.transparent,
-        body: Stack(children: <Widget>[
-          Image.asset(
-            'assets/images/BackGround.png',
-            fit: BoxFit.cover,
-            height: double.infinity,
-            width: double.infinity,
-          ),
-          const Layer(),
-          Positioned(
-            top: 0,
-            left: (viewWidth - 400) / 2.0,
-            child: Container(
-              color: Colors.transparent,
-              width: 400,
-              child: RichText(
-                textAlign: TextAlign.center,
-                text: const TextSpan(
-                    style: triviaHeading2, text: "Waiting for host..."),
+        body: WillPopScope(
+          onWillPop: () async => false,
+          child: Stack(children: <Widget>[
+            Image.asset(
+              'assets/images/BackGround.png',
+              fit: BoxFit.cover,
+              height: double.infinity,
+              width: double.infinity,
+            ),
+            const Layer(),
+            Positioned(
+              top: 0,
+              left: (viewWidth - 400) / 2.0,
+              child: Container(
+                color: Colors.transparent,
+                width: 400,
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: const TextSpan(
+                      style: triviaHeading2, text: "Waiting for host..."),
+                ),
               ),
             ),
-          ),
-          AnimatedBuilder(
-              animation: anime,
-              builder: (context, _) {
-                var p1 = Image.asset(
-                  'assets/images/planet.png',
-                  fit: BoxFit.cover,
-                );
-                final mv = anime.value.toDouble();
-                return Positioned(
-                    top: viewHeight / 1.35,
-                    left: (viewWidth - 700 + 300) / 2.0,
-                    child: Container(
-                        width: 400,
-                        child: Transform.translate(
-                          offset: const Offset(0, -300),
-                          child: Transform.rotate(
-                              angle: -2.0 / 3.0 * pi * 1 + pi * 0.4 - 2 * pi * mv, child: p1),
-                        )));
-              }),
-        ]),
+            AnimatedBuilder(
+                animation: anime,
+                builder: (context, _) {
+                  var p1 = Image.asset(
+                    'assets/images/planet.png',
+                    fit: BoxFit.cover,
+                  );
+                  final mv = anime.value.toDouble();
+                  return Positioned(
+                      top: viewHeight / 1.35,
+                      left: (viewWidth - 700 + 300) / 2.0,
+                      child: Container(
+                          width: 400,
+                          child: Transform.translate(
+                            offset: const Offset(0, -300),
+                            child: Transform.rotate(
+                                angle: -2.0 / 3.0 * pi * 1 + pi * 0.4 - 2 * pi * mv, child: p1),
+                          )));
+                }),
+          ]),
+        ),
       ),
     );
   }

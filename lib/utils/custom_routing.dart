@@ -47,8 +47,6 @@ class CustomRouter {
         return MaterialPageRoute(builder: (_) => const QuestionPollPage());
       case AnswerRevealPage.routeName:
         return MaterialPageRoute(builder: (_) => const AnswerRevealPage());
-      case TestFirebasePage.routeName:
-        return MaterialPageRoute(builder: (_) => const TestFirebasePage());
       case CreateUserPage.routeName:
         return MaterialPageRoute(builder: (_) => const CreateUserPage());
       case EndPage.routeName:

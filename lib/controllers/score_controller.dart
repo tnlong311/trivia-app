@@ -43,11 +43,11 @@ class ScoreController extends GetxController with GetTickerProviderStateMixin {
   }
 
   void setUserAnswer(value) {
-    _userAnswer = value.toString().toUpperCase();
+    _userAnswer = value.toString().trim();
   }
 
   void setBet(value) {
-    _bet = int.parse(value);
+    _bet = int.parse(value.toString().trim());
   }
 
   void setAnswerState(bool state) {
@@ -88,12 +88,12 @@ class ScoreController extends GetxController with GetTickerProviderStateMixin {
     _total = await RtdbGameService.getUserTotalScore(pin);
   }
 
-  Future<void> checkAndPostAnswer() async {
+  Future<bool> checkAndPostAnswer() async {
     print('bet=$_bet, user answered=$_userAnswer');
     print('user answered '
         '${_answerList[index].correct == _userAnswer ? 'correct' : 'wrong'}');
 
-    if (_userAnswer == _answerList[index].correct) {
+    if (_userAnswer.toLowerCase() == _answerList[index].correct.toLowerCase()) {
       _result = _bet;
     } else {
       _result = -_bet;
@@ -101,9 +101,20 @@ class ScoreController extends GetxController with GetTickerProviderStateMixin {
 
     // update();
 
-    await RtdbGameService.postScoreChange(
+    var result1 = await RtdbGameService.postScoreChange(
         AuthService.getPin(), _index + 1, _result);
-    // await RtdbGameService.postTotalScore(AuthService.getPin(), _currentPoint);
+    if (!result1) {
+      // post failed
+      return false;
+    }
+
+    var result2 = await RtdbGameService.postUserAnswer(
+        AuthService.getPin(), _index + 1, _userAnswer);
+    if (!result2) {
+      return false;
+    }
+
+    return true;
   }
 
   Future<void> resetAnswerState() async {

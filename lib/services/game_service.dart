@@ -64,12 +64,33 @@ class RtdbGameService {
   //       .catchError((error) => print(error));
   // }
 
-  static Future<void> postScoreChange(
+  static Future<bool> postScoreChange(
       String id, int question, int score) async {
-    await gameRef
-        .child('scores/$id/changes')
-        .update({'$question': score})
-        .then((value) => print('updated $score to $question on user $id'))
-        .catchError((error) => print(error));
+    try {
+      await gameRef
+          .child('scores/$id/changes')
+          .update({'$question': score}).then(
+              (value) => print('updated $score to $question on user $id'));
+    } catch (error) {
+      print(error);
+      return false;
+    }
+
+    return true;
+  }
+
+  static Future<bool> postUserAnswer(
+      String id, int question, String answer) async {
+    try {
+      await gameRef
+          .child('scores/$id/answers')
+          .update({'$question': answer}).then(
+              (value) => print('updated $answer to $question on user $id'));
+    } catch (error) {
+      print(error);
+      return false;
+    }
+
+    return true;
   }
 }
