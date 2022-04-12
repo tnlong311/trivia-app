@@ -159,69 +159,54 @@ class _LandingPageState extends State<LandingPage>
                 failMsg: 'Wrong game code!',
                 successMsg: 'Game joined!',
                 hintText: 'Enter game code',
-                isKeyboard: isKeyboard,
                 nextPage: nextPage,
                 width: 300,
                 height: 80,
                 run_animation: run_animation,
               ),
-//                 }),
-//             AnimatedBuilder(
-//                 animation: anime,
-//                 builder: (context, _) {
-//                   final d = movement.value.toDouble();
-//                   return
-//                     Positioned(
-//                       top: 0,
-//                       left: (viewWidth - 400) / 2.0 + (1 - d) * 350,
-//                       child: Container(
-//                         color: Colors.transparent,
-//                         width: 400,
-//                         child: RichText(
-//                           textAlign: TextAlign.center,
-//                           text: TextSpan(
-//                               style: TextStyle(
-//                                 color: Colors.white.withOpacity(d),
-//                                 fontWeight: FontWeight.w800,
-//                                 fontFamily: 'PixelFont',
-//                                 letterSpacing: 0.6,
-//                                 fontSize: 50,
-//                                 height: 2,
-//                                 shadows: <Shadow>[
-//                                   Shadow(
-//                                     offset: const Offset(4.0, 4.0),
-//                                     blurRadius: 1.0,
-//                                     color: const Color.fromARGB(255, 232, 27, 119)
-//                                         .withOpacity(d),
-//                                   ),
-//                                   Shadow(
-//                                     offset: const Offset(-4.0, -4.0),
-//                                     blurRadius: 1.0,
-//                                     color: const Color.fromARGB(255, 67, 230, 244)
-//                                         .withOpacity(d),
-//                                   ),
-//                                 ],
-//                                 decoration: TextDecoration.none,
-//                               ), text: "How can we call your group?"),
-//                         ),
-//                       ),
-//                     );
-//                 }),
-//             Positioned(
-//               top: viewHeight * 2.0 / 4.0 - max(0, MediaQuery.of(context).viewInsets.bottom - viewHeight * 2.0 / 4.0),
-//               left: (viewWidth - 250) / 2.0,
-//               child: TextFieldWithButton(
-//                 validator: inputValidator,
-//                 updator: inputUpdator,
-//                 routeName: TeamFormationPage.routeName,
-//                 failMsg: 'Wrong game code!',
-//                 successMsg: 'Game joined!',
-//                 hintText: 'Enter game code',
-//                 isKeyboard: isKeyboard,
-//                 width: 300,
-//                 height: 80,
-//                 run_animation: run_animation,
-            )
+            ),
+            // }),
+            AnimatedBuilder(
+                animation: anime,
+                builder: (context, _) {
+                  final d = movement.value.toDouble();
+                  return Positioned(
+                    top: 0,
+                    left: (viewWidth - 400) / 2.0 + (1 - d) * 350,
+                    child: Container(
+                      color: Colors.transparent,
+                      width: 400,
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(d),
+                              fontWeight: FontWeight.w800,
+                              fontFamily: 'PixelFont',
+                              letterSpacing: 0.6,
+                              fontSize: 50,
+                              height: 2,
+                              shadows: <Shadow>[
+                                Shadow(
+                                  offset: const Offset(4.0, 4.0),
+                                  blurRadius: 1.0,
+                                  color: const Color.fromARGB(255, 232, 27, 119)
+                                      .withOpacity(d),
+                                ),
+                                Shadow(
+                                  offset: const Offset(-4.0, -4.0),
+                                  blurRadius: 1.0,
+                                  color: const Color.fromARGB(255, 67, 230, 244)
+                                      .withOpacity(d),
+                                ),
+                              ],
+                              decoration: TextDecoration.none,
+                            ),
+                            text: "How can we call your group?"),
+                      ),
+                    ),
+                  );
+                }),
           ]),
         ),
       ),

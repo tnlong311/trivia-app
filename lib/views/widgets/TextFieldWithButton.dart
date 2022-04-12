@@ -8,7 +8,6 @@ class TextFieldWithButton extends StatefulWidget {
   const TextFieldWithButton(
       {Key? key,
       required this.routeName,
-      required this.isKeyboard,
       required this.validator,
       required this.updator,
       required this.failMsg,
@@ -23,7 +22,6 @@ class TextFieldWithButton extends StatefulWidget {
   final String routeName;
   final String failMsg;
   final String successMsg;
-  final bool isKeyboard;
   final Function validator;
   final Function updator;
   final Function run_animation;
@@ -74,38 +72,34 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
             height: widget.height,
           ),
         ),
-        widget.isKeyboard
-            ? Align(
-                alignment: Alignment.centerRight,
-                child: GestureDetector(
-                  onTapDown: (tap) async {
-                    setState(() {
-                      p1 = Image.asset(
-                          'assets/images/next_page_button_pressed.png');
-                    });
-                  },
-                  onTapCancel: () => {
-                    setState(() {
-                      p1 = Image.asset('assets/images/next_page_button.png');
-                    })
-                  },
-                  onTapUp: (tap) async {
-                    setState(() {
-                      p1 = Image.asset('assets/images/next_page_button.png');
-                    });
-                    Future.delayed(Duration(seconds: 5));
-                    if (_formKey.currentState!.validate()) {
-                      // close keyboard
-                      FocusManager.instance.primaryFocus?.unfocus();
+        Align(
+          alignment: Alignment.centerRight,
+          child: GestureDetector(
+            onTapDown: (tap) async {
+              setState(() {
+                p1 = Image.asset('assets/images/next_page_button_pressed.png');
+              });
+            },
+            onTapCancel: () => {
+              setState(() {
+                p1 = Image.asset('assets/images/next_page_button.png');
+              })
+            },
+            onTapUp: (tap) async {
+              setState(() {
+                p1 = Image.asset('assets/images/next_page_button.png');
+              });
+              // Future.delayed(Duration(seconds: 5));
+              if (_formKey.currentState!.validate()) {
+                // close keyboard
+                FocusManager.instance.primaryFocus?.unfocus();
 
-                      await onSubmitValidate();
-                    }
-                    ;
-                  },
-                  child: Container(width: widget.width / 9, child: p1),
-                ),
-              )
-            : const SizedBox.shrink(),
+                await onSubmitValidate();
+              }
+            },
+            child: Container(width: widget.width / 9, child: p1),
+          ),
+        ),
         Positioned(
           left: 0,
           child: Container(

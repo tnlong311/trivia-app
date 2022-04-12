@@ -213,17 +213,17 @@ class _TeamFormationPageState extends State<TeamFormationPage>
                       child: Container(
                         width: -mv * 150 + 300,
                         child: TextFieldWithButton(
-                            nextPage: nextPage,
-                            run_animation: run_animation,
-                            validator: inputValidator,
-                            updator: inputUpdator,
-                            routeName: LobbyPage.routeName,
-                            failMsg: 'An error has occured',
-                            hintText: 'Your group name',
-                            width: 300,
-                            height: 80,
-                            successMsg: 'Welcome, $_name!',
-                            isKeyboard: isKeyboard),
+                          nextPage: nextPage,
+                          run_animation: run_animation,
+                          validator: inputValidator,
+                          updator: inputUpdator,
+                          routeName: LobbyPage.routeName,
+                          failMsg: 'An error has occured',
+                          hintText: 'Your group name',
+                          width: 300,
+                          height: 80,
+                          successMsg: 'Welcome, $_name!',
+                        ),
                       ));
                 }),
             AnimatedBuilder(
@@ -242,7 +242,8 @@ class _TeamFormationPageState extends State<TeamFormationPage>
                           child: Transform.translate(
                             offset: Offset(0, mv * -300),
                             child: Transform.rotate(
-                                angle: -2.0 / 3.0 * pi * 1 + pi * 0.4, child: p1),
+                                angle: -2.0 / 3.0 * pi * 1 + pi * 0.4,
+                                child: p1),
                           )));
                 }),
           ]),

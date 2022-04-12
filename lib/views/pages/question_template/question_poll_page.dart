@@ -67,7 +67,7 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
           return 'Enter a valid number';
         } else if (num < 0) {
           return 'Must be positive ?? :D';
-        } else if (num > _scoreController.totalPoint / 2 &&
+        } else if (num > (_scoreController.totalPoint / 2).ceil() &&
             _gameController.index + 1 < 11) {
           return 'Must not exceed half of your score';
         } else if (num > _scoreController.totalPoint &&
