@@ -127,6 +127,7 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
                         BorderSide(color: Colors.transparent, width: 5.0),
                   ),
                   hintText: widget.hintText,
+                  errorStyle: const TextStyle(color: Colors.black, fontFamily: 'PixelFont'),
                 ),
               ),
             ),
