@@ -118,7 +118,6 @@ class AnswerRevealPage extends StatelessWidget {
                   child: Container(
                     height: screenHeight / 5,
                     width: screenWidth / 1.6,
-
                     child: Stack(children: [
                       Image.asset('assets/images/Current_score_panel.png'),
                       Positioned(
