@@ -27,17 +27,18 @@ class RtdbGameService {
         .catchError((error) => print(error));
 
     num score = 0;
-    List lst = [0];
+    List<String> lst = ['0'];
 
     if (snapshot.exists) {
       for (var data in snapshot.children) {
-        lst.add(data.value);
+        lst.add(data.value.toString());
       }
     }
 
     for (var val in lst) {
-      score += val;
+      score += int.tryParse(val.toString()) ?? 0;
     }
+
     print('Fetched total score: $score');
 
     return score;

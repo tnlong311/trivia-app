@@ -55,6 +55,14 @@ class ScoreController extends GetxController with GetTickerProviderStateMixin {
   }
 
   // helpful methods
+  bool isWin() {
+    if (_result < 0) {
+      return false;
+    }
+
+    return true;
+  }
+
   Future<void> fetchAnswers() async {
     if (_answerList.isEmpty) {
       DatabaseReference questionRef =
@@ -96,7 +104,11 @@ class ScoreController extends GetxController with GetTickerProviderStateMixin {
     if (_userAnswer.toLowerCase() == _answerList[index].correct.toLowerCase()) {
       _result = _bet;
     } else {
-      _result = -_bet;
+      if (_total == 0) {
+        _result = 0;
+      } else {
+        _result = -_bet;
+      }
     }
 
     // update();

@@ -4,11 +4,9 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:trivia_app/controllers/game_controller.dart';
 import 'package:trivia_app/controllers/score_controller.dart';
-import 'package:trivia_app/views/widgets/TextFieldSingle.dart';
 
 import '../../../consts/app_styles.dart';
 import '../../dialogs/custom_snackbar.dart';
-import '../../widgets/InfoBox.dart';
 import '../../widgets/Layer.dart';
 import '../../widgets/ProgressBar.dart';
 import '../../widgets/TextFieldSingle2.dart';
@@ -67,7 +65,15 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
           return 'Enter a valid number';
         } else if (num < 0) {
           return 'Must be positive ?? :D';
-        } else if (num > (_scoreController.totalPoint / 2).ceil() &&
+        }
+        else if (_scoreController.totalPoint <= 0) {
+          if (num > 1) {
+            return 'Can bet 1 point';
+          } else {
+            return null;
+          }
+        }
+        else if (num > (_scoreController.totalPoint / 2).ceil() &&
             _gameController.index + 1 < 11) {
           return 'Must not exceed half of your score';
         } else if (num > _scoreController.totalPoint &&
@@ -169,10 +175,10 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
                     Positioned(
                         top: paddingTop + (box_height * 1.1 - 40) / 2,
                         left: (screenWidth / 2.0 - box_width) / 2.0 +
-                            (box_width - 70) / 2.0 -
+                            (box_width - 110) / 2.0 -
                             3,
                         child: Container(
-                          width: 70,
+                          width: 110,
                           child: RichText(
                             textAlign: TextAlign.center,
                             text: TextSpan(

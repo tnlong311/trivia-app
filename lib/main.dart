@@ -66,6 +66,7 @@ void main() async {
         print('proceed to question $questionNum');
 
         _gameController.setIndexFromQuestionNum(questionNum);
+        await _scoreController.fetchTotalScore();
 
         _gameController.gotoQuestionTitle();
       } else if (event.snapshot.key == 'reveal') {

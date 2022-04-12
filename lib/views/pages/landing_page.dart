@@ -151,7 +151,7 @@ class _LandingPageState extends State<LandingPage>
                       MediaQuery.of(context).viewInsets.bottom -
                           viewHeight +
                           viewHeight * 2.0 / 4.0 +
-                          80),
+                          120),
               left: (viewWidth - 300 * 0.8) / 2.0,
               child: TextFieldWithButton(
                 validator: inputValidator,

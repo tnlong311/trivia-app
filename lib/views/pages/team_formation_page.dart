@@ -211,7 +211,7 @@ class _TeamFormationPageState extends State<TeamFormationPage>
                                 MediaQuery.of(context).viewInsets.bottom -
                                     viewHeight +
                                     viewHeight * 2.0 / 4.0 +
-                                    80),
+                                    120),
                         left: (viewWidth - (-mv * 200 + 300 * 0.8)) / 2.0,
                         child: Container(
                           width: -mv * 200 + 300,
