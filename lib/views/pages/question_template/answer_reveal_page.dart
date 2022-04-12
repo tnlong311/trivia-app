@@ -65,14 +65,14 @@ class AnswerRevealPage extends StatelessWidget {
                           const Align(
                             alignment: Alignment.topRight,
                             child: Text(
-                              'YOU WIN',
+                              'YOU WIN', /// dien ket qua lose hay win nha a
                               style: triviaHeading1,
                             ),
                           ),
                           Align(
                             alignment: Alignment.bottomLeft,
                             child: Text(
-                              "${_scoreController.totalPoint}",
+                              "${_scoreController.totalPoint}", /// o day them cai so trong bang dau tien nha a
                               style: triviaHeading1,
                             ),
                           )
@@ -96,6 +96,7 @@ class AnswerRevealPage extends StatelessWidget {
                           height: box2Height,
                           width: screenWidth / 1.5,
                           child: Image.asset('assets/images/Your_answer_panel.png'),
+                          /// o day them answer nha a
                         ),
                         Container(
                           alignment: Alignment.center,
@@ -128,7 +129,7 @@ class AnswerRevealPage extends StatelessWidget {
                           height: box3Height,
                           child: Align(
                             alignment: Alignment.center,
-                            child: Text( '1222',
+                            child: Text( '1222', /// O day them diem nha anh
                               style: triviaHeading1,
                             ),
                           ),
