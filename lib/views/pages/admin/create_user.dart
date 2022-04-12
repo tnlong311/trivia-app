@@ -35,7 +35,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
 
       if (userRole == 'admin') {
         // CustomUser.createCustomUser();
-        await CustomUser.changeUserGameStatus();
+        print(await CustomUser.getPinList());
       } else {
         print('not authorize');
       }
