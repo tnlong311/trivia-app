@@ -75,7 +75,7 @@ class AnswerRevealPage extends StatelessWidget {
                               "${_scoreController.totalPoint}", /// o day them cai so trong bang dau tien nha a
                               style: triviaHeading1,
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ],

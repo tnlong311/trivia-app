@@ -8,6 +8,7 @@ import 'package:trivia_app/controllers/score_controller.dart';
 import 'package:trivia_app/services/auth_service.dart';
 import 'package:trivia_app/services/user_service.dart';
 import 'package:trivia_app/utils/custom_routing.dart';
+import 'package:trivia_app/views/pages/end_page.dart';
 // import 'package:trivia_app/views/pages/admin/create_user.dart';
 // import 'package:trivia_app/views/pages/end_page.dart';
 // import 'package:trivia_app/views/pages/guidelines_page.dart';
@@ -98,7 +99,7 @@ class MyApp extends StatelessWidget {
               ColorScheme.fromSwatch().copyWith(secondary: Colors.cyanAccent),
         ),
 
-        initialRoute: AnswerRevealPage.routeName,
+        initialRoute: LandingPage.routeName,
         // initialRoute: RulesPage.routeName,
         // initialRoute: TestFirebasePage.routeName,
         // initialRoute: CreateUserPage.routeName,
