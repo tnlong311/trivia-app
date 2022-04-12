@@ -25,14 +25,14 @@ class _LobbyPageState extends State<LobbyPage> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: PageView.builder(
-        scrollDirection: Axis.horizontal,
-        controller: _pageController,
-        itemCount: slideList.length,
-        itemBuilder: (context, i) => slideList[i],
-      ),
-    ));
+          resizeToAvoidBottomInset: false,
+          body: PageView.builder(
+            scrollDirection: Axis.horizontal,
+            controller: _pageController,
+            itemCount: slideList.length,
+            itemBuilder: (context, i) => slideList[i],
+          ),
+        ));
   }
 }
 
@@ -93,16 +93,18 @@ class _WaitingRoomState extends State<WaitingRoom>
             ),
             Container(
               alignment: Alignment.bottomRight,
-              child: const Text('Swipe right ->', style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w800,
-                fontFamily: 'PixelFont',
-                letterSpacing: 0.6,
-                fontSize: 20,
-                height: 2,
-
-                decoration: TextDecoration.none,
-              ),),
+              child: const Text(
+                'Swipe right ->',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w800,
+                  fontFamily: 'PixelFont',
+                  letterSpacing: 0.6,
+                  fontSize: 20,
+                  height: 2,
+                  decoration: TextDecoration.none,
+                ),
+              ),
             ),
             const Layer(),
             Positioned(
@@ -227,6 +229,13 @@ class _GuidelinesPageState extends State<GuidelinesPage> {
         max(0, screenWidth / 1.1 - (screenHeight / 1.1) * ratio) / 2;
     var realWidth = (screenWidth / 1.1 >= 375.0) ? 375.0 : (screenWidth / 1.1);
     var realHeight = realWidth / ratio;
+    if (max(0, 375 - screenWidth / 1.1) / 375 > max(0, 812 - screenHeight / 1.1) / 812) {
+      realWidth = screenWidth / 1.1;
+      realHeight = realWidth / ratio;
+    } else {
+      realHeight = screenHeight / 1.1;
+      realWidth = realHeight * ratio;
+    }
     var heightSpace = max(0, screenHeight / 1.1 - realHeight) / 2;
     double border_ratio = (MediaQuery.of(context).size.height / 1.1) / 812.0;
 
@@ -249,6 +258,7 @@ class _GuidelinesPageState extends State<GuidelinesPage> {
               child: Container(
                 height: screenHeight / 1.1,
                 width: screenWidth / 1.1,
+                color: Colors.black45,
                 child: Stack(children: [
                   Container(
                     child: Container(
@@ -261,7 +271,9 @@ class _GuidelinesPageState extends State<GuidelinesPage> {
                     alignment: Alignment.bottomRight,
                     child: Container(
                       alignment: Alignment.topLeft,
-                      height: (realWidth / 2.5) / 2 * (30 / 80) + realHeight/49 + heightSpace,
+                      height: (realWidth / 2.5) / 2 * (30 / 80) +
+                          realHeight / 49 +
+                          heightSpace,
                       width: realWidth / 2.5 + borderSpace + realWidth / 20,
                       child: Container(
                         width: realWidth / 2.5,
@@ -289,18 +301,19 @@ class _GuidelinesPageState extends State<GuidelinesPage> {
                       ),
                     ),
                   ),
-                 Container(
-                   alignment: Alignment(0, 0.2),
-                   child: Container(
-                     height: realHeight / 1.35,
-                     width: realWidth / 1.3,
-                     color: Colors.white,
-                     child: SingleChildScrollView(
-                               scrollDirection: Axis.vertical,
-                               child: textContent,
-                           ),
-                   ),
-                 )
+                  Container(
+                    alignment: Alignment(0, 0.2),
+                    child: Container(
+                      height: realHeight / 1.35,
+                      width: realWidth / 1.3,
+                      color: Colors.white,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: textContent,
+                      ),
+                    ),
+                  ),
+
                 ]),
               ),
             ),
@@ -316,7 +329,8 @@ class NextButton extends StatefulWidget {
   final scale_factor;
   final Function upd;
 
-  NextButton({Key? key, this.scale_factor, required this.upd}) : super(key: key);
+  NextButton({Key? key, this.scale_factor, required this.upd})
+      : super(key: key);
 
   @override
   State<NextButton> createState() => _NextButtonState();
@@ -363,7 +377,7 @@ class _NextButtonState extends State<NextButton> {
       onTapUp: (tap) {
         widget.upd();
 
-        Future.delayed(Duration(milliseconds:100), () {
+        Future.delayed(Duration(milliseconds: 100), () {
           setState(() {
             pd = Image.asset(
               'assets/images/next_page_not_pressed.png',
@@ -371,12 +385,12 @@ class _NextButtonState extends State<NextButton> {
             );
           });
         });
-
       },
       child: pd,
     );
   }
 }
+
 class BackButton extends StatefulWidget {
   final Function upd;
 
@@ -424,7 +438,7 @@ class _BackButtonState extends State<BackButton> {
       },
       onTapUp: (tap) {
         widget.upd();
-        Future.delayed(Duration(milliseconds:100), () {
+        Future.delayed(Duration(milliseconds: 100), () {
           setState(() {
             pd = Image.asset(
               'assets/images/previous_page_not_pressed.png',
