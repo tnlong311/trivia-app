@@ -294,6 +294,7 @@ class _GuidelinesPageState extends State<GuidelinesPage> {
                    child: Container(
                      height: realHeight / 1.35,
                      width: realWidth / 1.3,
+                     color: Colors.white,
                      child: SingleChildScrollView(
                                scrollDirection: Axis.vertical,
                                child: textContent,
