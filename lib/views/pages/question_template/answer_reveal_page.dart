@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:trivia_app/consts/app_styles.dart';
 import 'package:trivia_app/views/widgets/InfoBox.dart';
 
@@ -60,8 +59,8 @@ class AnswerRevealPage extends StatelessWidget {
                             child: Image.asset('assets/images/dogecoin.png')),
                       ),
                       Column(
-                        children: const [
-                          Align(
+                        children: [
+                          const Align(
                             alignment: Alignment.topRight,
                             child: Text(
                               'YOU WIN',
@@ -71,7 +70,7 @@ class AnswerRevealPage extends StatelessWidget {
                           Align(
                             alignment: Alignment.bottomLeft,
                             child: Text(
-                              '3000',
+                              "${_scoreController.totalPoint}",
                               style: triviaHeading1,
                             ),
                           )
@@ -99,7 +98,7 @@ class AnswerRevealPage extends StatelessWidget {
                           alignment: Alignment.center,
                           child: Container(
                             child: Text(
-                              '$_scoreController.resultString',
+                              _scoreController.resultString,
                               style: triviaSmall1,
                             ),
                             width: box2Width / 1.1,
@@ -122,10 +121,10 @@ class AnswerRevealPage extends StatelessWidget {
                         child: Container(
                           height: box3Height / 2,
                           width: box3Width / 2,
-                          child: const Align(
+                          child: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              '1234',
+                              _scoreController.userAnswer,
                               style: triviaSmall3,
                             ),
                           ),
@@ -136,35 +135,5 @@ class AnswerRevealPage extends StatelessWidget {
             ],
           ),
         ));
-
-    // return Scaffold(
-    //   body: SafeArea(
-    //     child: Column(
-    //       children: [
-    //         Expanded(
-    //           flex: 1,
-    //           child: Center(
-    //               child: InfoBox(
-    //                   title: "",
-    //                   width: 200,
-    //                   height: 120,
-    //                   content: _scoreController.resultString)),
-    //         ),
-    //         Expanded(
-    //           flex: 1,
-    //           child: CorrectAnswerWidget(
-    //               header: "The correct answer is:",
-    //               content: _scoreController.fullCorrectAnswer),
-    //         ),
-    //         Expanded(
-    //           flex: 1,
-    //           child: CorrectAnswerWidget(
-    //               header: "Your current point:",
-    //               content: _scoreController.totalPoint.toString()),
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // );
   }
 }

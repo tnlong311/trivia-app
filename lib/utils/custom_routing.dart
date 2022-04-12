@@ -39,8 +39,6 @@ class CustomRouter {
         return MaterialPageRoute(builder: (_) => LobbyPage());
       case RulesPage.routeName:
         return MaterialPageRoute(builder: (_) => const RulesPage());
-      case GuidelinesPage.routeName:
-        return MaterialPageRoute(builder: (_) => const GuidelinesPage());
       case QuestionTitlePage.routeName:
         return MaterialPageRoute(builder: (_) => const QuestionTitlePage());
       case QuestionPollPage.routeName:

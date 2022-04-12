@@ -96,7 +96,7 @@ class MyApp extends StatelessWidget {
               ColorScheme.fromSwatch().copyWith(secondary: Colors.cyanAccent),
         ),
 
-        initialRoute: LandingPage.routeName,
+        initialRoute: LobbyPage.routeName,
         // initialRoute: RulesPage.routeName,
         // initialRoute: TestFirebasePage.routeName,
         // initialRoute: CreateUserPage.routeName,

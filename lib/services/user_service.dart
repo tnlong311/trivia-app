@@ -39,6 +39,10 @@ class RtdbUserService {
   }
 
   static isNamed(String pin) async {
+    if (pin == '') {
+      return false;
+    }
+
     bool exists = false;
     await userRef.child(pin).child('/name').get().then((DataSnapshot snapshot) {
       exists = snapshot.exists;
