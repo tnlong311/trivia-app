@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trivia_app/consts/app_styles.dart';
@@ -28,7 +30,7 @@ class AnswerRevealPage extends StatelessWidget {
           body: Stack(
             children: <Widget>[
               Image.asset(
-                'assets/images/BackGround.png',
+                'assets/images/background.png',
                 fit: BoxFit.cover,
                 height: double.infinity,
                 width: double.infinity,
@@ -38,7 +40,7 @@ class AnswerRevealPage extends StatelessWidget {
                   top: screenHeight / 25,
                   left: (screenWidth - screenWidth / 1.4) / 2,
                   child: Container(
-                    width: screenWidth / 1.4,
+                    width: min(400, screenWidth / 1.4),
                     child: Image.asset(
                       'assets/images/Score_win_board.png',
                       fit: BoxFit.contain,
@@ -86,7 +88,8 @@ class AnswerRevealPage extends StatelessWidget {
                   child: Container(
                     width: screenWidth / 1.5,
                     height: box2Height,
-                    color: Colors.transparent,
+                    alignment: Alignment.center,
+                    color: Colors.black45,
                     child: Stack(
                       children: [
                         Container(
@@ -94,12 +97,13 @@ class AnswerRevealPage extends StatelessWidget {
                           width: screenWidth / 1.5,
                           child: Image.asset('assets/images/Your_answer_panel.png'),
                         ),
-                        Align(
+                        Container(
                           alignment: Alignment.center,
                           child: Container(
+                            alignment: Alignment.center,
                             child: Text(
                               _scoreController.resultString,
-                              style: triviaSmall1,
+                              style: triviaHeading1,
                             ),
                             width: box2Width / 1.1,
                           ),
@@ -113,19 +117,19 @@ class AnswerRevealPage extends StatelessWidget {
                   child: Container(
                     height: screenHeight / 5,
                     width: screenWidth / 1.6,
+
                     child: Stack(children: [
                       Image.asset('assets/images/Current_score_panel.png'),
                       Positioned(
-                        top: box3Height / 5,
-                        left: box3Width / 7,
+                        right: screenWidth / 1.6 - box3Width,
                         child: Container(
-                          height: box3Height / 2,
-                          width: box3Width / 2,
+                          alignment: Alignment.center,
+                          width: box3Width/1,
+                          height: box3Height,
                           child: Align(
                             alignment: Alignment.center,
-                            child: Text(
-                              _scoreController.userAnswer,
-                              style: triviaSmall3,
+                            child: Text( '1222',
+                              style: triviaHeading1,
                             ),
                           ),
                         ),
