@@ -93,11 +93,10 @@ class _LandingPageState extends State<LandingPage>
     final viewHeight = MediaQuery.of(context).size.height;
     final viewWidth = MediaQuery.of(context).size.width;
 
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        top: false,
-        child: WillPopScope(
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: WillPopScope(
           onWillPop: () async => false,
           child: Stack(children: <Widget>[
             Image.asset(
@@ -116,9 +115,9 @@ class _LandingPageState extends State<LandingPage>
                   );
                   return Positioned(
                       top: viewHeight / 1.35,
-                      left: (MediaQuery.of(context).size.width - 700) / 2.0,
+                      left: (MediaQuery.of(context).size.width - viewWidth * 1.7) / 2.0,
                       child: Container(
-                        width: 700,
+                        width: viewWidth * 1.7,
                         child: Transform.rotate(
                             angle:
                                 -2.0 / 3.0 * pi * (movement.value) + pi * 0.4,
@@ -150,7 +149,9 @@ class _LandingPageState extends State<LandingPage>
                   max(
                       0,
                       MediaQuery.of(context).viewInsets.bottom -
-                          viewHeight * 2.0 / 4.0),
+                          viewHeight +
+                          viewHeight * 2.0 / 4.0 +
+                          80),
               left: (viewWidth - 300 * 0.8) / 2.0,
               child: TextFieldWithButton(
                 validator: inputValidator,

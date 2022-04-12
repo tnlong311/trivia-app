@@ -72,7 +72,7 @@ class _QuestionTitlePageState extends State<QuestionTitlePage>
                   left: (MediaQuery.of(context).size.width - 400) / 2.0 +
                       max(0, anime.value * 6 - 4) / 2 * 400,
                   child: Container(
-                    color: Colors.white30,
+                    color: Colors.transparent,
                     width: 400,
                     child: RichText(
                       textAlign: TextAlign.center,
