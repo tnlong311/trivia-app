@@ -218,7 +218,7 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
                     ),
                     Positioned(
                         left: (screenWidth - 200) / 2.0,
-                        bottom: screenHeight / 4,
+                        bottom: screenHeight / 5.5,
                         child: Container(
                             width: 200,
                             child: SubmitButton(onPressed: answerOnSubmit)))
@@ -251,9 +251,6 @@ class _SubmitButtonState extends State<SubmitButton> {
   @override
   void didUpdateWidget(SubmitButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-    pd = Image.asset(
-      'assets/images/button_not_pressed.png',
-    );
   }
 
   @override
