@@ -42,16 +42,17 @@ class _TextFieldSingle2State extends State<TextFieldSingle2> {
   Widget build(BuildContext context) {
     return Container(
       width: widget.width,
-      height: widget.height,
+      height: widget.height + 20,
       color: Colors.transparent,
       child: Stack(children: <Widget>[
         Container(
           width: 250.0 / 300.0 * widget.width,
-          // height: widget.height + 20,
+          height: widget.height,
+          // height: widget.height,
           child: Image.asset(
             'assets/images/InputBox2.png',
             fit: BoxFit.fill,
-            height: widget.height + 20,
+            height: widget.height,
           ),
         ),
         Positioned(
@@ -75,7 +76,16 @@ class _TextFieldSingle2State extends State<TextFieldSingle2> {
                       BorderSide(color: Colors.transparent, width: 5.0),
                 ),
                 hintText: widget.hintText,
-                errorStyle: TextStyle(color: Colors.white, fontFamily: 'PixelFont'),
+                errorStyle: TextStyle(color: Colors.white, fontFamily: 'PixelFont',fontSize: 13),
+                errorMaxLines: 2,
+                focusedErrorBorder: const OutlineInputBorder(
+                  borderSide:
+                  BorderSide(color: Colors.red, width: 10.0),
+                ),
+                errorBorder: const OutlineInputBorder(
+                    borderSide:
+                    BorderSide(color: Colors.red, width: 10.0),
+                  )
               ),
               onSaved: (value) => widget.updator(value),
             ),

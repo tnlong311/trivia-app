@@ -258,7 +258,7 @@ class _GuidelinesPageState extends State<GuidelinesPage> {
               child: Container(
                 height: screenHeight / 1.1,
                 width: screenWidth / 1.1,
-                color: Colors.black45,
+                color: Colors.transparent,
                 child: Stack(children: [
                   Container(
                     child: Container(
