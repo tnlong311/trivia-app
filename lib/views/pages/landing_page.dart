@@ -174,10 +174,10 @@ class _LandingPageState extends State<LandingPage>
                   final d = movement.value.toDouble();
                   return Positioned(
                     top: 0,
-                    left: (viewWidth - 400) / 2.0 + (1 - d) * 350,
+                    left: (viewWidth - viewWidth / 1.1) / 2.0 + (1 - d) * 350,
                     child: Container(
                       color: Colors.transparent,
-                      width: 400,
+                      width: viewWidth / 1.1,
                       child: RichText(
                         textAlign: TextAlign.center,
                         text: TextSpan(

@@ -103,7 +103,7 @@ class _QuestionTitlePageState extends State<QuestionTitlePage>
                             ],
                             decoration: TextDecoration.none,
                           ),
-                          text: "Question #${_gameController.index + 1}"),
+                          text: "Question #${_gameController.index}"),
                     ),
                   ),
                 );

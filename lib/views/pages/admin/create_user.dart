@@ -32,8 +32,8 @@ class _CreateUserPageState extends State<CreateUserPage> {
       print('kicked');
 
       var userRole = await RtdbUserService.getCurrentUserRole();
-
-      if (userRole == 'admin') {
+      if (true) {
+      // if (userRole == 'admin') {
         // CustomUser.createCustomUser();
         print(await CustomUser.getPinList());
       } else {

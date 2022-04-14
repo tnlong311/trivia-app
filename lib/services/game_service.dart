@@ -80,16 +80,17 @@ class RtdbGameService {
 
   static Future<bool> postScoreChange(
       String id, int question, int score) async {
-    try {
-      await gameRef
-          .child('scores/$id/changes')
-          .update({'$question': score}).then(
-              (value) => print('updated $score to $question on user $id'));
-    } catch (error) {
-      print(error);
-      return false;
+    if (question != 0) {
+      try {
+        await gameRef
+            .child('scores/$id/changes')
+            .update({'$question': score}).then(
+                (value) => print('updated $score to $question on user $id'));
+      } catch (error) {
+        print(error);
+        return false;
+      }
     }
-
     return true;
   }
 

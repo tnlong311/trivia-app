@@ -86,7 +86,7 @@ class ScoreController extends GetxController with GetTickerProviderStateMixin {
   Future<void> fetchChange() async {
     var pin = await RtdbUserService.getCurrentUserPin();
 
-    _result = await RtdbGameService.getCurrentQuestionScore(pin, _index + 1);
+    _result = await RtdbGameService.getCurrentQuestionScore(pin, _index);
     print('score is $_result');
   }
 
@@ -100,6 +100,7 @@ class ScoreController extends GetxController with GetTickerProviderStateMixin {
     print('bet=$_bet, user answered=$_userAnswer');
     print('user answered '
         '${_answerList[index].correct == _userAnswer ? 'correct' : 'wrong'}');
+    print('correct answer ${_answerList[index].correct}');
 
     if (_userAnswer.toLowerCase() == _answerList[index].correct.toLowerCase()) {
       _result = _bet;
@@ -112,16 +113,15 @@ class ScoreController extends GetxController with GetTickerProviderStateMixin {
     }
 
     // update();
-
     var result1 = await RtdbGameService.postScoreChange(
-        AuthService.getPin(), _index + 1, _result);
+        AuthService.getPin(), _index, _result);
     if (!result1) {
       // post failed
       return false;
     }
 
     var result2 = await RtdbGameService.postUserAnswer(
-        AuthService.getPin(), _index + 1, _userAnswer);
+        AuthService.getPin(), _index, _userAnswer);
     if (!result2) {
       return false;
     }

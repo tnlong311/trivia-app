@@ -46,7 +46,7 @@ class CustomUser {
         .child('gameplay/2022/scores')
         .update({
           pin: {
-              'changes': {0: DEFAULT_SCORE}
+              'changes': {-1: DEFAULT_SCORE}
           }
         })
         .then((_) => print('User added to gameplay'))
