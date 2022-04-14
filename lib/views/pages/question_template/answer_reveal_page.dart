@@ -57,23 +57,20 @@ class AnswerRevealPage extends StatelessWidget {
                     fit: BoxFit.scaleDown,
                     child: _scoreController.isWin()
                         ? const Text(
-                      'YOU WIN',
-
-                      /// dien ket qua lose hay win nha a
-                      style: triviaHeading1,
-                    )
+                            'YOU WIN',
+                            style: triviaHeading1,
+                          )
                         : const Text(
-                      'YOU !WIN',
-
-                      /// dien ket qua lose hay win nha a
-                      style: triviaHeading1,
-                    ),
+                            'YOU !WIN',
+                            style: triviaHeading1,
+                          ),
                   ),
                   Row(
                     children: [
                       const SizedBox(width: 10),
                       Text(
                         _scoreController.resultString,
+
                         /// o day them cai so trong bang dau tien nha a
                         style: triviaHeading1,
                       ),
@@ -84,7 +81,6 @@ class AnswerRevealPage extends StatelessWidget {
                           child: Image.asset('assets/images/dogecoin.png')),
                     ],
                   ),
-
                 ],
               ),
             ),
@@ -96,7 +92,7 @@ class AnswerRevealPage extends StatelessWidget {
                 width: screenWidth / 1.5,
                 height: box2Height,
                 alignment: Alignment.center,
-                color: Colors.black45,
+                // color: Colors.black45,
                 child: Stack(
                   children: [
                     Container(
@@ -106,18 +102,16 @@ class AnswerRevealPage extends StatelessWidget {
 
                       /// o day them answer nha a
                     ),
-                    Container(
+                    Align(
                       alignment: Alignment.center,
-                      child: Container(
-                        alignment: Alignment.center,
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            _scoreController.userAnswer,
-                            style: triviaHeading1,
-                          ),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          (_scoreController.userAnswer == '')
+                              ? 'null'
+                              : _scoreController.userAnswer,
+                          style: triviaHeading1,
                         ),
-                        width: box2Width / 1.1,
                       ),
                     )
                   ],
@@ -145,6 +139,7 @@ class AnswerRevealPage extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 40),
                             child: Text(
                               '${_scoreController.totalPoint}',
+
                               /// O day them diem nha anh
                               style: triviaHeading1,
                             ),

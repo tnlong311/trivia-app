@@ -11,9 +11,9 @@ class Answer {
   factory Answer.fromRTDB(Map data) {
     return Answer(
       id: data['qid'],
-      type: data['answer type'],
-      correct: data['correct'],
-      fullCorrect: data['full correct'],
+      type: data['answer type'].toString(),
+      correct: data['correct'].toString(),
+      fullCorrect: data['full correct'].toString(),
     );
   }
 }
