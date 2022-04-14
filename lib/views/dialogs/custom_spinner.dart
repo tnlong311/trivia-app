@@ -11,7 +11,7 @@ class Spinner {
 
   static Widget FadingCube() {
     return const SpinKitFadingCube(
-      color: Colors.black,
+      color: Colors.white,
       size: 60.0,
     );
   }

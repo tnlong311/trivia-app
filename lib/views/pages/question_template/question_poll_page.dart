@@ -7,6 +7,7 @@ import 'package:trivia_app/controllers/score_controller.dart';
 
 import '../../../consts/app_styles.dart';
 import '../../dialogs/custom_snackbar.dart';
+import '../../dialogs/custom_spinner.dart';
 import '../../widgets/Layer.dart';
 import '../../widgets/ProgressBar.dart';
 import '../../widgets/TextFieldSingle2.dart';
@@ -25,6 +26,7 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
   final TextEditingController _controller = TextEditingController();
   final GameController _gameController = Get.put(GameController());
   final ScoreController _scoreController = Get.put(ScoreController());
+  bool _isPressing = false;
 
   @override
   Widget build(BuildContext context) {
@@ -65,15 +67,13 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
           return 'Enter a valid number';
         } else if (num < 0) {
           return 'Must be positive ?? :D';
-        }
-        else if (_scoreController.totalPoint <= 0) {
+        } else if (_scoreController.totalPoint <= 0) {
           if (num > 1) {
             return 'Can bet 1 point';
           } else {
             return null;
           }
-        }
-        else if (num > (_scoreController.totalPoint / 2).ceil() &&
+        } else if (num > (_scoreController.totalPoint / 2).ceil() &&
             _gameController.index + 1 < 11) {
           return 'Must not exceed half of your score';
         } else if (num > _scoreController.totalPoint &&
@@ -100,7 +100,11 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
       FocusManager.instance.primaryFocus?.unfocus();
 
       if (_formKey.currentState!.validate()) {
-        print('hmm');
+        setState(() {
+          _isPressing = true;
+        });
+        await Future.delayed(Duration(seconds: 2));
+
         if (_gameController.countdown.isCompleted) {
           CustomSnackBar.showFailSnackBar(context, 'Out of time!');
         } else if (!_scoreController.isAnswered) {
@@ -114,6 +118,10 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
         } else {
           CustomSnackBar.showFailSnackBar(context, 'Already submitted!');
         }
+
+        setState(() {
+          _isPressing = false;
+        });
       }
     }
 
@@ -137,7 +145,7 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
                     Positioned(
                       top: 0,
                       child: ProgressBar(
-                        width: screenWidth,
+                          width: screenWidth,
                           progress: gameController.countdown.value),
                     ),
                     Positioned(
@@ -216,12 +224,18 @@ class _QuestionPollPageState extends State<QuestionPollPage> {
                         ),
                       ),
                     ),
-                    Positioned(
-                        left: (screenWidth - 200) / 2.0,
-                        bottom: screenHeight / 5.5,
-                        child: Container(
-                            width: 200,
-                            child: SubmitButton(onPressed: answerOnSubmit)))
+                    _isPressing
+                        ? Padding(
+                            padding: const EdgeInsets.only(right: 20),
+                            child: Spinner.FadingCube(),
+                          )
+                        : Positioned(
+                            left: (screenWidth - 200) / 2.0,
+                            bottom: screenHeight / 5.5,
+                            child: Container(
+                                width: 200,
+                                child: SubmitButton(onPressed: answerOnSubmit)),
+                          ),
                   ]);
                 }),
           )),
