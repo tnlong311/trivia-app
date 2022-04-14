@@ -60,7 +60,7 @@ class _TeamFormationPageState extends State<TeamFormationPage>
     if (value == null || value.isEmpty) {
       return 'Please enter some text';
     } else if (value.length < 4 || value.length > 30) {
-      return 'Must be between 4 & 30 chars';
+      return 'Must between 4-30 chars';
     }
 
     return null;

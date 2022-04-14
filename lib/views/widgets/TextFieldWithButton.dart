@@ -60,7 +60,7 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
 
     return Container(
       width: widget.width,
-      height: widget.height,
+      height: widget.height+20,
       color: Colors.transparent,
       child: Stack(children: <Widget>[
         Container(
@@ -74,30 +74,33 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
         ),
         Align(
           alignment: Alignment.centerRight,
-          child: GestureDetector(
-            onTapDown: (tap) async {
-              setState(() {
-                p1 = Image.asset('assets/images/next_page_button_pressed.png');
-              });
-            },
-            onTapCancel: () => {
-              setState(() {
-                p1 = Image.asset('assets/images/next_page_button.png');
-              })
-            },
-            onTapUp: (tap) async {
-              setState(() {
-                p1 = Image.asset('assets/images/next_page_button.png');
-              });
-              // Future.delayed(Duration(seconds: 5));
-              if (_formKey.currentState!.validate()) {
-                // close keyboard
-                FocusManager.instance.primaryFocus?.unfocus();
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 20),
+            child: GestureDetector(
+              onTapDown: (tap) async {
+                setState(() {
+                  p1 = Image.asset('assets/images/next_page_button_pressed.png');
+                });
+              },
+              onTapCancel: () => {
+                setState(() {
+                  p1 = Image.asset('assets/images/next_page_button.png');
+                })
+              },
+              onTapUp: (tap) async {
+                setState(() {
+                  p1 = Image.asset('assets/images/next_page_button.png');
+                });
+                // Future.delayed(Duration(seconds: 5));
+                if (_formKey.currentState!.validate()) {
+                  // close keyboard
+                  FocusManager.instance.primaryFocus?.unfocus();
 
-                await onSubmitValidate();
-              }
-            },
-            child: Container(width: widget.width / 9, child: p1),
+                  await onSubmitValidate();
+                }
+              },
+              child: Container(width: widget.width / 9, child: p1),
+            ),
           ),
         ),
         Positioned(
@@ -127,7 +130,11 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
                         BorderSide(color: Colors.transparent, width: 5.0),
                   ),
                   hintText: widget.hintText,
-                  errorStyle: const TextStyle(color: Colors.black, fontFamily: 'PixelFont'),
+                  errorStyle: const TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'PixelFont',
+                      fontSize: 13),
+                  errorMaxLines: 1,
                 ),
               ),
             ),

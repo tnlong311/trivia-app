@@ -68,24 +68,21 @@ class _TextFieldSingle2State extends State<TextFieldSingle2> {
               // textAlignVertical: TextAlignVertical.bottom,
               decoration: InputDecoration(
                 focusedBorder: const OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: Colors.transparent, width: 4.0),
+                  borderSide: BorderSide(color: Colors.transparent, width: 4.0),
                 ),
                 enabledBorder: const OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: Colors.transparent, width: 5.0),
+                  borderSide: BorderSide(color: Colors.transparent, width: 5.0),
                 ),
                 hintText: widget.hintText,
-                errorStyle: TextStyle(color: Colors.white, fontFamily: 'PixelFont',fontSize: 13),
-                errorMaxLines: 2,
-                focusedErrorBorder: const OutlineInputBorder(
-                  borderSide:
-                  BorderSide(color: Colors.red, width: 10.0),
-                ),
-                errorBorder: const OutlineInputBorder(
-                    borderSide:
-                    BorderSide(color: Colors.red, width: 10.0),
-                  )
+                errorStyle: const TextStyle(
+                    color: Colors.white, fontFamily: 'PixelFont', fontSize: 12),
+                errorMaxLines: 1,
+                // focusedErrorBorder: const OutlineInputBorder(
+                //   borderSide: BorderSide(color: Colors.red, width: 10.0),
+                // ),
+                // errorBorder: const OutlineInputBorder(
+                //   borderSide: BorderSide(color: Colors.red, width: 10.0),
+                // ),
               ),
               onSaved: (value) => widget.updator(value),
             ),
