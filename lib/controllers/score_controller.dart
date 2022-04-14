@@ -12,7 +12,7 @@ import '../services/game_service.dart';
 class ScoreController extends GetxController with GetTickerProviderStateMixin {
   int _total = -1;
   int _index = 0;
-  String _userAnswer = "";
+  String _userAnswer = '';
   int _bet = 0;
   int _result = 0;
   bool _isAnswered = false;

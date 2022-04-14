@@ -57,6 +57,19 @@ class RtdbGameService {
     return 0;
   }
 
+  static getStartTime() async {
+    final snapshot = await gameRef
+        .child('/game status/start time')
+        .get()
+        .catchError((error) => print(error));
+
+    if (snapshot.exists) {
+      return snapshot.value.toString();
+    }
+
+    return DateTime.now().millisecondsSinceEpoch.toString();
+  }
+
   // static Future<void> postTotalScore(String id, int score) async {
   //   await gameRef
   //       .child('scores/$id/score')

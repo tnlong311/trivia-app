@@ -4,6 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:trivia_app/controllers/score_controller.dart';
+import 'package:trivia_app/services/game_service.dart';
 import 'package:trivia_app/views/pages/end_page.dart';
 import 'package:trivia_app/views/pages/question_template/answer_reveal_page.dart';
 import 'package:trivia_app/views/pages/question_template/question_poll_page.dart';
@@ -17,13 +18,14 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
   late Animation _countdown;
   final List<Question> _questionList = [];
   int _index = 0;
+  int _duration = 50;
 
   // getters
   Animation get countdown => _countdown;
 
   int get index => _index;
 
-  int get duration => _questionList[index].clock;
+  int get duration => _duration;
 
   int get questionsLength => _questionList.length;
 
@@ -47,10 +49,11 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
   }
 
   Future<void> resetQuestionState() async {
-    print("index $index, timer: ${_questionList[index].clock}");
-
-    updateCountDown();
+    await updateCountdown();
     _countdownController.reset();
+
+    print("Question ${index+1}, timer: ${_questionList[index].clock}");
+    print('Actual timer $_duration');
 
     ScoreController _scoreController = Get.put(ScoreController());
     await _scoreController.resetAnswerState();
@@ -64,9 +67,30 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
     _scoreController.setIndex(_index);
   }
 
-  void updateCountDown() {
-    _countdownController.duration =
-        Duration(seconds: _questionList[index].clock);
+  Future<int> fetchCountdownToSeconds() async {
+    var startTimeDb = await RtdbGameService.getStartTime();
+
+    var countdownGap =
+        (int.tryParse(startTimeDb) ?? DateTime.now().millisecondsSinceEpoch) -
+            DateTime.now().millisecondsSinceEpoch;
+
+    print('countdown gap: $countdownGap');
+
+    num countdownTime =
+        (countdownGap / 1000).floor() + _questionList[index].clock;
+
+    if (countdownTime <= 0) {
+      print('fetch time is negative');
+      return _questionList[index].clock;
+    }
+
+    return int.tryParse(countdownTime.toString()) ?? _questionList[index].clock;
+  }
+
+  Future<void> updateCountdown() async {
+    _duration = await fetchCountdownToSeconds() + 3;
+
+    _countdownController.duration = Duration(seconds: _duration);
     _countdown = Tween<double>(begin: 1, end: 0).animate(_countdownController);
     update();
   }
@@ -77,7 +101,7 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
       Get.offAndToNamed(EndPage.routeName);
     } else {
       CustomRouter.customGetTo(const QuestionTitlePage());
-      await Future.delayed(const Duration(seconds: 10), () {
+      await Future.delayed(const Duration(seconds: 1), () {
         gotoPollPage();
       });
     }
@@ -86,10 +110,9 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
   // page 2
   Future<void> gotoPollPage() async {
     await resetQuestionState();
+    _countdownController.forward();
 
     CustomRouter.customGetTo(const QuestionPollPage());
-
-    _countdownController.forward();
   }
 
   // page 3

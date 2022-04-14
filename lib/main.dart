@@ -61,7 +61,7 @@ void main() async {
       await _scoreController.fetchAnswers();
     }
 
-    if (AuthService.isSignedIn() && isNamed && questionNum > 0) {
+    if (AuthService.isSignedIn() && isNamed && questionNum > -1) {
       if (event.snapshot.key == 'current') {
         print('proceed to question $questionNum');
 
