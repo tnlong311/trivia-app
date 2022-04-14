@@ -8,6 +8,7 @@ import 'package:trivia_app/controllers/score_controller.dart';
 import 'package:trivia_app/services/auth_service.dart';
 import 'package:trivia_app/services/user_service.dart';
 import 'package:trivia_app/utils/custom_routing.dart';
+import 'package:trivia_app/views/pages/admin/test_firebase.dart';
 import 'package:trivia_app/views/pages/end_page.dart';
 // import 'package:trivia_app/views/pages/admin/create_user.dart';
 // import 'package:trivia_app/views/pages/end_page.dart';

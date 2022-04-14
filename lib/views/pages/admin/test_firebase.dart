@@ -55,7 +55,6 @@ class _TestFirebasePageState extends State<TestFirebasePage> {
         _isPressing = false;
       });
       print('done');
-
     }
 
     return Scaffold(
@@ -76,13 +75,15 @@ class _TestFirebasePageState extends State<TestFirebasePage> {
                       child: Center(
                         child: SizedBox(
                           height: 60,
-                          child: _isPressing ? Spinner.Spinkit() : ElevatedButton(
-                            onPressed: answerOnSubmit,
-                            child: Text(
-                              "Submit",
-                              style: themeData.textTheme.headline5,
-                            ),
-                          ),
+                          child: _isPressing
+                              ? Spinner.FadingCube()
+                              : ElevatedButton(
+                                  onPressed: answerOnSubmit,
+                                  child: Text(
+                                    "Submit",
+                                    style: themeData.textTheme.headline5,
+                                  ),
+                                ),
                         ),
                       ),
                     ),

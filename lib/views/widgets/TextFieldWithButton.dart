@@ -4,6 +4,8 @@ import 'package:trivia_app/consts/app_styles.dart';
 import 'package:trivia_app/views/pages/team_formation_page.dart';
 import 'package:trivia_app/views/dialogs/custom_snackbar.dart';
 
+import '../dialogs/custom_spinner.dart';
+
 class TextFieldWithButton extends StatefulWidget {
   const TextFieldWithButton(
       {Key? key,
@@ -40,6 +42,7 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _controller = TextEditingController();
   var p1;
+  bool _isPressing = false;
 
   @override
   void initState() {
@@ -60,87 +63,106 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
 
     return Container(
       width: widget.width,
-      height: widget.height+20,
+      height: widget.height + 20,
       color: Colors.transparent,
-      child: Stack(children: <Widget>[
-        Container(
-          width: 250.0 / 300.0 * widget.width,
-          height: widget.height,
-          child: Image.asset(
-            'assets/images/InputBox2.png',
-            fit: BoxFit.fill,
-            height: widget.height,
-          ),
-        ),
-        Align(
-          alignment: Alignment.centerRight,
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 20),
-            child: GestureDetector(
-              onTapDown: (tap) async {
-                setState(() {
-                  p1 = Image.asset('assets/images/next_page_button_pressed.png');
-                });
-              },
-              onTapCancel: () => {
-                setState(() {
-                  p1 = Image.asset('assets/images/next_page_button.png');
-                })
-              },
-              onTapUp: (tap) async {
-                setState(() {
-                  p1 = Image.asset('assets/images/next_page_button.png');
-                });
-                // Future.delayed(Duration(seconds: 5));
-                if (_formKey.currentState!.validate()) {
-                  // close keyboard
-                  FocusManager.instance.primaryFocus?.unfocus();
-
-                  await onSubmitValidate();
-                }
-              },
-              child: Container(width: widget.width / 9, child: p1),
-            ),
-          ),
-        ),
-        Positioned(
-          left: 0,
-          child: Container(
-            width: widget.width * 0.8,
-            child: Form(
-              key: _formKey,
-              child: TextFormField(
-                style: triviaSmall1,
-                validator: (value) => widget.validator(value),
-                onFieldSubmitted: (value) async {
-                  if (_formKey.currentState!.validate()) {
-                    await onSubmitValidate();
-                  }
-                },
-                controller: _controller,
-                textAlign: TextAlign.center,
-                // textAlignVertical: TextAlignVertical.bottom,
-                decoration: InputDecoration(
-                  focusedBorder: const OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.transparent, width: 4.0),
-                  ),
-                  enabledBorder: const OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                  hintText: widget.hintText,
-                  errorStyle: const TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'PixelFont',
-                      fontSize: 13),
-                  errorMaxLines: 1,
+      child: _isPressing
+          ? Padding(
+            padding: const EdgeInsets.only(right: 40),
+            child: Spinner.PouringHourGlass(),
+          )
+          : Stack(children: <Widget>[
+              Container(
+                width: 250.0 / 300.0 * widget.width,
+                height: widget.height,
+                child: Image.asset(
+                  'assets/images/InputBox2.png',
+                  fit: BoxFit.fill,
+                  height: widget.height,
                 ),
               ),
-            ),
-          ),
-        ),
-      ]),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: GestureDetector(
+                    onTapDown: (tap) async {
+                      setState(() {
+                        p1 = Image.asset(
+                            'assets/images/next_page_button_pressed.png');
+                      });
+                    },
+                    onTapCancel: () => {
+                      setState(() {
+                        p1 = Image.asset('assets/images/next_page_button.png');
+                      })
+                    },
+                    onTapUp: (tap) async {
+                      setState(() {
+                        p1 = Image.asset('assets/images/next_page_button.png');
+                      });
+                      if (_formKey.currentState!.validate()) {
+                        setState(() {
+                          _isPressing = true;
+                        });
+                        // close keyboard
+                        FocusManager.instance.primaryFocus?.unfocus();
+
+                        await onSubmitValidate();
+                        setState(() {
+                          _isPressing = false;
+                        });
+                      }
+                    },
+                    child: Container(width: widget.width / 9, child: p1),
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 0,
+                child: Container(
+                  width: widget.width * 0.8,
+                  child: Form(
+                    key: _formKey,
+                    child: TextFormField(
+                      style: triviaSmall1,
+                      validator: (value) => widget.validator(value),
+                      onFieldSubmitted: (value) async {
+                        if (_formKey.currentState!.validate()) {
+                          setState(() {
+                            _isPressing = true;
+                          });
+
+                          await onSubmitValidate();
+
+                          setState(() {
+                            _isPressing = false;
+                          });
+                        }
+                      },
+                      controller: _controller,
+                      textAlign: TextAlign.center,
+                      // textAlignVertical: TextAlignVertical.bottom,
+                      decoration: InputDecoration(
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.transparent, width: 4.0),
+                        ),
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.transparent, width: 5.0),
+                        ),
+                        hintText: widget.hintText,
+                        errorStyle: const TextStyle(
+                            color: Colors.black,
+                            fontFamily: 'PixelFont',
+                            fontSize: 13),
+                        errorMaxLines: 1,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ]),
     );
   }
 }

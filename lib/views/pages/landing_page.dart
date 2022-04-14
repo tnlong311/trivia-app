@@ -87,6 +87,7 @@ class _LandingPageState extends State<LandingPage>
             reverseTransitionDuration: Duration.zero));
   }
 
+
   @override
   Widget build(BuildContext context) {
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
