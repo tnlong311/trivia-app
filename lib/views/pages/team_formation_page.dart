@@ -124,10 +124,10 @@ class _TeamFormationPageState extends State<TeamFormationPage>
                     final d = movement2.value.toDouble();
                     return Positioned(
                       top: 0,
-                      right: (viewWidth - 400) / 2.0 + d * 350,
+                      right: (viewWidth - viewWidth / 1.1) / 2.0 + d * 350,
                       child: Container(
                         color: Colors.transparent,
-                        width: 400,
+                        width: viewWidth / 1.1,
                         child: RichText(
                           textAlign: TextAlign.center,
                           text: TextSpan(
