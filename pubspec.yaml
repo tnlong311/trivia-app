@@ -42,11 +42,6 @@ flutter:
 
 
   fonts:
-    - family: Garamond
-      fonts:
-        - asset: fonts/EBGaramond-VariableFont_wght.ttf
-        - asset: fonts/EBGaramond-Italic-VariableFont_wght.ttf
-          style: italic
     - family: PixelFont
       fonts:
         - asset: fonts/RetroGaming.ttf

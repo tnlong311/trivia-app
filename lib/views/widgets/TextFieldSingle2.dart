@@ -76,15 +76,14 @@ class _TextFieldSingle2State extends State<TextFieldSingle2> {
                       BorderSide(color: Colors.transparent, width: 5.0),
                 ),
                 hintText: widget.hintText,
-                errorStyle: TextStyle(color: Colors.white, fontFamily: 'PixelFont',fontSize: 13),
+                  errorStyle: TextStyle(color: Colors.white, fontFamily: 'PixelFont',fontSize: 13),
                 errorMaxLines: 2,
-                focusedErrorBorder: const OutlineInputBorder(
-                  borderSide:
-                  BorderSide(color: Colors.red, width: 10.0),
+                focusedErrorBorder: const UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red, width: 4.0),
                 ),
-                errorBorder: const OutlineInputBorder(
+                errorBorder: const UnderlineInputBorder(
                     borderSide:
-                    BorderSide(color: Colors.red, width: 10.0),
+                    BorderSide(color: Colors.red, width: 4.0),
                   )
               ),
               onSaved: (value) => widget.updator(value),

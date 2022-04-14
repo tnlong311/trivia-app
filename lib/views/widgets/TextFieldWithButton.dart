@@ -60,7 +60,7 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
 
     return Container(
       width: widget.width,
-      height: widget.height,
+      height: widget.height + 20,
       color: Colors.transparent,
       child: Stack(children: <Widget>[
         Container(
@@ -73,7 +73,7 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
           ),
         ),
         Align(
-          alignment: Alignment.centerRight,
+          alignment: Alignment(1, -0.2),
           child: GestureDetector(
             onTapDown: (tap) async {
               setState(() {
@@ -118,17 +118,23 @@ class _TextFieldWithButtonState extends State<TextFieldWithButton> {
                 textAlign: TextAlign.center,
                 // textAlignVertical: TextAlignVertical.bottom,
                 decoration: InputDecoration(
-                  focusedBorder: const OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.transparent, width: 4.0),
-                  ),
-                  enabledBorder: const OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.transparent, width: 5.0),
-                  ),
-                  hintText: widget.hintText,
-                  errorStyle: const TextStyle(color: Colors.black, fontFamily: 'PixelFont'),
-                ),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.transparent, width: 4.0),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.transparent, width: 5.0),
+                    ),
+                    hintText: widget.hintText,
+                    errorStyle: TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'PixelFont',
+                        fontSize: 13),
+                    errorMaxLines: 2,
+                    errorBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.red, width: 4.0),
+                    )),
               ),
             ),
           ),
