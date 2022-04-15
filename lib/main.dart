@@ -91,6 +91,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+        themeMode: ThemeMode.light,
         title: 'Trivia App',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

@@ -121,28 +121,28 @@ class AnswerRevealPage extends StatelessWidget {
               bottom: 4,
               right: 5,
               child: Container(
-                height: screenHeight / 5,
+                alignment: Alignment.center,
+                height: screenHeight / 4,
                 width: screenWidth / 1.6,
                 child: Stack(children: [
-                  Image.asset('assets/images/Current_score_panel.png'),
-                  Positioned(
-                    right: screenWidth / 1.6 - box3Width,
-                    child: Container(
+                  Container(
+                      // color: Colors.yellow,
+                      alignment: Alignment.center, child: Image.asset('assets/images/Current_score_panel.png')),
+                  Container(
+                    color: Colors.black45,
+                    alignment: Alignment.center,
+                    height: screenHeight / 4,
+                    width: screenWidth / 1.6,
+                    child: Align(
                       alignment: Alignment.center,
-                      width: box3Width / 1,
-                      height: box3Height,
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 40),
-                            child: Text(
-                              '${_scoreController.totalPoint}',
-
-                              /// O day them diem nha anh
-                              style: triviaHeading1,
-                            ),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 40),
+                          child: Text(
+                            '${_scoreController.totalPoint}',
+                            /// O day them diem nha anh
+                            style: triviaHeading3,
                           ),
                         ),
                       ),
