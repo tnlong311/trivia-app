@@ -29,6 +29,15 @@ const triviaSmall1 = TextStyle(
     height: 2,
     decoration: TextDecoration.none);
 
+const triviaSmallTitle = TextStyle(
+    color: Color(0xFF9d4ea0),
+    fontWeight: FontWeight.w200,
+    fontFamily: 'PixelFont',
+    letterSpacing: 0.6,
+    fontSize: 15,
+    height: 2,
+    decoration: TextDecoration.none);
+
 const triviaSmall2 = TextStyle(
     color: Color(0xFF352852),
     fontWeight: FontWeight.w200,
@@ -68,6 +77,17 @@ const triviaHeading2 = TextStyle(
     ],
     decoration: TextDecoration.none,
 );
+
+
+const triviaHeading3 = TextStyle(
+    color: Color(0xFF352852),
+    fontWeight: FontWeight.w600,
+    fontFamily: 'PixelFont',
+    letterSpacing: 0.6,
+    fontSize: 30,
+    height: 2,
+    decoration: TextDecoration.none);
+
 
 const triviaGreen = LinearGradient(
   colors: [Color(0xFF46A0AE), Color(0xFF00FFCB)],

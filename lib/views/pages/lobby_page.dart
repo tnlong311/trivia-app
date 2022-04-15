@@ -188,7 +188,7 @@ class _GuidelinesPageState extends State<GuidelinesPage> {
     'assets/images/About_TV.png',
     'assets/images/About_app.png',
   ];
-  List<Text> content = [rules_trivia, about_trivia, about_app];
+  List<RichText> content = [rules_trivia, about_trivia, about_app];
 
   @override
   void initState() {
